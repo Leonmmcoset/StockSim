@@ -22,7 +22,7 @@ export interface Quote {
   limitUp: Price; limitDown: Price;
   bids: Level[]; asks: Level[]; // 各最多五档，最优在下标0；缺档不伪造
   minuteBars: Bar[]; // 当日一分钟bar，尾项可为未完成bar
-  dailyBars: Bar[];  // 含当前交易日的未完成bar；最多250项
+  dailyBars: Bar[];  // 含当前交易日的未完成bar；最多251项（250个历史交易日加当日）
   recentTrades: TapeTrade[]; // 最新在前，最多30项
 }
 export interface Position {
