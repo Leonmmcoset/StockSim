@@ -18,3 +18,10 @@
 /* F10 shares the original chart region and scrolls independently. */
 .chart-host.company-host{display:flex;padding:0;overflow:hidden}.chart-host.company-host>.company-fundamentals{flex:1;height:100%;min-height:0}
 @media(max-width:780px){.chart-host.company-host{min-height:330px}.chart-pane:has(.company-host){height:560px}.chart-toolbar .chart-period{white-space:nowrap}}
+
+/* Review uses the full workspace; keep the trading form mounted for its draft. */
+.workspace.workspace-review-hidden{display:none}
+.review-workspace{display:flex;flex:1;min-width:0;min-height:0;overflow:hidden}
+.account-panel.review-open{height:87px;min-height:87px}
+.account-content[hidden]{display:none}
+@media(max-width:780px){.terminal.review-active{height:100dvh;min-height:640px;overflow:hidden}.review-workspace{flex:1;min-height:340px}.account-panel.review-open{height:104px;min-height:104px}.account-tabs{width:100%}.account-tabs button{flex:1;justify-content:center;padding:0 5px;gap:0}.account-tabs .tab-count,.account-tabs button svg{display:none}}
