@@ -64,4 +64,10 @@ npm run test:e2e
 
 本次真实浏览器验证通过 Codex 内置浏览器执行，Playwright 测试仅完成发现检查。具体结果见 [验证记录](docs/verification.md)。较慢的市场统计脚本及复现命令见 [市场模型](docs/market-model.md#2026-11-07-实现先导检查)。
 
-开发分支 `codex/stock-simulator`；功能、修复与验证分别提交，未配置远程仓库。
+仓库：[Leonmmcoset/StockSim](https://github.com/Leonmmcoset/StockSim)，默认分支 `main`。初始功能在 `codex/stock-simulator` 分支开发，功能、修复与验证分别提交。
+
+## 许可证
+
+Copyright 2026 Leonmmcoset。
+
+本项目采用 [Apache License 2.0](LICENSE)，SPDX 标识为 `Apache-2.0`。第三方依赖保留各自的许可证。
