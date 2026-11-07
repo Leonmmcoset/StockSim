@@ -18,13 +18,13 @@ describe('persistence', () => {
   });
   it('rejects unsupported versions and malformed envelope', () => {
     const save = createSave(engine, prefs);
-    for (const bad of [{ ...save, version: 2 }, { ...save, engine: { schemaVersion: 3, data: {} } }, { ...save, engine: { schemaVersion: 1 } }]) {
+    for (const bad of [{ ...save, version: 2 }, { ...save, engine: { schemaVersion: 4, data: {} } }, { ...save, engine: { schemaVersion: 1 } }]) {
       expect(() => parseSave(JSON.stringify(bad))).toThrow();
     }
     expect(() => parseSave('{')).toThrow();
   });
-  it('round trips both engine schema versions and preserves legacy preferences', () => {
-    for (const schemaVersion of [1, 2]) {
+  it('round trips supported engine schema versions and preserves preferences', () => {
+    for (const schemaVersion of [1, 2, 3]) {
       const original = {
         format: 'stock-sim', version: 1, savedAt: '2025-01-01T00:00:00.000Z',
         engine: { schemaVersion, data: { cash: 500000, orders: [] } },
