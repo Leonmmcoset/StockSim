@@ -42,4 +42,4 @@
 - Complete: 42 tests and production build passed; real-browser F10, release timing, news-to-report links, loss valuation, legacy migration/refresh, corrupt report rejection and narrow layout verified.
 - Fresh final review found loss-making earnings headline wording; Astra fixed it and the scoped re-review is clean.
 - Post-integration pilot: 2400 stock-days, 2.442% daily log-return volatility, 10/10 final saved states restored.
-- Original black terminal, 5000-fen-unit account conventions and legacy trading state preserved; game account restored from normal backup after migration testing.
+- Original black terminal, ¥5,000 starting capital and integer-fen accounting conventions and legacy trading state preserved; game account restored from normal backup after migration testing.
