@@ -90,3 +90,9 @@ it('rejects a nonempty traded day with no last-trade tape',()=>{
  expect(s.stocks[0].volume).toBeGreaterThan(0);s.stocks[0].tape=[];
  expect(()=>importMarket(bad)).toThrow();
 });
+it('rejects an out-of-band active bid even when its cash reserve is consistent',()=>{
+ const bad=createMarket({seed:'forged-band',historyDays:0}).exportState(),s=bad.data as State,q=s.stocks[0],o=s.orders[q.bids[0]],w=s.wallets[o.owner];
+ w.frozenCash-=o.reserve;o.price=q.limitUp+100;
+ o.reserve=o.remaining*o.price+fees(o.notional+o.remaining*o.price,'buy').total-o.fee;w.frozenCash+=o.reserve;
+ expect(()=>importMarket(bad)).toThrow();
+});

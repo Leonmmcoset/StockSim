@@ -43,7 +43,7 @@ export function validateSave(input:unknown):State {
     for(const [side,ids] of [['buy',q.bids],['sell',q.asks]] as const){
       let prev:State['orders'][string]|undefined;
       for(const id of ids){
-        const o=s.orders[id];if(bookIds.has(id)||!o||o.symbol!==q.symbol||o.side!==side||!['open','partial'].includes(o.status))fail();bookIds.add(id);
+        const o=s.orders[id];if(bookIds.has(id)||!o||o.symbol!==q.symbol||o.side!==side||o.price<q.limitDown||o.price>q.limitUp||!['open','partial'].includes(o.status))fail();bookIds.add(id);
         if(prev&&((side==='buy'?prev.price<o.price:prev.price>o.price)||(prev.price===o.price&&prev.seq>o.seq)))fail();prev=o;
       }
     }
