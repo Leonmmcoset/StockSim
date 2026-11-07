@@ -1,3 +1,5 @@
+import { initializeCompanies } from './fundamentals';
+import { companiesSchema, validateCompanies } from './fundamentals-save';
 import { z } from 'zod';
 import type { State } from './internal';
 import { UNIVERSE } from './data';
@@ -10,11 +12,11 @@ const wallet=z.object({cash:int,frozenCash:int,positions:z.record(z.string(),pos
 const order=z.object({id:str,symbol:str,side,price,quantity:int.min(1).max(1000000),filled:int,remaining:int,status:z.enum(['open','partial','filled','cancelled','expired']),createdAt:int,avgFillPrice:int,fee:int,owner:int,seq:int,notional:int,reserve:int,expires:int});
 const tape=z.object({id:str,symbol:str,time:int,price,quantity:int.min(1),side});
 const stock=z.object({symbol:str,name:str,sector:str,beta:finite,base:price,fundamental:z.number().positive().finite(),sentiment:finite,ema:z.number().positive().finite(),variance:z.number().nonnegative().finite(),last:price,prevClose:price,open:price,high:price,low:price,volume:int,turnover:int,limitUp:price,limitDown:price,bids:z.array(str).max(5000),asks:z.array(str).max(5000),agents:z.array(int).length(48),minuteBars:z.array(bar).max(242),dailyBars:z.array(bar).min(1).max(251),tape:z.array(tape).max(100)});
-const stateSchema=z.object({seed:z.string().max(300),rng:int.max(4294967295),seq:int,tick:int,date:z.string().regex(/^\d{4}-\d{2}-\d{2}$/),seconds:int.min(34200).max(54000),dayIndex:int,initialCash:int,feePool:int,realizedPnl:z.number().int(),playerFees:int,wallets:z.array(wallet).length(577),stocks:z.array(stock).length(12),orders:z.record(z.string(),order),playerOrderIds:z.array(str).max(20000),trades:z.array(z.object({id:str,orderId:str,symbol:str,side,time:int,price,quantity:int,amount:int,fee:int})).max(5000),news:z.array(z.object({id:str,time:int,headline:str,body:z.string().max(2000),scope:z.enum(['market','sector','company']),symbols:z.array(str).max(12),impact:z.enum(['positive','negative','neutral'])})).max(100),macro:finite,sectorFactors:z.record(z.string(),finite),totalCash:int,totalShares:z.record(z.string(),int)});
+const stateSchema=z.object({seed:z.string().max(300),rng:int.max(4294967295),seq:int,tick:int,date:z.string().regex(/^\d{4}-\d{2}-\d{2}$/),seconds:int.min(34200).max(54000),dayIndex:int,initialCash:int,feePool:int,realizedPnl:z.number().int(),playerFees:int,wallets:z.array(wallet).length(577),stocks:z.array(stock).length(12),orders:z.record(z.string(),order),playerOrderIds:z.array(str).max(20000),trades:z.array(z.object({id:str,orderId:str,symbol:str,side,time:int,price,quantity:int,amount:int,fee:int})).max(5000),news:z.array(z.object({id:str,time:int,headline:str,body:z.string().max(2000),scope:z.enum(['market','sector','company']),symbols:z.array(str).max(12),impact:z.enum(['positive','negative','neutral']),kind:z.literal('earnings').optional(),reportId:str.optional()})).max(100),macro:finite,sectorFactors:z.record(z.string(),finite),totalCash:int,totalShares:z.record(z.string(),int)});
 export function validateSave(input:unknown):State {
   let text:string;try{text=JSON.stringify(input);}catch{throw new Error('存档格式错误：无法读取JSON');}
   if(!text||text.length>12_000_000)throw new Error('存档为空或超过12MB大小限制');
-  const parsed=z.object({schemaVersion:z.literal(1),data:stateSchema}).safeParse(input);
+  const parsed=z.discriminatedUnion('schemaVersion',[z.object({schemaVersion:z.literal(1),data:stateSchema}),z.object({schemaVersion:z.literal(2),data:stateSchema.extend({companies:companiesSchema})})]).safeParse(input);
   if(!parsed.success)throw new Error('存档格式或版本不兼容，原进度未被修改');
   const s=parsed.data.data as State;
   const fail=()=>{throw new Error('存档资金、持仓、订单或时间校验失败');};
@@ -74,5 +76,7 @@ export function validateSave(input:unknown):State {
   if(s.wallets[0].cash+Object.values(s.wallets[0].positions).reduce((n,h)=>n+h.costBasis,0)!==s.initialCash+s.realizedPnl)fail();
   if(s.playerOrderIds.reduce((n,id)=>n+s.orders[id].fee,0)!==s.playerFees)fail();
   if(cash!==s.totalCash)fail();for(const q of s.stocks)if(shares[q.symbol]!==s.totalShares[q.symbol])fail();
+  if(parsed.data.schemaVersion===1)s.companies=initializeCompanies(s);
+  validateCompanies(s);
   return s;
 }

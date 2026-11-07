@@ -1,3 +1,5 @@
+import { releaseDueEarnings } from './earnings';
+import { initializeCompanies, publicCompanies } from './fundamentals';
 import type { Account, Bar, CommandResult, ErrorCode, Level, MarketEngine, MarketOptions, MarketSave, MarketSnapshot, Order, OrderInput, OrderPreview, Side } from './types';
 import type { InternalOrder, State, Stock, Wallet } from './internal';
 import { DEFAULT_SEED, UNIVERSE } from './data';
@@ -32,7 +34,7 @@ export class Market implements MarketEngine {
     const seed=String(options.seed??DEFAULT_SEED),initialCash=options.startingCash??500000;
     if(!Number.isSafeInteger(initialCash)||initialCash<0||initialCash>1e12)throw new Error('初始资金必须是有效的整数分');
     this.s={seed,rng:hashSeed(seed),seq:0,tick:0,date:'2026-11-09',seconds:OPEN,dayIndex:0,initialCash,feePool:0,realizedPnl:0,playerFees:0,
-      wallets:[newWallet('player',initialCash)],stocks:[],orders:{},playerOrderIds:[],trades:[],news:[],macro:0,sectorFactors:{},totalCash:initialCash,totalShares:{}};
+      wallets:[newWallet('player',initialCash)],stocks:[],orders:{},playerOrderIds:[],trades:[],news:[],macro:0,sectorFactors:{},totalCash:initialCash,totalShares:{},companies:[]};
     const s=this.s;
     for(const u of UNIVERSE){
       s.sectorFactors[u.sector]=0;
@@ -52,6 +54,7 @@ export class Market implements MarketEngine {
       s.totalShares[stock.symbol]=4800000;
       this.newDailyBar(stock);this.seedLiquidity(stock);
     }
+    s.companies=initializeCompanies(s);
     this.s.news.push({id:'welcome',time:timestamp(s.date,OPEN),headline:'股海模拟市场开市',body:'12家虚构公司已进入竞价交易。初始资金5000元，买入100股起，T+1可卖；背景历史为合成行情。',scope:'market',symbols:[],impact:'neutral'});
     this.step(10);
     // The player enters after the five-minute opening warm-up with no trades.
@@ -220,6 +223,7 @@ export class Market implements MarketEngine {
         }
       }
       s.seconds+=30;
+      releaseDueEarnings(s);
       if(s.seconds===CLOSE)this.closeDay();
     }
   }
@@ -309,8 +313,8 @@ export class Market implements MarketEngine {
     const quotes=s.stocks.map(q=>({symbol:q.symbol,name:q.name,sector:q.sector,last:q.last,prevClose:q.prevClose,open:q.open,high:q.high,low:q.low,change:q.last-q.prevClose,changePct:(q.last/q.prevClose-1)*100,
       volume:q.volume,turnover:q.turnover,vwap:q.volume?Math.round(q.turnover/q.volume):q.last,limitUp:q.limitUp,limitDown:q.limitDown,bids:this.levels(q,'buy'),asks:this.levels(q,'sell'),minuteBars:q.minuteBars,dailyBars:q.dailyBars,recentTrades:q.tape.slice(0,30)}));
     return clone({version:1,seed:s.seed,clock:{dayIndex:s.dayIndex,date:s.date,time:`${String(hours).padStart(2,'0')}:${String(minutes).padStart(2,'0')}:${String(secs).padStart(2,'0')}`,timestamp:timestamp(s.date,s.seconds),phase:ph,phaseLabel:labels[ph]},
-      quotes,account:this.account(),orders:s.playerOrderIds.map(id=>publicOrder(s.orders[id])).reverse(),trades:s.trades,news:s.news,
+      quotes,companies:publicCompanies(s),account:this.account(),orders:s.playerOrderIds.map(id=>publicOrder(s.orders[id])).reverse(),trades:s.trades,news:s.news,
       index:{name:'股海综合',value:s.stocks.reduce((a,q)=>a+q.last/q.base,0)/12*1000,changePct:(s.stocks.reduce((a,q)=>a+q.last/q.base,0)/s.stocks.reduce((a,q)=>a+q.prevClose/q.base,0)-1)*100,advancing:quotes.filter(q=>q.change>0).length,declining:quotes.filter(q=>q.change<0).length,unchanged:quotes.filter(q=>q.change===0).length,volume:quotes.reduce((a,q)=>a+q.volume,0),turnover:quotes.reduce((a,q)=>a+q.turnover,0)}});
   }
-  exportState():MarketSave {return {schemaVersion:1,data:clone(this.s)};}
+  exportState():MarketSave {return {schemaVersion:2,data:clone(this.s)};}
 }
