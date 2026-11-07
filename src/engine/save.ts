@@ -52,10 +52,12 @@ export function validateSave(input:unknown):State {
     if(w.frozenCash!==reserveCash[i]||w.cash<w.frozenCash)fail();cash+=w.cash;
     for(const [symbol,reserved] of Object.entries(reserveShares[i]))if(!w.positions[symbol]||w.positions[symbol].frozen!==reserved)fail();
     for(const [symbol,h] of Object.entries(w.positions)){
-      if(!s.stocks.some(q=>q.symbol===symbol)||h.todayBought+h.frozen>h.quantity||h.frozen!==(reserveShares[i][symbol]??0)||(h.quantity===0&&h.costBasis!==0))fail();
+      if(!s.stocks.some(q=>q.symbol===symbol)||h.todayBought+h.frozen>h.quantity||h.frozen!==(reserveShares[i][symbol]??0)||(h.quantity===0&&h.costBasis!==0)||(h.quantity>0&&h.costBasis===0))fail();
       shares[symbol]=(shares[symbol]??0)+h.quantity;
     }
   });
+  if(s.wallets[0].cash+Object.values(s.wallets[0].positions).reduce((n,h)=>n+h.costBasis,0)!==s.initialCash+s.realizedPnl)fail();
+  if(s.playerOrderIds.reduce((n,id)=>n+s.orders[id].fee,0)!==s.playerFees)fail();
   if(cash!==s.totalCash)fail();for(const q of s.stocks)if(shares[q.symbol]!==s.totalShares[q.symbol])fail();
   return s;
 }

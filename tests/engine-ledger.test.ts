@@ -64,3 +64,14 @@ it('rejects active sell reservations whose owner position is missing even when t
  recipient.quantity+=h.quantity;recipient.costBasis+=h.costBasis;delete s.wallets[0].positions[symbol];
  expect(()=>importMarket(bad)).toThrow();
 });
+it('rejects a forged position cost basis instead of inventing unrealized profit',()=>{
+ const {market:m,symbol,price}=fixture();m.placeOrder({symbol,side:'buy',price,quantity:100});
+ const bad=m.exportState(),s=bad.data as State;s.wallets[0].positions[symbol].costBasis=0;
+ expect(()=>importMarket(bad)).toThrow();
+});
+it('keeps the exact cash plus remaining basis equals capital plus realized profit identity',()=>{
+ const {market:m,symbol,price}=fixture();m.placeOrder({symbol,side:'buy',price,quantity:200});m.nextDay();
+ const q=m.getSnapshot().quotes.find(q=>q.symbol===symbol)!;m.placeOrder({symbol,side:'sell',price:q.bids[0].price,quantity:100});
+ const s=m.getSnapshot();expect(s.account.cash+s.account.positions.reduce((n,p)=>n+p.costBasis,0)).toBe(s.account.initialCash+s.account.realizedPnl);
+ expect(()=>importMarket(m.exportState())).not.toThrow();
+});
