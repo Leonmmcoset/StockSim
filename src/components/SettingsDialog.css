@@ -1,4 +1,4 @@
-.settings-overlay { position: fixed; inset: 0; background: #000b; z-index: 50; backdrop-filter: blur(2px); }
+.settings-overlay { position: fixed; inset: 0; background: #000b; z-index: 50; }
 .settings-dialog { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: min(680px, calc(100vw - 28px)); max-height: min(720px, calc(100dvh - 40px)); display: flex; flex-direction: column; background: #0d1016; border: 1px solid #525663; box-shadow: 0 16px 70px #000c; z-index: 51; color: #d2d5df; font: 12px "Microsoft YaHei", sans-serif; outline: none; }
 .settings-dialog button { cursor: pointer; font: inherit; background: #1a1e28; border: 1px solid #414653; border-radius: 2px; color: #d6d9e2; padding: 6px 12px; display: inline-flex; align-items: center; justify-content: center; gap: 6px; }
 .settings-dialog button:hover { background: #282f3d; border-color: #767a87; }.settings-dialog button:disabled { opacity: .4; cursor: default; }.settings-dialog button:focus-visible,.settings-dialog a:focus-visible { outline: 1px solid #ead16e; outline-offset: 2px; }
