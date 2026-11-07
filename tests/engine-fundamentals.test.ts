@@ -126,3 +126,11 @@ it('migrates a late-day v1 save with future deadlines and no backdated new annou
  expect(s.news.some(n=>n.kind==='earnings')).toBe(false);
  expect((restored.exportState().data as State).rng).toBe(legacy.rng);
 });
+it('describes a loss-making report as net profit below consensus without calling it earnings',()=>{
+ const m=make();for(let day=0;day<4;day++)m.nextDay();m.step(60);
+ const s=m.getSnapshot(),r=s.companies.find(c=>c.symbol==='600502')!.reports[0];
+ expect(r.period).toBe(5);expect(r.netProfit).toBeLessThan(0);expect(r.netProfit).toBeLessThan(r.expectedNetProfit);
+ const announcement=s.news.find(n=>n.reportId===r.id)!;
+ expect(announcement.impact).toBe('negative');
+ expect(announcement.headline).toBe(`瑞宁生物 ${r.label}：净利润不及预期`);
+},15000);

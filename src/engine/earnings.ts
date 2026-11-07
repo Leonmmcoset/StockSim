@@ -20,7 +20,7 @@ export function releaseDueEarnings(s:State):void {
     const sign=report.profitSurprisePct>.5?'positive':report.profitSurprisePct<-.5?'negative':'neutral';
     const money=(n:number)=>(n/100).toLocaleString('zh-CN',{minimumFractionDigits:2,maximumFractionDigits:2});
     s.news.unshift({id:`N${++s.seq}`,time:report.publishedAt,kind:'earnings',reportId:report.id,scope:'company',symbols:[c.symbol],impact:sign,
-      headline:`${q.name} ${report.label}：${sign==='positive'?'盈利超预期':sign==='negative'?'盈利不及预期':'盈利符合预期'}`,
+      headline:`${q.name} ${report.label}：${sign==='positive'?'净利润超出预期':sign==='negative'?'净利润不及预期':'净利润符合预期'}`,
       body:`营业收入${money(report.revenue)}元（此前预期${money(report.expectedRevenue)}元）；净利润${money(report.netProfit)}元（此前预期${money(report.expectedNetProfit)}元），盈利预期差${report.profitSurprisePct>=0?'+':''}${report.profitSurprisePct.toFixed(2)}%；经营现金流${money(report.operatingCashFlow)}元。每5交易日约一模拟季度；预期差以预期净利绝对值与预期营收1%中的较大值为分母。公告影响交易者判断，成交方向取决于订单撮合。`});
   }
   if(s.news.length>100)s.news.length=100;
