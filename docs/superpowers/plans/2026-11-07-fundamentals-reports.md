@@ -18,11 +18,11 @@
 
 ## Tasks
 
-- [ ] **Engine company model and reports — Astra**: `src/engine/{types,internal,fundamentals,market,save,index}.ts`, relevant tests and `docs/fundamentals-model.md`. Freeze public contract, write failing accounting/publication/migration tests, implement independent company RNG and schedule, connect earnings surprise to agent inputs, strengthen v2 validation. Verify targeted and complete regression suites. Commit model and publication/compatibility milestones after checks.
-- [ ] **Outer save compatibility — Terra**: `src/lib/persistence.ts`, `tests/persistence.test.ts`. Write v1/v2 envelope and unsupported-version regression first, then accept engine 1|2 while retaining outer schema, size and safe-JSON protections. Run targeted tests and commit.
-- [ ] **F10 interface — Sol**: `src/components/CompanyFundamentals.tsx/.css`. Render profile, published statements, report announcements and peers; formatting uses engine units and derived values returned by engine. Scope styles to panel, allow local scrolling, avoid global layout changes. Verify TypeScript and browser paths, commit.
-- [ ] **Terminal integration — root**: `src/App.tsx` and small scoped layout updates. Add F10 button/key, preserve left/right panes and selection, link market announcements to F10. Update E2E specifications, README and tests guide. Verify build and real browser.
-- [ ] **Independent review and verification**: review report timing/no-forward-data, accounting identities, schema migration, persistence failure behavior and UI labels. Route any algorithm fixes back to Astra, rerun relevant checks, capture screenshots, commit checked result.
+- [x] **Engine company model and reports — Astra**: `src/engine/{types,internal,fundamentals,market,save,index}.ts`, relevant tests and `docs/fundamentals-model.md`. Freeze public contract, write failing accounting/publication/migration tests, implement independent company RNG and schedule, connect earnings surprise to agent inputs, strengthen v2 validation. Verify targeted and complete regression suites. Commit model and publication/compatibility milestones after checks.
+- [x] **Outer save compatibility — Terra**: `src/lib/persistence.ts`, `tests/persistence.test.ts`. Write v1/v2 envelope and unsupported-version regression first, then accept engine 1|2 while retaining outer schema, size and safe-JSON protections. Run targeted tests and commit.
+- [x] **F10 interface — Sol**: `src/components/CompanyFundamentals.tsx/.css`. Render profile, published statements, report announcements and peers; formatting uses engine units and derived values returned by engine. Scope styles to panel, allow local scrolling, avoid global layout changes. Verify TypeScript and browser paths, commit.
+- [x] **Terminal integration — root**: `src/App.tsx` and small scoped layout updates. Add F10 button/key, preserve left/right panes and selection, link market announcements to F10. Update E2E specifications, README and tests guide. Verify build and real browser.
+- [x] **Independent review and verification**: review report timing/no-forward-data, accounting identities, schema migration, persistence failure behavior and UI labels. Route any algorithm fixes back to Astra, rerun relevant checks, capture screenshots, commit checked result.
 
 ## Review focus
 
@@ -38,3 +38,8 @@
 - User approved F10 + announcements and chose 5-trading-day compressed reports.
 - Real pre-change v1 save with 100-share position preserved under ignored `test-results/` for migration verification.
 - Work assigned to Astra (engine), Sol (F10), Terra (save envelope), root (terminal integration and validation).
+
+- Complete: 42 tests and production build passed; real-browser F10, release timing, news-to-report links, loss valuation, legacy migration/refresh, corrupt report rejection and narrow layout verified.
+- Fresh final review found loss-making earnings headline wording; Astra fixed it and the scoped re-review is clean.
+- Post-integration pilot: 2400 stock-days, 2.442% daily log-return volatility, 10/10 final saved states restored.
+- Original black terminal, 5000-fen-unit account conventions and legacy trading state preserved; game account restored from normal backup after migration testing.

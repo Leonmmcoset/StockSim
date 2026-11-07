@@ -82,6 +82,7 @@ export interface MarketIndex {
 export interface MarketSnapshot {
   version: 1; seed: string; clock: MarketClock;
   quotes: Quote[]; account: Account;
+  companies: CompanyFundamentals[]; // 已公开公司资料、报表、预期、估值；完整类型见src/engine/types.ts
   orders: Order[]; // 玩家全部保留订单，最新在前；可按date/status筛选
   trades: PlayerTrade[]; // 玩家成交，最新在前
   news: NewsItem[]; // 最新在前，最多100项
@@ -118,7 +119,7 @@ export interface MarketEngine {
   getSnapshot(): MarketSnapshot;
   exportState(): MarketSave; // 带schemaVersion的可JSON序列化对象
 }
-export interface MarketSave { schemaVersion: 1; data: unknown }
+export interface MarketSave { schemaVersion: 1 | 2; data: unknown }
 export function createMarket(options?: MarketOptions): MarketEngine;
 export function importMarket(state: unknown): MarketEngine;
 export const DEFAULT_SEED: string;

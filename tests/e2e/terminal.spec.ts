@@ -76,3 +76,35 @@ test('导出、导入与损坏存档保护', async ({ page }) => {
   await dialog.getByRole('button', { name: '返回终端' }).click();
   await expect(page.getByRole('region', { name: '委托交易' })).toContainText(savedSymbol!);
 });
+
+test('F10公开公司资料、同行联动和定时财报公告', async ({ page }) => {
+  await page.goto('/');
+  await page.getByRole('button', { name: '暂停', exact: true }).click();
+  await page.getByRole('button', { name: '公司资料 F10', exact: true }).click();
+  const panel = page.getByRole('region', { name: /F10公司资料/ });
+  await expect(panel).toContainText('华川银行');
+  await expect(panel).toContainText('PE（TTM）');
+  await panel.getByRole('tab', { name: '财务数据', exact: true }).click();
+  await expect(panel).toContainText('营业收入（万元）');
+  await expect(panel.locator('.f10-table thead th')).toHaveCount(5);
+  await panel.getByRole('tab', { name: '同行比较', exact: true }).click();
+  await panel.getByRole('button', { name: '查看东衡证券公司资料', exact: true }).click();
+  await expect(panel).toContainText('东衡证券');
+  await expect(panel.getByRole('tab', { name: '同行比较' })).toHaveAttribute('aria-selected', 'true');
+  await panel.getByRole('button', { name: '查看华川银行公司资料', exact: true }).click();
+  await panel.getByRole('tab', { name: '财报公告', exact: true }).click();
+  await expect(panel.locator('.f10-next-report')).toContainText('10:00');
+  await expect(panel.getByRole('navigation', { name: '选择已发布报告' }).getByRole('button')).toHaveCount(4);
+  await page.getByRole('button', { name: '16×', exact: true }).click();
+  await page.getByRole('button', { name: '继续', exact: true }).click();
+  await expect(panel.getByRole('navigation', { name: '选择已发布报告' }).getByRole('button')).toHaveCount(5);
+  await page.getByRole('button', { name: '暂停', exact: true }).click();
+  await page.getByRole('button', { name: /市场快讯/ }).click();
+  const announcement = page.locator('.news-item').filter({ hasText: /华川银行.*第5期/ });
+  await announcement.click();
+  await page.getByRole('dialog').getByRole('button', { name: '查看财报 F10', exact: true }).click();
+  await expect(panel.getByRole('tab', { name: '财报公告' })).toHaveAttribute('aria-selected', 'true');
+  await expect(panel.locator('.f10-report-article')).toContainText('第5期');
+  await panel.getByRole('button', { name: '返回图表', exact: true }).click();
+  await expect(page.locator('.market-chart')).toBeVisible();
+});
