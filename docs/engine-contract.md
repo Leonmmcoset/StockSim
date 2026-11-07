@@ -7,7 +7,7 @@
 - `Money` / `Price`：整数人民币分；`quantity` / `volume`：股；`turnover`：分；百分比字段 `changePct` 的 `1` 表示 `1%`。
 - `time`：Unix 毫秒；日期按中国标准时间显示。`date` 为 `YYYY-MM-DD`，`clock.time` 为 `HH:mm:ss`。
 - 一个核心 tick 为 30 模拟秒；`step(n)` 必须等价于 n 次 `step(1)`。UI 1× 每现实秒调用 `step(1)`；加速只改变批量次数。
-- 午休和收盘时 `step` 不推进，避免无人值守跨越下一天。午休可调用 `skipLunch()`；`nextTradingDay()` 会先模拟当天剩余交易（现有委托可能成交），再清理当日委托、解锁 T+1 并进入下一工作日 09:30。
+- 午休和收盘时 `step` 不推进，避免无人值守跨越下一天。午休可调用 `skipLunch()`；`nextDay()` 会先模拟当天剩余交易（现有委托可能成交），再清理当日委托、解锁 T+1 并进入下一工作日 09:30。
 - 默认进入 `2026-11-09 09:35:00`；首日 09:30–09:35 已生成的成交不涉及玩家账户。只排除周六、周日，未应用法定节假日历。
 
 ## TypeScript 公共类型
@@ -95,8 +95,7 @@ export type ErrorCode =
   | 'OUTSIDE_LIMIT' | 'PRICE_CAGE' | 'MARKET_CLOSED'
   | 'INSUFFICIENT_CASH' | 'INSUFFICIENT_SHARES'
   | 'ORDER_NOT_FOUND' | 'ORDER_NOT_OPEN' | 'CANCEL_RESTRICTED';
-export type Result<T> = { ok: true; value: T } |
-  { ok: false; code: ErrorCode; message: string };
+export interface CommandResult { ok: boolean; order?: Order; error?: string; code?: ErrorCode }
 export interface FeeBreakdown {
   commission: Money; transfer: Money; stamp: Money; total: Money;
 }
@@ -105,26 +104,27 @@ export interface OrderPreview {
   maxBuyQuantity: number; maxSellQuantity: number;
 }
 export interface MarketOptions {
-  seed?: string;
+  seed?: string | number;
   startingCash?: Money; // 默认500000
   historyDays?: number; // 默认60；0可用于测试/诊断
 }
 export interface MarketEngine {
   step(ticks?: number): void;
-  placeOrder(input: OrderInput): Result<Order>;
-  cancelOrder(orderId: string): Result<Order>;
+  placeOrder(input: OrderInput): CommandResult;
+  cancelOrder(orderId: string): CommandResult;
   previewOrder(input: OrderInput): OrderPreview;
   skipLunch(): void;
-  nextTradingDay(): void;
+  nextDay(): void;
   getSnapshot(): MarketSnapshot;
-  exportState(): string; // 带schemaVersion的JSON字符串
+  exportState(): MarketSave; // 带schemaVersion的可JSON序列化对象
 }
+export interface MarketSave { schemaVersion: 1; data: unknown }
 export function createMarket(options?: MarketOptions): MarketEngine;
-export function restoreMarket(serialized: string): MarketEngine;
+export function importMarket(state: unknown): MarketEngine;
 export const DEFAULT_SEED: string;
 ```
 
-`restoreMarket` 校验失败抛出带中文说明的 `Error`，不会修改原引擎；UI 仅在成功返回后替换实例。`previewOrder` 不改变状态、无 RNG 消耗；输入暂时非法（表单编辑中）时按安全的零值预览，最终是否合法由 `placeOrder` 判定。卖单预览 `cashRequired=0`。
+`importMarket` 校验失败抛出带中文说明的 `Error`，不会修改原引擎；UI 仅在成功返回后替换实例。`previewOrder` 不改变状态、无 RNG 消耗；输入暂时非法（表单编辑中）时按安全的零值预览，最终是否合法由 `placeOrder` 判定。卖单预览 `cashRequired=0`。
 
 `getSnapshot()` 返回隔离的可序列化展示数据；UI 视为只读。`equity=cash+marketValue`，`cash=availableCash+frozenCash`，`totalPnl=equity-initialCash`。持仓成本按成交数量比例分摊，最后一次清仓带走剩余尾差。盈亏展示不能用四舍五入后的 `averageCost` 反推。
 
@@ -135,11 +135,11 @@ export const DEFAULT_SEED: string;
 ```ts
 const market = createMarket({ seed: 'stock-sim-2026' });
 const result = market.placeOrder({ symbol: '600101', side: 'buy', price: 850, quantity: 100 });
-if (!result.ok) showToast(result.message);
+if (!result.ok) showToast(result.error);
 const snapshot = market.getSnapshot();
-localStorage.setItem('stock-sim-v1', market.exportState());
+localStorage.setItem('stock-sim-v1', JSON.stringify(market.exportState()));
 // 导入时先创建candidate，成功后替换当前实例。
-const candidate = restoreMarket(importedText);
+const candidate = importMarket(JSON.parse(importedText));
 ```
 
 UI 每现实秒更新1–4次快照即可；Canvas动画不必重算市场。自动存档建议每5–10秒及下单/撤单/换日后执行，避免每个30秒tick序列化完整状态。
