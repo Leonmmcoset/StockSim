@@ -28,7 +28,7 @@ const saveSchema = z.strictObject({
   format: z.literal('stock-sim'),
   version: z.literal(1),
   savedAt: z.iso.datetime(),
-  engine: z.strictObject({ schemaVersion: z.literal(1), data: z.unknown() }),
+  engine: z.strictObject({ schemaVersion: z.union([z.literal(1), z.literal(2)]), data: z.unknown() }),
   preferences: settingsSchema,
 });
 

@@ -18,10 +18,22 @@ describe('persistence', () => {
   });
   it('rejects unsupported versions and malformed envelope', () => {
     const save = createSave(engine, prefs);
-    for (const bad of [{ ...save, version: 2 }, { ...save, engine: { schemaVersion: 2, data: {} } }, { ...save, engine: { schemaVersion: 1 } }]) {
+    for (const bad of [{ ...save, version: 2 }, { ...save, engine: { schemaVersion: 3, data: {} } }, { ...save, engine: { schemaVersion: 1 } }]) {
       expect(() => parseSave(JSON.stringify(bad))).toThrow();
     }
     expect(() => parseSave('{')).toThrow();
+  });
+  it('round trips both engine schema versions and preserves legacy preferences', () => {
+    for (const schemaVersion of [1, 2]) {
+      const original = {
+        format: 'stock-sim', version: 1, savedAt: '2025-01-01T00:00:00.000Z',
+        engine: { schemaVersion, data: { cash: 500000, orders: [] } },
+        preferences: { selectedSymbol: '600002', chartMode: 'daily', watchlist: ['600002'], speed: 16 },
+      };
+      const parsed = parseSave(JSON.stringify(original));
+      expect(parsed).toEqual(original);
+      expect(parseSave(serializeSave(parsed))).toEqual(original);
+    }
   });
   it('rejects oversized input, duplicate symbols and invalid speed', () => {
     expect(() => parseSave(' '.repeat(12 * 1024 * 1024 + 1))).toThrow();
