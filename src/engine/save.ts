@@ -1,3 +1,5 @@
+import { initializeReview } from './review';
+import { reviewSchema, validateReview } from './review-save';
 import { initializeCompanies } from './fundamentals';
 import { companiesSchema, validateCompanies } from './fundamentals-save';
 import { z } from 'zod';
@@ -16,7 +18,7 @@ const stateSchema=z.object({seed:z.string().max(300),rng:int.max(4294967295),seq
 export function validateSave(input:unknown):State {
   let text:string;try{text=JSON.stringify(input);}catch{throw new Error('存档格式错误：无法读取JSON');}
   if(!text||text.length>12_000_000)throw new Error('存档为空或超过12MB大小限制');
-  const parsed=z.discriminatedUnion('schemaVersion',[z.object({schemaVersion:z.literal(1),data:stateSchema}),z.object({schemaVersion:z.literal(2),data:stateSchema.extend({companies:companiesSchema})})]).safeParse(input);
+  const parsed=z.discriminatedUnion('schemaVersion',[z.object({schemaVersion:z.literal(1),data:stateSchema}),z.object({schemaVersion:z.literal(2),data:stateSchema.extend({companies:companiesSchema})}),z.object({schemaVersion:z.literal(3),data:stateSchema.extend({companies:companiesSchema,review:reviewSchema})})]).safeParse(input);
   if(!parsed.success)throw new Error('存档格式或版本不兼容，原进度未被修改');
   const s=parsed.data.data as State;
   const fail=()=>{throw new Error('存档资金、持仓、订单或时间校验失败');};
@@ -78,5 +80,7 @@ export function validateSave(input:unknown):State {
   if(cash!==s.totalCash)fail();for(const q of s.stocks)if(shares[q.symbol]!==s.totalShares[q.symbol])fail();
   if(parsed.data.schemaVersion===1)s.companies=initializeCompanies(s);
   validateCompanies(s);
+  if(parsed.data.schemaVersion<3)initializeReview(s);
+  validateReview(s);
   return s;
 }

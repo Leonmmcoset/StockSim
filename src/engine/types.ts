@@ -69,6 +69,7 @@ export interface MarketSnapshot {
   version: 1; seed: string; clock: MarketClock;
   quotes: Quote[]; account: Account;
   companies: CompanyFundamentals[];
+  review: InvestmentReview;
   orders: Order[]; // 玩家全部保留订单，最新在前；可按date/status筛选
   trades: PlayerTrade[]; // 玩家成交，最新在前
   news: NewsItem[]; // 最新在前，最多100项
@@ -105,7 +106,7 @@ export interface MarketEngine {
   getSnapshot(): MarketSnapshot;
   exportState(): MarketSave; // 带schemaVersion的可JSON序列化对象
 }
-export interface MarketSave { schemaVersion: 1 | 2; data: unknown }
+export interface MarketSave { schemaVersion: 1 | 2 | 3; data: unknown }
 
 /** All total amounts are integer fen; EPS/BPS are fen per share (not rounded).
  * All *Pct are percentage points. Growth is QoQ and null if prior base <= 0.
@@ -138,4 +139,31 @@ export interface CompanyFundamentals {
   };
   peerSymbols: string[];
   cycleTradingDays: 5;
+}
+
+/** Real account observations only; all amounts are integer fen, *Pct percentage points. */
+export interface EquityPoint {
+  time: number; dayIndex: number; equity: Money; cash: Money; marketValue: Money;
+  positionPct: number; indexValue: number;
+}
+export interface NormalizedEquityPoint extends EquityPoint {
+  returnPct: number | null; benchmarkReturnPct: number; excessReturnPct: number | null;
+}
+export interface DailyReview {
+  dayIndex: number; date: string; status: 'in-progress' | 'closed';
+  partial: boolean; coverageStartAt: number; startAt: number; endAt: number;
+  startEquity: Money; endEquity: Money; netPnl: Money; returnPct: number | null;
+  benchmarkReturnPct: number; excessReturnPct: number | null;
+  buyFillCount: number; sellFillCount: number; buyAmount: Money; sellAmount: Money;
+  fees: Money; realizedPnl: Money; unrealizedPnlChange: Money; grossPnl: Money;
+  maxDrawdownPct: number;
+}
+export interface InvestmentReview {
+  points: EquityPoint[]; days: DailyReview[]; currentDay: DailyReview;
+  coverageStartAt: number; retentionDays: 30; sampling: '30s-and-fills';
+  /** Extremely busy days may be compacted, preserving observed equity drawdown extrema. */
+  compacted: boolean;
+}
+export interface ReviewPeriodSummary extends Omit<DailyReview, 'dayIndex' | 'date'> {
+  startDate: string; endDate: string; dayCount: number;
 }

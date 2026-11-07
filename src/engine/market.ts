@@ -1,3 +1,4 @@
+import { initializeReview, openReviewDay, publicReview, recordReview } from './review';
 import { releaseDueEarnings } from './earnings';
 import { initializeCompanies, publicCompanies } from './fundamentals';
 import type { Account, Bar, CommandResult, ErrorCode, Level, MarketEngine, MarketOptions, MarketSave, MarketSnapshot, Order, OrderInput, OrderPreview, Side } from './types';
@@ -58,6 +59,7 @@ export class Market implements MarketEngine {
     this.s.news.push({id:'welcome',time:timestamp(s.date,OPEN),headline:'股海模拟市场开市',body:'12家虚构公司已进入竞价交易。初始资金5000元，买入100股起，T+1可卖；背景历史为合成行情。',scope:'market',symbols:[],impact:'neutral'});
     this.step(10);
     // The player enters after the five-minute opening warm-up with no trades.
+    initializeReview(s);
   }
   /** Fast, explicitly synthetic background history, not a trade replay. */
   private history(days:number):void {
@@ -157,6 +159,8 @@ export class Market implements MarketEngine {
     bar.high=bar.volume?Math.max(bar.high,price):price;bar.low=bar.volume?Math.min(bar.low,price):price;bar.close=price;bar.volume+=quantity;bar.turnover+=price*quantity;
     const daily=stock.dailyBars.at(-1)!;Object.assign(daily,{open:stock.open,high:stock.high,low:stock.low,close:price,volume:stock.volume,turnover:stock.turnover});
     if(s.trades.length>5000)s.trades.length=5000;
+    const player = a.owner === 0 ? a : b.owner === 0 ? b : undefined;
+    if (player) recordReview(s, {side: player.side, amount: price * quantity});
   }
   private agentAction(stock:Stock,owner:number):void {
     const s=this.s,w=s.wallets[owner],h=holding(w,stock.symbol),p=stock.last;
@@ -225,6 +229,7 @@ export class Market implements MarketEngine {
       s.seconds+=30;
       releaseDueEarnings(s);
       if(s.seconds===CLOSE)this.closeDay();
+      recordReview(s, undefined, s.seconds===CLOSE);
     }
   }
   private closeDay():void {
@@ -247,11 +252,12 @@ export class Market implements MarketEngine {
       for(const o of [...this.book(q,'buy'),...this.book(q,'sell')])this.cancelInternal(q,o,'expired');
     }
   }
-  skipLunch():void {if(phase(this.s)==='lunch')this.s.seconds=AFTERNOON;}
+  skipLunch():void {if(phase(this.s)==='lunch'){this.s.seconds=AFTERNOON;recordReview(this.s);}}
   nextDay():void {
     const s=this.s;
     this.step(1000);this.skipLunch();this.step(1000);
     s.date=shiftDate(s.date);s.dayIndex++;s.seconds=OPEN;
+    openReviewDay(s);
     for(const w of s.wallets)for(const h of Object.values(w.positions))h.todayBought=0;
     const macro=normal(s)*.004;
     for(const q of s.stocks){
@@ -260,6 +266,7 @@ export class Market implements MarketEngine {
     }
     s.news.unshift({id:`N${++s.seq}`,time:timestamp(s.date,OPEN),headline:`${s.date} 新交易日开市`,body:'昨日买入持仓已转为可卖，未成交的昨日委托已失效。',scope:'market',symbols:[],impact:'neutral'});
     if(s.news.length>100)s.news.length=100;
+    recordReview(s);
   }
   private error(code:ErrorCode,error:string):CommandResult{return {ok:false,code,error};}
   placeOrder(input:OrderInput):CommandResult {
@@ -313,8 +320,8 @@ export class Market implements MarketEngine {
     const quotes=s.stocks.map(q=>({symbol:q.symbol,name:q.name,sector:q.sector,last:q.last,prevClose:q.prevClose,open:q.open,high:q.high,low:q.low,change:q.last-q.prevClose,changePct:(q.last/q.prevClose-1)*100,
       volume:q.volume,turnover:q.turnover,vwap:q.volume?Math.round(q.turnover/q.volume):q.last,limitUp:q.limitUp,limitDown:q.limitDown,bids:this.levels(q,'buy'),asks:this.levels(q,'sell'),minuteBars:q.minuteBars,dailyBars:q.dailyBars,recentTrades:q.tape.slice(0,30)}));
     return clone({version:1,seed:s.seed,clock:{dayIndex:s.dayIndex,date:s.date,time:`${String(hours).padStart(2,'0')}:${String(minutes).padStart(2,'0')}:${String(secs).padStart(2,'0')}`,timestamp:timestamp(s.date,s.seconds),phase:ph,phaseLabel:labels[ph]},
-      quotes,companies:publicCompanies(s),account:this.account(),orders:s.playerOrderIds.map(id=>publicOrder(s.orders[id])).reverse(),trades:s.trades,news:s.news,
+      quotes,companies:publicCompanies(s),review:publicReview(s),account:this.account(),orders:s.playerOrderIds.map(id=>publicOrder(s.orders[id])).reverse(),trades:s.trades,news:s.news,
       index:{name:'股海综合',value:s.stocks.reduce((a,q)=>a+q.last/q.base,0)/12*1000,changePct:(s.stocks.reduce((a,q)=>a+q.last/q.base,0)/s.stocks.reduce((a,q)=>a+q.prevClose/q.base,0)-1)*100,advancing:quotes.filter(q=>q.change>0).length,declining:quotes.filter(q=>q.change<0).length,unchanged:quotes.filter(q=>q.change===0).length,volume:quotes.reduce((a,q)=>a+q.volume,0),turnover:quotes.reduce((a,q)=>a+q.turnover,0)}});
   }
-  exportState():MarketSave {return {schemaVersion:2,data:clone(this.s)};}
+  exportState():MarketSave {return {schemaVersion:3,data:clone(this.s)};}
 }

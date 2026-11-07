@@ -1,4 +1,4 @@
-# 引擎公开契约（实现前冻结稿）
+# 引擎公开契约
 
 本文件由市场算法负责人维护。实现入口为 `src/engine/index.ts`，类型在该入口统一导出。UI 不直接读写内部订单簿、代理账户或随机状态。
 
@@ -83,6 +83,7 @@ export interface MarketSnapshot {
   version: 1; seed: string; clock: MarketClock;
   quotes: Quote[]; account: Account;
   companies: CompanyFundamentals[]; // 已公开公司资料、报表、预期、估值；完整类型见src/engine/types.ts
+  review: InvestmentReview; // 真实资产采样、已收盘日报和当前日快照
   orders: Order[]; // 玩家全部保留订单，最新在前；可按date/status筛选
   trades: PlayerTrade[]; // 玩家成交，最新在前
   news: NewsItem[]; // 最新在前，最多100项
@@ -119,10 +120,39 @@ export interface MarketEngine {
   getSnapshot(): MarketSnapshot;
   exportState(): MarketSave; // 带schemaVersion的可JSON序列化对象
 }
-export interface MarketSave { schemaVersion: 1 | 2; data: unknown }
+export interface MarketSave { schemaVersion: 1 | 2 | 3; data: unknown }
 export function createMarket(options?: MarketOptions): MarketEngine;
 export function importMarket(state: unknown): MarketEngine;
 export const DEFAULT_SEED: string;
+
+export interface EquityPoint {
+  time: number; dayIndex: number; equity: Money; cash: Money; marketValue: Money;
+  positionPct: number; indexValue: number;
+}
+export interface NormalizedEquityPoint extends EquityPoint {
+  returnPct: number | null; benchmarkReturnPct: number; excessReturnPct: number | null;
+}
+export interface DailyReview {
+  dayIndex: number; date: string; status: 'in-progress' | 'closed';
+  partial: boolean; coverageStartAt: number; startAt: number; endAt: number;
+  startEquity: Money; endEquity: Money; netPnl: Money; returnPct: number | null;
+  benchmarkReturnPct: number; excessReturnPct: number | null;
+  buyFillCount: number; sellFillCount: number; buyAmount: Money; sellAmount: Money;
+  fees: Money; realizedPnl: Money; unrealizedPnlChange: Money; grossPnl: Money;
+  maxDrawdownPct: number;
+}
+export interface InvestmentReview {
+  points: EquityPoint[]; days: DailyReview[]; currentDay: DailyReview;
+  coverageStartAt: number; retentionDays: 30; sampling: '30s-and-fills';
+  compacted: boolean;
+}
+export interface ReviewPeriodSummary extends Omit<DailyReview, 'dayIndex' | 'date'> {
+  startDate: string; endDate: string; dayCount: number;
+}
+export function normalizeEquityCurve(points: readonly EquityPoint[]): NormalizedEquityPoint[];
+export function selectReviewPeriod(
+  review: InvestmentReview, period: 'all' | number | { dayIndex: number }
+): { points: NormalizedEquityPoint[]; summary: ReviewPeriodSummary };
 ```
 
 `importMarket` 校验失败抛出带中文说明的 `Error`，不会修改原引擎；UI 仅在成功返回后替换实例。`previewOrder` 不改变状态、无 RNG 消耗；输入暂时非法（表单编辑中）时按安全的零值预览，最终是否合法由 `placeOrder` 判定。卖单预览 `cashRequired=0`。
@@ -144,3 +174,14 @@ const candidate = importMarket(JSON.parse(importedText));
 ```
 
 UI 每现实秒更新1–4次快照即可；Canvas动画不必重算市场。自动存档建议每5–10秒及下单/撤单/换日后执行，避免每个30秒tick序列化完整状态。
+
+
+## 投资复盘接口
+
+`exportState()` 输出 schema 3，`importMarket()` 接受 schema 1、2、3。旧版本依次完成原账本/公司校验，从导入时刻建立真实复盘起点；不会回填启用前的历史。新开局在玩家可操作的 09:35 开始采集。具体会计规则、存档校验与抽稀策略见 [投资复盘模型](investment-review-model.md)。
+
+`review.points` 依时间与真实执行顺序排列，同一时间可能有多笔成交点。`days` 只包含已收盘日，旧至新；`currentDay` 永远是当前交易日，收盘后该日也出现在 `days` 中。`partial` 表示该日未从 09:30 完整采集。`coverageStartAt`、`startAt`、`endAt` 均为 Unix 毫秒。最多保留 30 个交易日、每日 1,024 点、全局 15,000 点；`compacted=true` 表示高频记录已抽稀且保留观察回撤极值。
+
+`DailyReview` 金额为整数分，所有 `*Pct` 为百分点。`returnPct` 与 `excessReturnPct` 在起始总资产为零时为 `null`，UI 显示“—”。`fees` 已计入净收益；`unrealizedPnlChange` 是浮盈的首尾变动，不能替换为期末浮盈。`buyFillCount` / `sellFillCount` 按实际执行成交计数，不按委托计数。`grossPnl` 仅表示净收益加回本区间实际交易费用后的金额。
+
+`normalizeEquityCurve` 以传入点首点同时归一化账户和股海指数。`selectReviewPeriod` 的数字参数表示最近 N 个已记录交易日，`{dayIndex}` 表示指定日，`'all'` 表示全部保留记录；返回曲线和同覆盖范围 summary，并自动消除已收盘 currentDay 的重复引用。UI 只调用这些公开算法，不用市场当日 `index.changePct` 代替同期基准，也不自行计算费用、收益或最大回撤。

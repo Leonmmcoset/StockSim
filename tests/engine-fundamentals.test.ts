@@ -49,16 +49,17 @@ it('migrates v1 after validation without altering exchange balances, orders or i
  const m=make();const q=m.getSnapshot().quotes[0];
  m.placeOrder({symbol:q.symbol,side:'buy',price:q.asks[0].price,quantity:100});
  m.placeOrder({symbol:q.symbol,side:'buy',price:q.limitDown,quantity:100});
- const raw=structuredClone(m.exportState().data) as State;const {companies:discarded,...legacy}=raw;void discarded;
+ const raw=structuredClone(m.exportState().data) as State;const {companies:discarded,review:discardedReview,...legacy}=raw;void discarded;void discardedReview;
  const restored=importMarket({schemaVersion:1,data:legacy}),migrated=restored.exportState();
- expect(migrated.schemaVersion).toBe(2);
- const {companies,...rest}=migrated.data as State;expect(rest).toEqual(legacy);expect(companies).toHaveLength(12);
+ expect(migrated.schemaVersion).toBe(3);
+ const {companies,review,...rest}=migrated.data as State;void review;expect(rest).toEqual(legacy);expect(companies).toHaveLength(12);
  expect(restored.getSnapshot().account).toEqual(m.getSnapshot().account);
  const corrupt=structuredClone(legacy);corrupt.wallets[0].cash++;
  expect(()=>importMarket({schemaVersion:1,data:corrupt})).toThrow();
 });
 it('rejects corrupt reports, duplicate periods and forward-dated disclosures in schema 2',()=>{
- const save=make().exportState();expect(save.schemaVersion).toBe(2);
+ const {review,...legacy}=make().exportState().data as State;void review;
+ const save={schemaVersion:2 as const,data:legacy};
  for(const corrupt of [
   (s:State)=>{s.companies[0].reports[0].netProfit++;},
   (s:State)=>{s.companies[0].reports[0].assets++;},
@@ -118,7 +119,7 @@ it('publishes each company on its staggered five-trading-day schedule and restor
 },15000);
 it('migrates a late-day v1 save with future deadlines and no backdated new announcement',()=>{
  const m=make();m.step(1000);const raw=structuredClone(m.exportState().data) as State;
- const {companies:discarded,...legacy}=raw;void discarded;
+ const {companies:discarded,review:discardedReview,...legacy}=raw;void discarded;void discardedReview;
  // A genuine old v1 has no earnings news, even when migrated after the new release hour.
  legacy.news=legacy.news.filter(n=>!n.kind);
  const restored=importMarket({schemaVersion:1,data:legacy}),s=restored.getSnapshot();

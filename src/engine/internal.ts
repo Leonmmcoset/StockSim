@@ -1,3 +1,4 @@
+import type { ReviewState } from './review';
 import type { CompanyState } from './fundamentals';
 import type { Bar, NewsItem, Order, PlayerTrade, TapeTrade } from './types';
 export interface Holding { quantity:number; todayBought:number; frozen:number; costBasis:number }
@@ -14,5 +15,6 @@ export interface State {
  wallets:Wallet[];stocks:Stock[];orders:Record<string,InternalOrder>;playerOrderIds:string[];
  trades:PlayerTrade[];news:NewsItem[];macro:number;sectorFactors:Record<string,number>;
  companies:CompanyState[];
+ review?:ReviewState;
  totalCash:number;totalShares:Record<string,number>;
 }
