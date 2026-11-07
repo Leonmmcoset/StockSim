@@ -75,3 +75,18 @@ it('keeps the exact cash plus remaining basis equals capital plus realized profi
  const s=m.getSnapshot();expect(s.account.cash+s.account.positions.reduce((n,p)=>n+p.costBasis,0)).toBe(s.account.initialCash+s.account.realizedPnl);
  expect(()=>importMarket(m.exportState())).not.toThrow();
 });
+it('rejects missing current-day candles before the restored market can run',()=>{
+ const bad=createMarket({seed:'missing-bars',historyDays:0}).exportState(),s=bad.data as State;
+ for(const q of s.stocks)q.dailyBars=[];
+ expect(()=>importMarket(bad)).toThrow();
+});
+it('rejects a current-day candle dated on the wrong day',()=>{
+ const bad=createMarket({seed:'wrong-bars',historyDays:0}).exportState(),s=bad.data as State;
+ s.stocks[0].dailyBars.at(-1)!.time-=86400000;
+ expect(()=>importMarket(bad)).toThrow();
+});
+it('rejects a nonempty traded day with no last-trade tape',()=>{
+ const bad=createMarket({seed:'missing-tape',historyDays:0}).exportState(),s=bad.data as State;
+ expect(s.stocks[0].volume).toBeGreaterThan(0);s.stocks[0].tape=[];
+ expect(()=>importMarket(bad)).toThrow();
+});
