@@ -33,6 +33,7 @@ const numberFormat = new Intl.NumberFormat('zh-CN', { minimumFractionDigits: 2, 
 const formatAmount = (value: number) => `${compactNumber(value / 100)}元`;
 const formatWan = (value: number) => numberFormat.format(value / 1e6);
 const formatMultiple = (value: number | null) => value === null ? '—' : `${value.toFixed(2)}倍`;
+const formatPE = (company: CompanyData) => company.valuation.pe === null && company.valuation.ttmNetProfit < 0 ? '亏损' : formatMultiple(company.valuation.pe);
 const formatPct = (value: number | null, sign = false) => value === null ? '—' : pct(value, sign);
 const reportDate = (timestamp: number) => new Date(timestamp).toLocaleDateString('zh-CN', { timeZone: 'Asia/Shanghai', year: 'numeric', month: '2-digit', day: '2-digit' }).replaceAll('/', '-');
 const reportTime = (timestamp: number) => new Date(timestamp).toLocaleTimeString('zh-CN', { timeZone: 'Asia/Shanghai', hour12: false, hour: '2-digit', minute: '2-digit' });
@@ -64,7 +65,7 @@ function FinancialTrend({ reports }: { reports: FinancialReport[] }) {
 }
 
 function ValuationNotes() {
-  return <p className="f10-note">PE＝当前总市值 / 最近四期归母净利润（TTM）；利润非正时显示“—”。PB＝总市值 / 最新净资产，净资产非正时显示“—”。EPS 为最新单季每股收益，BPS 为最新每股净资产。ROE＝最近四期归母净利润 / 最新净资产，采用期末净资产的简化口径；负债率＝最新总负债 / 总资产。以上估值随成交价更新，财务数据仅在公告发布后更新。</p>;
+  return <p className="f10-note">PE＝当前总市值 / 最近四期归母净利润（TTM）；滚动四期归母净利润为负时显示“亏损”，零利润时显示“—”。PB＝总市值 / 最新净资产，净资产非正时显示“—”。EPS 为最新单季每股收益，BPS 为最新每股净资产。ROE＝最近四期归母净利润 / 最新净资产，采用期末净资产的简化口径；负债率＝最新总负债 / 总资产。以上估值随成交价更新，财务数据仅在公告发布后更新。</p>;
 }
 
 function ReportArticle({ report, company }: { report: FinancialReport; company: CompanyData }) {
@@ -127,7 +128,7 @@ export default function CompanyFundamentals({ company, companies, quote, clock, 
       {activeTab === 'overview' && <>
         <div className="f10-grid"><div><section className="f10-section"><h3>公司简介</h3><p className="f10-description">{profile.description}</p></section><section className="f10-section"><h3>主营业务</h3><p>{profile.business}</p><p className="f10-note">所属行业：{profile.sector}　总股本：{compactNumber(company.shares)}股。全部公司及其财务数据均为原创虚构模拟。</p></section></div>
           <section className="f10-section"><h3>估值与财务指标 <small>{latest?.label ?? '暂无报告'}</small></h3><dl className="f10-facts">
-            <div><dt>PE（TTM）</dt><dd>{formatMultiple(valuation.pe)}</dd></div><div><dt>PB</dt><dd>{formatMultiple(valuation.pb)}</dd></div>
+            <div><dt>PE（TTM）</dt><dd>{formatPE(company)}</dd></div><div><dt>PB</dt><dd>{formatMultiple(valuation.pb)}</dd></div>
             <div><dt>EPS（元/股）</dt><dd>{money(valuation.eps, 4)}</dd></div><div><dt>BPS（元/股）</dt><dd>{money(valuation.bps, 4)}</dd></div>
             <div><dt>ROE（简化TTM）</dt><dd>{formatPct(valuation.roePct)}</dd></div><div><dt>资产负债率</dt><dd>{pct(valuation.debtRatioPct, false)}</dd></div>
             <div><dt>总市值</dt><dd>{formatAmount(valuation.marketCap)}</dd></div><div><dt>最新成交价</dt><dd className={direction(quote.change)}>{price(quote.last)}元</dd></div>
@@ -146,7 +147,7 @@ export default function CompanyFundamentals({ company, companies, quote, clock, 
         <p className="f10-footnote">游戏将季度经营和披露压缩为交易日节奏，倒计时按模拟交易日计算；这与真实上市公司的自然季度、法定披露期限不同。初始背景财报为合成数据，后续报告由同一公司经营模型逐期生成。</p>
       </>}
       {activeTab === 'peers' && <>
-        <section className="f10-section"><h3>{profile.sector} · 同行比较 <small>同一公开指标口径</small></h3><div className="f10-table-scroll" tabIndex={0} aria-label="同行比较，可左右滚动"><table className="f10-table f10-peer-table"><thead><tr><th>公司</th><th>总市值</th><th>PE / TTM</th><th>PB</th><th>EPS / 元</th><th>ROE / TTM</th><th>负债率</th><th>操作</th></tr></thead><tbody>{peers.map(peer => <tr key={peer.symbol} className={peer.symbol === company.symbol ? 'selected' : ''}><td><span className="f10-peer-name">{peer.profile.name}</span><span className="f10-peer-code">{peer.symbol}</span></td><td>{formatAmount(peer.valuation.marketCap)}</td><td>{formatMultiple(peer.valuation.pe)}</td><td>{formatMultiple(peer.valuation.pb)}</td><td>{money(peer.valuation.eps, 4)}</td><td>{formatPct(peer.valuation.roePct)}</td><td>{pct(peer.valuation.debtRatioPct, false)}</td><td><button className="f10-select-peer" disabled={peer.symbol === company.symbol} onClick={() => onSelect(peer.symbol)} aria-label={`查看${peer.profile.name}公司资料`}>{peer.symbol === company.symbol ? '当前' : '查看公司'}</button></td></tr>)}</tbody></table></div><p className="f10-note">仅列出同属“{profile.sector}”的公司。选择同行会同步切换行情与交易标的，并保留 F10 界面。</p></section><ValuationNotes />
+        <section className="f10-section"><h3>{profile.sector} · 同行比较 <small>同一公开指标口径</small></h3><div className="f10-table-scroll" tabIndex={0} aria-label="同行比较，可左右滚动"><table className="f10-table f10-peer-table"><thead><tr><th>公司</th><th>总市值</th><th>PE / TTM</th><th>PB</th><th>EPS / 元</th><th>ROE / TTM</th><th>负债率</th><th>操作</th></tr></thead><tbody>{peers.map(peer => <tr key={peer.symbol} className={peer.symbol === company.symbol ? 'selected' : ''}><td><span className="f10-peer-name">{peer.profile.name}</span><span className="f10-peer-code">{peer.symbol}</span></td><td>{formatAmount(peer.valuation.marketCap)}</td><td>{formatPE(peer)}</td><td>{formatMultiple(peer.valuation.pb)}</td><td>{money(peer.valuation.eps, 4)}</td><td>{formatPct(peer.valuation.roePct)}</td><td>{pct(peer.valuation.debtRatioPct, false)}</td><td><button className="f10-select-peer" disabled={peer.symbol === company.symbol} onClick={() => onSelect(peer.symbol)} aria-label={`查看${peer.profile.name}公司资料`}>{peer.symbol === company.symbol ? '当前' : '查看公司'}</button></td></tr>)}</tbody></table></div><p className="f10-note">仅列出同属“{profile.sector}”的公司。选择同行会同步切换行情与交易标的，并保留 F10 界面。</p></section><ValuationNotes />
       </>}
     </div>
   </section>;
