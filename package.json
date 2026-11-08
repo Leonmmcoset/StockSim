@@ -10,8 +10,14 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host 0.0.0.0",
+    "dev:server": "cd server && go run ./cmd/stocksim",
     "build": "tsc -b && vite build",
     "preview": "vite preview --host 0.0.0.0",
+    "build:server": "cd server && go build -o ../bin/stocksim ./cmd/stocksim",
+    "start": "npm run build && npm run build:server && cd server && ../bin/stocksim",
+    "test:server": "cd server && go test ./...",
+    "test:race": "cd server && go test -race ./...",
+    "test:integration": "npm run build && npm run build:server && node scripts/check-multiplayer.mjs",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:e2e": "playwright test"

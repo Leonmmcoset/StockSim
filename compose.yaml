@@ -1,0 +1,17 @@
+services:
+  stocksim:
+    build: .
+    ports:
+      - "${STOCKSIM_BIND_HOST:-127.0.0.1}:8080:8080"
+    environment:
+      STOCKSIM_PUBLIC_ORIGIN: "${STOCKSIM_PUBLIC_ORIGIN:-}"
+      STOCKSIM_SECURE_COOKIE: "${STOCKSIM_SECURE_COOKIE:-auto}"
+    volumes:
+      - stocksim-data:/data
+    read_only: true
+    tmpfs:
+      - /tmp
+    restart: unless-stopped
+
+volumes:
+  stocksim-data:
