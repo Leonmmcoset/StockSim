@@ -1,0 +1,5745 @@
+{
+  "cases": [
+    {
+      "seed": "stock-sim-2026",
+      "historyDays": 0,
+      "elapsed": 0,
+      "quotes": [
+        {
+          "symbol": "600101",
+          "last": 679,
+          "prevClose": 680,
+          "volume": 19200,
+          "turnover": 13045400,
+          "bids": [
+            {
+              "price": 679,
+              "quantity": 2700
+            },
+            {
+              "price": 678,
+              "quantity": 9200
+            },
+            {
+              "price": 677,
+              "quantity": 200
+            },
+            {
+              "price": 676,
+              "quantity": 3000
+            },
+            {
+              "price": 675,
+              "quantity": 3100
+            }
+          ],
+          "asks": [
+            {
+              "price": 680,
+              "quantity": 4000
+            },
+            {
+              "price": 681,
+              "quantity": 5100
+            },
+            {
+              "price": 682,
+              "quantity": 1700
+            },
+            {
+              "price": 683,
+              "quantity": 2800
+            }
+          ]
+        },
+        {
+          "symbol": "600102",
+          "last": 1240,
+          "prevClose": 1240,
+          "volume": 12800,
+          "turnover": 15866900,
+          "bids": [
+            {
+              "price": 1239,
+              "quantity": 7200
+            },
+            {
+              "price": 1238,
+              "quantity": 7500
+            },
+            {
+              "price": 1236,
+              "quantity": 1100
+            },
+            {
+              "price": 1233,
+              "quantity": 400
+            }
+          ],
+          "asks": [
+            {
+              "price": 1240,
+              "quantity": 2300
+            },
+            {
+              "price": 1241,
+              "quantity": 8000
+            },
+            {
+              "price": 1242,
+              "quantity": 1100
+            },
+            {
+              "price": 1243,
+              "quantity": 3400
+            },
+            {
+              "price": 1244,
+              "quantity": 3400
+            }
+          ]
+        },
+        {
+          "symbol": "600201",
+          "last": 1818,
+          "prevClose": 1820,
+          "volume": 23000,
+          "turnover": 41828000,
+          "bids": [
+            {
+              "price": 1817,
+              "quantity": 1600
+            },
+            {
+              "price": 1816,
+              "quantity": 11200
+            },
+            {
+              "price": 1814,
+              "quantity": 2600
+            },
+            {
+              "price": 1813,
+              "quantity": 1500
+            }
+          ],
+          "asks": [
+            {
+              "price": 1818,
+              "quantity": 6800
+            },
+            {
+              "price": 1819,
+              "quantity": 2500
+            },
+            {
+              "price": 1820,
+              "quantity": 2400
+            },
+            {
+              "price": 1822,
+              "quantity": 1600
+            },
+            {
+              "price": 1824,
+              "quantity": 1500
+            }
+          ]
+        },
+        {
+          "symbol": "600202",
+          "last": 894,
+          "prevClose": 895,
+          "volume": 13100,
+          "turnover": 11720500,
+          "bids": [
+            {
+              "price": 894,
+              "quantity": 9000
+            },
+            {
+              "price": 893,
+              "quantity": 3500
+            },
+            {
+              "price": 892,
+              "quantity": 1800
+            },
+            {
+              "price": 891,
+              "quantity": 3000
+            },
+            {
+              "price": 890,
+              "quantity": 400
+            }
+          ],
+          "asks": [
+            {
+              "price": 895,
+              "quantity": 3000
+            },
+            {
+              "price": 896,
+              "quantity": 11200
+            },
+            {
+              "price": 898,
+              "quantity": 2400
+            },
+            {
+              "price": 899,
+              "quantity": 2700
+            },
+            {
+              "price": 901,
+              "quantity": 2500
+            }
+          ]
+        },
+        {
+          "symbol": "600301",
+          "last": 746,
+          "prevClose": 745,
+          "volume": 15800,
+          "turnover": 11781000,
+          "bids": [
+            {
+              "price": 745,
+              "quantity": 8200
+            },
+            {
+              "price": 744,
+              "quantity": 4500
+            },
+            {
+              "price": 743,
+              "quantity": 1000
+            },
+            {
+              "price": 742,
+              "quantity": 1000
+            },
+            {
+              "price": 741,
+              "quantity": 2400
+            }
+          ],
+          "asks": [
+            {
+              "price": 746,
+              "quantity": 300
+            },
+            {
+              "price": 747,
+              "quantity": 10800
+            },
+            {
+              "price": 749,
+              "quantity": 1300
+            },
+            {
+              "price": 750,
+              "quantity": 1800
+            }
+          ]
+        },
+        {
+          "symbol": "600302",
+          "last": 559,
+          "prevClose": 560,
+          "volume": 15000,
+          "turnover": 8394700,
+          "bids": [
+            {
+              "price": 559,
+              "quantity": 2600
+            },
+            {
+              "price": 558,
+              "quantity": 8200
+            },
+            {
+              "price": 557,
+              "quantity": 800
+            },
+            {
+              "price": 556,
+              "quantity": 2100
+            },
+            {
+              "price": 555,
+              "quantity": 400
+            }
+          ],
+          "asks": [
+            {
+              "price": 560,
+              "quantity": 5000
+            },
+            {
+              "price": 561,
+              "quantity": 7600
+            },
+            {
+              "price": 562,
+              "quantity": 3300
+            },
+            {
+              "price": 564,
+              "quantity": 1100
+            }
+          ]
+        },
+        {
+          "symbol": "600401",
+          "last": 2669,
+          "prevClose": 2670,
+          "volume": 22900,
+          "turnover": 61119200,
+          "bids": [
+            {
+              "price": 2669,
+              "quantity": 1900
+            },
+            {
+              "price": 2668,
+              "quantity": 4900
+            },
+            {
+              "price": 2667,
+              "quantity": 1400
+            },
+            {
+              "price": 2666,
+              "quantity": 2500
+            },
+            {
+              "price": 2665,
+              "quantity": 3300
+            }
+          ],
+          "asks": [
+            {
+              "price": 2671,
+              "quantity": 1700
+            },
+            {
+              "price": 2672,
+              "quantity": 5000
+            },
+            {
+              "price": 2673,
+              "quantity": 5900
+            },
+            {
+              "price": 2677,
+              "quantity": 200
+            },
+            {
+              "price": 2680,
+              "quantity": 1200
+            }
+          ]
+        },
+        {
+          "symbol": "600402",
+          "last": 1579,
+          "prevClose": 1580,
+          "volume": 17400,
+          "turnover": 27483300,
+          "bids": [
+            {
+              "price": 1579,
+              "quantity": 5600
+            },
+            {
+              "price": 1578,
+              "quantity": 4200
+            },
+            {
+              "price": 1577,
+              "quantity": 2500
+            },
+            {
+              "price": 1576,
+              "quantity": 800
+            }
+          ],
+          "asks": [
+            {
+              "price": 1580,
+              "quantity": 1500
+            },
+            {
+              "price": 1581,
+              "quantity": 7300
+            },
+            {
+              "price": 1583,
+              "quantity": 900
+            },
+            {
+              "price": 1585,
+              "quantity": 3200
+            },
+            {
+              "price": 1586,
+              "quantity": 2500
+            }
+          ]
+        },
+        {
+          "symbol": "600501",
+          "last": 2251,
+          "prevClose": 2250,
+          "volume": 22400,
+          "turnover": 50388600,
+          "bids": [
+            {
+              "price": 2249,
+              "quantity": 1300
+            },
+            {
+              "price": 2247,
+              "quantity": 3700
+            },
+            {
+              "price": 2245,
+              "quantity": 700
+            },
+            {
+              "price": 2243,
+              "quantity": 1500
+            },
+            {
+              "price": 2240,
+              "quantity": 2000
+            }
+          ],
+          "asks": [
+            {
+              "price": 2251,
+              "quantity": 4200
+            },
+            {
+              "price": 2253,
+              "quantity": 6000
+            },
+            {
+              "price": 2255,
+              "quantity": 1200
+            },
+            {
+              "price": 2261,
+              "quantity": 2500
+            }
+          ]
+        },
+        {
+          "symbol": "600502",
+          "last": 1178,
+          "prevClose": 1180,
+          "volume": 13400,
+          "turnover": 15790100,
+          "bids": [
+            {
+              "price": 1178,
+              "quantity": 2800
+            },
+            {
+              "price": 1177,
+              "quantity": 11900
+            },
+            {
+              "price": 1176,
+              "quantity": 1500
+            },
+            {
+              "price": 1175,
+              "quantity": 600
+            },
+            {
+              "price": 1174,
+              "quantity": 400
+            }
+          ],
+          "asks": [
+            {
+              "price": 1179,
+              "quantity": 8800
+            },
+            {
+              "price": 1180,
+              "quantity": 4300
+            },
+            {
+              "price": 1184,
+              "quantity": 400
+            },
+            {
+              "price": 1188,
+              "quantity": 2000
+            }
+          ]
+        },
+        {
+          "symbol": "600601",
+          "last": 1381,
+          "prevClose": 1380,
+          "volume": 17800,
+          "turnover": 24564900,
+          "bids": [
+            {
+              "price": 1379,
+              "quantity": 7500
+            },
+            {
+              "price": 1378,
+              "quantity": 6300
+            },
+            {
+              "price": 1377,
+              "quantity": 2500
+            },
+            {
+              "price": 1376,
+              "quantity": 1000
+            },
+            {
+              "price": 1375,
+              "quantity": 2900
+            }
+          ],
+          "asks": [
+            {
+              "price": 1381,
+              "quantity": 8600
+            },
+            {
+              "price": 1382,
+              "quantity": 1700
+            },
+            {
+              "price": 1383,
+              "quantity": 800
+            },
+            {
+              "price": 1384,
+              "quantity": 600
+            },
+            {
+              "price": 1385,
+              "quantity": 2000
+            }
+          ]
+        },
+        {
+          "symbol": "600602",
+          "last": 955,
+          "prevClose": 960,
+          "volume": 25200,
+          "turnover": 24094400,
+          "bids": [
+            {
+              "price": 955,
+              "quantity": 1200
+            },
+            {
+              "price": 953,
+              "quantity": 2900
+            }
+          ],
+          "asks": [
+            {
+              "price": 956,
+              "quantity": 2100
+            },
+            {
+              "price": 957,
+              "quantity": 7100
+            },
+            {
+              "price": 958,
+              "quantity": 4200
+            },
+            {
+              "price": 960,
+              "quantity": 800
+            },
+            {
+              "price": 964,
+              "quantity": 1500
+            }
+          ]
+        }
+      ],
+      "reports": [
+        {
+          "symbol": "600101",
+          "period": 4,
+          "revenue": 874169437,
+          "netProfit": 133394622
+        },
+        {
+          "symbol": "600102",
+          "period": 4,
+          "revenue": 1526879400,
+          "netProfit": 215158242
+        },
+        {
+          "symbol": "600201",
+          "period": 4,
+          "revenue": 2275046685,
+          "netProfit": 239124527
+        },
+        {
+          "symbol": "600202",
+          "period": 4,
+          "revenue": 994613724,
+          "netProfit": 60026812
+        },
+        {
+          "symbol": "600301",
+          "period": 4,
+          "revenue": 1085166109,
+          "netProfit": 136049974
+        },
+        {
+          "symbol": "600302",
+          "period": 4,
+          "revenue": 745225725,
+          "netProfit": 64132255
+        },
+        {
+          "symbol": "600401",
+          "period": 4,
+          "revenue": 3404280612,
+          "netProfit": 528380561
+        },
+        {
+          "symbol": "600402",
+          "period": 4,
+          "revenue": 1916077278,
+          "netProfit": 132964332
+        },
+        {
+          "symbol": "600501",
+          "period": 4,
+          "revenue": 2738923145,
+          "netProfit": 314758866
+        },
+        {
+          "symbol": "600502",
+          "period": 4,
+          "revenue": 1500892786,
+          "netProfit": -17720890
+        },
+        {
+          "symbol": "600601",
+          "period": 4,
+          "revenue": 1714251994,
+          "netProfit": 116522853
+        },
+        {
+          "symbol": "600602",
+          "period": 4,
+          "revenue": 1312219773,
+          "netProfit": 103701879
+        }
+      ]
+    },
+    {
+      "seed": "stock-sim-2026",
+      "historyDays": 0,
+      "elapsed": 50,
+      "quotes": [
+        {
+          "symbol": "600101",
+          "last": 682,
+          "prevClose": 680,
+          "volume": 128300,
+          "turnover": 87279300,
+          "bids": [
+            {
+              "price": 681,
+              "quantity": 5500
+            },
+            {
+              "price": 680,
+              "quantity": 5100
+            },
+            {
+              "price": 678,
+              "quantity": 900
+            }
+          ],
+          "asks": [
+            {
+              "price": 682,
+              "quantity": 400
+            },
+            {
+              "price": 683,
+              "quantity": 7300
+            },
+            {
+              "price": 684,
+              "quantity": 3000
+            },
+            {
+              "price": 685,
+              "quantity": 200
+            },
+            {
+              "price": 687,
+              "quantity": 1000
+            }
+          ]
+        },
+        {
+          "symbol": "600102",
+          "last": 1253,
+          "prevClose": 1240,
+          "volume": 129600,
+          "turnover": 161532600,
+          "bids": [
+            {
+              "price": 1252,
+              "quantity": 900
+            },
+            {
+              "price": 1251,
+              "quantity": 17500
+            },
+            {
+              "price": 1250,
+              "quantity": 1200
+            },
+            {
+              "price": 1247,
+              "quantity": 1400
+            }
+          ],
+          "asks": [
+            {
+              "price": 1253,
+              "quantity": 5300
+            },
+            {
+              "price": 1254,
+              "quantity": 1000
+            },
+            {
+              "price": 1255,
+              "quantity": 2200
+            },
+            {
+              "price": 1257,
+              "quantity": 700
+            },
+            {
+              "price": 1259,
+              "quantity": 700
+            }
+          ]
+        },
+        {
+          "symbol": "600201",
+          "last": 1823,
+          "prevClose": 1820,
+          "volume": 133100,
+          "turnover": 242333200,
+          "bids": [
+            {
+              "price": 1823,
+              "quantity": 6800
+            },
+            {
+              "price": 1822,
+              "quantity": 3200
+            },
+            {
+              "price": 1821,
+              "quantity": 1200
+            },
+            {
+              "price": 1820,
+              "quantity": 600
+            },
+            {
+              "price": 1818,
+              "quantity": 600
+            }
+          ],
+          "asks": [
+            {
+              "price": 1825,
+              "quantity": 12100
+            },
+            {
+              "price": 1826,
+              "quantity": 2100
+            },
+            {
+              "price": 1827,
+              "quantity": 1200
+            },
+            {
+              "price": 1828,
+              "quantity": 800
+            },
+            {
+              "price": 1831,
+              "quantity": 800
+            }
+          ]
+        },
+        {
+          "symbol": "600202",
+          "last": 900,
+          "prevClose": 895,
+          "volume": 123900,
+          "turnover": 111125300,
+          "bids": [
+            {
+              "price": 899,
+              "quantity": 6600
+            },
+            {
+              "price": 898,
+              "quantity": 8400
+            },
+            {
+              "price": 897,
+              "quantity": 2400
+            },
+            {
+              "price": 894,
+              "quantity": 500
+            }
+          ],
+          "asks": [
+            {
+              "price": 900,
+              "quantity": 2100
+            },
+            {
+              "price": 901,
+              "quantity": 10100
+            },
+            {
+              "price": 902,
+              "quantity": 2700
+            }
+          ]
+        },
+        {
+          "symbol": "600301",
+          "last": 748,
+          "prevClose": 745,
+          "volume": 123300,
+          "turnover": 92108600,
+          "bids": [
+            {
+              "price": 747,
+              "quantity": 11800
+            },
+            {
+              "price": 746,
+              "quantity": 2200
+            },
+            {
+              "price": 743,
+              "quantity": 1000
+            }
+          ],
+          "asks": [
+            {
+              "price": 748,
+              "quantity": 100
+            },
+            {
+              "price": 749,
+              "quantity": 6800
+            },
+            {
+              "price": 750,
+              "quantity": 2900
+            },
+            {
+              "price": 751,
+              "quantity": 800
+            },
+            {
+              "price": 752,
+              "quantity": 1100
+            }
+          ]
+        },
+        {
+          "symbol": "600302",
+          "last": 559,
+          "prevClose": 560,
+          "volume": 114000,
+          "turnover": 63758100,
+          "bids": [
+            {
+              "price": 559,
+              "quantity": 200
+            },
+            {
+              "price": 558,
+              "quantity": 9900
+            },
+            {
+              "price": 557,
+              "quantity": 4300
+            },
+            {
+              "price": 556,
+              "quantity": 1300
+            },
+            {
+              "price": 555,
+              "quantity": 1000
+            }
+          ],
+          "asks": [
+            {
+              "price": 560,
+              "quantity": 4900
+            },
+            {
+              "price": 561,
+              "quantity": 4000
+            },
+            {
+              "price": 562,
+              "quantity": 2600
+            },
+            {
+              "price": 563,
+              "quantity": 600
+            },
+            {
+              "price": 564,
+              "quantity": 1000
+            }
+          ]
+        },
+        {
+          "symbol": "600401",
+          "last": 2690,
+          "prevClose": 2670,
+          "volume": 148800,
+          "turnover": 398756800,
+          "bids": [
+            {
+              "price": 2687,
+              "quantity": 1700
+            },
+            {
+              "price": 2686,
+              "quantity": 6400
+            },
+            {
+              "price": 2685,
+              "quantity": 2800
+            },
+            {
+              "price": 2684,
+              "quantity": 3400
+            }
+          ],
+          "asks": [
+            {
+              "price": 2690,
+              "quantity": 3400
+            },
+            {
+              "price": 2691,
+              "quantity": 1700
+            },
+            {
+              "price": 2693,
+              "quantity": 900
+            },
+            {
+              "price": 2694,
+              "quantity": 300
+            },
+            {
+              "price": 2698,
+              "quantity": 300
+            }
+          ]
+        },
+        {
+          "symbol": "600402",
+          "last": 1593,
+          "prevClose": 1580,
+          "volume": 160600,
+          "turnover": 254760100,
+          "bids": [
+            {
+              "price": 1593,
+              "quantity": 500
+            },
+            {
+              "price": 1592,
+              "quantity": 1800
+            },
+            {
+              "price": 1591,
+              "quantity": 1700
+            },
+            {
+              "price": 1590,
+              "quantity": 7000
+            },
+            {
+              "price": 1589,
+              "quantity": 3300
+            }
+          ],
+          "asks": [
+            {
+              "price": 1594,
+              "quantity": 1500
+            },
+            {
+              "price": 1595,
+              "quantity": 1100
+            },
+            {
+              "price": 1598,
+              "quantity": 1300
+            },
+            {
+              "price": 1600,
+              "quantity": 1100
+            },
+            {
+              "price": 1602,
+              "quantity": 600
+            }
+          ]
+        },
+        {
+          "symbol": "600501",
+          "last": 2246,
+          "prevClose": 2250,
+          "volume": 133900,
+          "turnover": 300639900,
+          "bids": [
+            {
+              "price": 2246,
+              "quantity": 4400
+            },
+            {
+              "price": 2245,
+              "quantity": 3200
+            },
+            {
+              "price": 2244,
+              "quantity": 3700
+            },
+            {
+              "price": 2243,
+              "quantity": 2600
+            },
+            {
+              "price": 2242,
+              "quantity": 200
+            }
+          ],
+          "asks": [
+            {
+              "price": 2249,
+              "quantity": 5500
+            },
+            {
+              "price": 2250,
+              "quantity": 8600
+            },
+            {
+              "price": 2253,
+              "quantity": 600
+            },
+            {
+              "price": 2254,
+              "quantity": 1100
+            }
+          ]
+        },
+        {
+          "symbol": "600502",
+          "last": 1184,
+          "prevClose": 1180,
+          "volume": 119500,
+          "turnover": 141118900,
+          "bids": [
+            {
+              "price": 1184,
+              "quantity": 3300
+            },
+            {
+              "price": 1183,
+              "quantity": 6900
+            },
+            {
+              "price": 1181,
+              "quantity": 1300
+            },
+            {
+              "price": 1180,
+              "quantity": 2800
+            }
+          ],
+          "asks": [
+            {
+              "price": 1185,
+              "quantity": 2200
+            },
+            {
+              "price": 1186,
+              "quantity": 10300
+            },
+            {
+              "price": 1187,
+              "quantity": 600
+            },
+            {
+              "price": 1189,
+              "quantity": 1400
+            },
+            {
+              "price": 1190,
+              "quantity": 1400
+            }
+          ]
+        },
+        {
+          "symbol": "600601",
+          "last": 1381,
+          "prevClose": 1380,
+          "volume": 112100,
+          "turnover": 154759300,
+          "bids": [
+            {
+              "price": 1381,
+              "quantity": 2000
+            },
+            {
+              "price": 1380,
+              "quantity": 8600
+            },
+            {
+              "price": 1379,
+              "quantity": 2900
+            },
+            {
+              "price": 1378,
+              "quantity": 2100
+            },
+            {
+              "price": 1376,
+              "quantity": 800
+            }
+          ],
+          "asks": [
+            {
+              "price": 1382,
+              "quantity": 7000
+            },
+            {
+              "price": 1383,
+              "quantity": 7400
+            },
+            {
+              "price": 1384,
+              "quantity": 300
+            },
+            {
+              "price": 1386,
+              "quantity": 1400
+            }
+          ]
+        },
+        {
+          "symbol": "600602",
+          "last": 963,
+          "prevClose": 960,
+          "volume": 141900,
+          "turnover": 136139000,
+          "bids": [
+            {
+              "price": 963,
+              "quantity": 8500
+            },
+            {
+              "price": 962,
+              "quantity": 5500
+            },
+            {
+              "price": 960,
+              "quantity": 600
+            },
+            {
+              "price": 959,
+              "quantity": 500
+            }
+          ],
+          "asks": [
+            {
+              "price": 965,
+              "quantity": 7400
+            },
+            {
+              "price": 967,
+              "quantity": 1400
+            },
+            {
+              "price": 968,
+              "quantity": 600
+            }
+          ]
+        }
+      ],
+      "reports": [
+        {
+          "symbol": "600101",
+          "period": 5,
+          "revenue": 909223656,
+          "netProfit": 141957354
+        },
+        {
+          "symbol": "600102",
+          "period": 4,
+          "revenue": 1526879400,
+          "netProfit": 215158242
+        },
+        {
+          "symbol": "600201",
+          "period": 4,
+          "revenue": 2275046685,
+          "netProfit": 239124527
+        },
+        {
+          "symbol": "600202",
+          "period": 4,
+          "revenue": 994613724,
+          "netProfit": 60026812
+        },
+        {
+          "symbol": "600301",
+          "period": 4,
+          "revenue": 1085166109,
+          "netProfit": 136049974
+        },
+        {
+          "symbol": "600302",
+          "period": 5,
+          "revenue": 763901450,
+          "netProfit": 67523488
+        },
+        {
+          "symbol": "600401",
+          "period": 4,
+          "revenue": 3404280612,
+          "netProfit": 528380561
+        },
+        {
+          "symbol": "600402",
+          "period": 4,
+          "revenue": 1916077278,
+          "netProfit": 132964332
+        },
+        {
+          "symbol": "600501",
+          "period": 4,
+          "revenue": 2738923145,
+          "netProfit": 314758866
+        },
+        {
+          "symbol": "600502",
+          "period": 4,
+          "revenue": 1500892786,
+          "netProfit": -17720890
+        },
+        {
+          "symbol": "600601",
+          "period": 5,
+          "revenue": 1824108849,
+          "netProfit": 148694540
+        },
+        {
+          "symbol": "600602",
+          "period": 4,
+          "revenue": 1312219773,
+          "netProfit": 103701879
+        }
+      ]
+    },
+    {
+      "seed": "stock-sim-2026",
+      "historyDays": 0,
+      "elapsed": 80,
+      "quotes": [
+        {
+          "symbol": "600101",
+          "last": 672,
+          "prevClose": 680,
+          "volume": 210500,
+          "turnover": 142875500,
+          "bids": [
+            {
+              "price": 672,
+              "quantity": 4000
+            },
+            {
+              "price": 671,
+              "quantity": 1600
+            },
+            {
+              "price": 670,
+              "quantity": 500
+            },
+            {
+              "price": 666,
+              "quantity": 1300
+            }
+          ],
+          "asks": [
+            {
+              "price": 674,
+              "quantity": 6600
+            },
+            {
+              "price": 675,
+              "quantity": 5700
+            },
+            {
+              "price": 676,
+              "quantity": 1000
+            },
+            {
+              "price": 677,
+              "quantity": 3400
+            },
+            {
+              "price": 678,
+              "quantity": 2100
+            }
+          ]
+        },
+        {
+          "symbol": "600102",
+          "last": 1250,
+          "prevClose": 1240,
+          "volume": 188300,
+          "turnover": 234988900,
+          "bids": [
+            {
+              "price": 1249,
+              "quantity": 6300
+            },
+            {
+              "price": 1248,
+              "quantity": 2600
+            },
+            {
+              "price": 1246,
+              "quantity": 800
+            },
+            {
+              "price": 1245,
+              "quantity": 1500
+            }
+          ],
+          "asks": [
+            {
+              "price": 1250,
+              "quantity": 300
+            },
+            {
+              "price": 1251,
+              "quantity": 4500
+            },
+            {
+              "price": 1252,
+              "quantity": 3900
+            },
+            {
+              "price": 1253,
+              "quantity": 2800
+            },
+            {
+              "price": 1255,
+              "quantity": 900
+            }
+          ]
+        },
+        {
+          "symbol": "600201",
+          "last": 1824,
+          "prevClose": 1820,
+          "volume": 202000,
+          "turnover": 368024500,
+          "bids": [
+            {
+              "price": 1824,
+              "quantity": 2600
+            },
+            {
+              "price": 1823,
+              "quantity": 6400
+            },
+            {
+              "price": 1822,
+              "quantity": 2800
+            },
+            {
+              "price": 1821,
+              "quantity": 900
+            },
+            {
+              "price": 1819,
+              "quantity": 1600
+            }
+          ],
+          "asks": [
+            {
+              "price": 1825,
+              "quantity": 5100
+            },
+            {
+              "price": 1826,
+              "quantity": 4800
+            },
+            {
+              "price": 1827,
+              "quantity": 600
+            },
+            {
+              "price": 1829,
+              "quantity": 1300
+            },
+            {
+              "price": 1831,
+              "quantity": 1000
+            }
+          ]
+        },
+        {
+          "symbol": "600202",
+          "last": 901,
+          "prevClose": 895,
+          "volume": 183900,
+          "turnover": 165140400,
+          "bids": [
+            {
+              "price": 900,
+              "quantity": 2600
+            },
+            {
+              "price": 899,
+              "quantity": 6200
+            },
+            {
+              "price": 898,
+              "quantity": 3100
+            },
+            {
+              "price": 897,
+              "quantity": 1300
+            }
+          ],
+          "asks": [
+            {
+              "price": 901,
+              "quantity": 1000
+            },
+            {
+              "price": 902,
+              "quantity": 8000
+            },
+            {
+              "price": 903,
+              "quantity": 3200
+            },
+            {
+              "price": 904,
+              "quantity": 700
+            },
+            {
+              "price": 905,
+              "quantity": 900
+            }
+          ]
+        },
+        {
+          "symbol": "600301",
+          "last": 749,
+          "prevClose": 745,
+          "volume": 177900,
+          "turnover": 133031100,
+          "bids": [
+            {
+              "price": 749,
+              "quantity": 1300
+            },
+            {
+              "price": 748,
+              "quantity": 8000
+            },
+            {
+              "price": 747,
+              "quantity": 1300
+            },
+            {
+              "price": 746,
+              "quantity": 200
+            },
+            {
+              "price": 745,
+              "quantity": 1200
+            }
+          ],
+          "asks": [
+            {
+              "price": 750,
+              "quantity": 2400
+            },
+            {
+              "price": 751,
+              "quantity": 6200
+            },
+            {
+              "price": 753,
+              "quantity": 3000
+            }
+          ]
+        },
+        {
+          "symbol": "600302",
+          "last": 569,
+          "prevClose": 560,
+          "volume": 197000,
+          "turnover": 110562200,
+          "bids": [
+            {
+              "price": 570,
+              "quantity": 900
+            },
+            {
+              "price": 567,
+              "quantity": 4100
+            },
+            {
+              "price": 566,
+              "quantity": 8100
+            },
+            {
+              "price": 565,
+              "quantity": 2100
+            },
+            {
+              "price": 564,
+              "quantity": 2100
+            }
+          ],
+          "asks": [
+            {
+              "price": 571,
+              "quantity": 700
+            },
+            {
+              "price": 572,
+              "quantity": 700
+            }
+          ]
+        },
+        {
+          "symbol": "600401",
+          "last": 2691,
+          "prevClose": 2670,
+          "volume": 226800,
+          "turnover": 608578600,
+          "bids": [
+            {
+              "price": 2689,
+              "quantity": 600
+            },
+            {
+              "price": 2688,
+              "quantity": 6200
+            },
+            {
+              "price": 2687,
+              "quantity": 2700
+            },
+            {
+              "price": 2686,
+              "quantity": 4300
+            }
+          ],
+          "asks": [
+            {
+              "price": 2691,
+              "quantity": 800
+            },
+            {
+              "price": 2692,
+              "quantity": 1500
+            },
+            {
+              "price": 2693,
+              "quantity": 3800
+            },
+            {
+              "price": 2694,
+              "quantity": 1100
+            },
+            {
+              "price": 2695,
+              "quantity": 2500
+            }
+          ]
+        },
+        {
+          "symbol": "600402",
+          "last": 1610,
+          "prevClose": 1580,
+          "volume": 264900,
+          "turnover": 421625600,
+          "bids": [
+            {
+              "price": 1610,
+              "quantity": 700
+            },
+            {
+              "price": 1603,
+              "quantity": 7400
+            },
+            {
+              "price": 1602,
+              "quantity": 5600
+            },
+            {
+              "price": 1601,
+              "quantity": 800
+            }
+          ],
+          "asks": []
+        },
+        {
+          "symbol": "600501",
+          "last": 2249,
+          "prevClose": 2250,
+          "volume": 199100,
+          "turnover": 447207600,
+          "bids": [
+            {
+              "price": 2249,
+              "quantity": 1300
+            },
+            {
+              "price": 2248,
+              "quantity": 2300
+            },
+            {
+              "price": 2247,
+              "quantity": 5200
+            },
+            {
+              "price": 2246,
+              "quantity": 1900
+            },
+            {
+              "price": 2245,
+              "quantity": 700
+            }
+          ],
+          "asks": [
+            {
+              "price": 2251,
+              "quantity": 3600
+            },
+            {
+              "price": 2252,
+              "quantity": 4600
+            },
+            {
+              "price": 2253,
+              "quantity": 5000
+            },
+            {
+              "price": 2255,
+              "quantity": 1200
+            },
+            {
+              "price": 2259,
+              "quantity": 1500
+            }
+          ]
+        },
+        {
+          "symbol": "600502",
+          "last": 1184,
+          "prevClose": 1180,
+          "volume": 176300,
+          "turnover": 208428800,
+          "bids": [
+            {
+              "price": 1184,
+              "quantity": 5000
+            },
+            {
+              "price": 1183,
+              "quantity": 900
+            },
+            {
+              "price": 1182,
+              "quantity": 500
+            },
+            {
+              "price": 1179,
+              "quantity": 1500
+            }
+          ],
+          "asks": [
+            {
+              "price": 1186,
+              "quantity": 7100
+            },
+            {
+              "price": 1187,
+              "quantity": 5700
+            },
+            {
+              "price": 1188,
+              "quantity": 1100
+            },
+            {
+              "price": 1189,
+              "quantity": 900
+            },
+            {
+              "price": 1190,
+              "quantity": 1400
+            }
+          ]
+        },
+        {
+          "symbol": "600601",
+          "last": 1466,
+          "prevClose": 1380,
+          "volume": 240300,
+          "turnover": 339239100,
+          "bids": [
+            {
+              "price": 1467,
+              "quantity": 1200
+            },
+            {
+              "price": 1465,
+              "quantity": 3700
+            },
+            {
+              "price": 1464,
+              "quantity": 5100
+            },
+            {
+              "price": 1458,
+              "quantity": 900
+            },
+            {
+              "price": 1449,
+              "quantity": 500
+            }
+          ],
+          "asks": [
+            {
+              "price": 1470,
+              "quantity": 200
+            },
+            {
+              "price": 1471,
+              "quantity": 100
+            },
+            {
+              "price": 1472,
+              "quantity": 200
+            },
+            {
+              "price": 1487,
+              "quantity": 1700
+            },
+            {
+              "price": 1488,
+              "quantity": 2100
+            }
+          ]
+        },
+        {
+          "symbol": "600602",
+          "last": 971,
+          "prevClose": 960,
+          "volume": 230300,
+          "turnover": 221646500,
+          "bids": [
+            {
+              "price": 969,
+              "quantity": 1700
+            },
+            {
+              "price": 968,
+              "quantity": 9800
+            },
+            {
+              "price": 967,
+              "quantity": 3300
+            },
+            {
+              "price": 966,
+              "quantity": 700
+            }
+          ],
+          "asks": [
+            {
+              "price": 971,
+              "quantity": 100
+            },
+            {
+              "price": 973,
+              "quantity": 3100
+            },
+            {
+              "price": 975,
+              "quantity": 600
+            },
+            {
+              "price": 979,
+              "quantity": 900
+            }
+          ]
+        }
+      ],
+      "reports": [
+        {
+          "symbol": "600101",
+          "period": 5,
+          "revenue": 909223656,
+          "netProfit": 141957354
+        },
+        {
+          "symbol": "600102",
+          "period": 4,
+          "revenue": 1526879400,
+          "netProfit": 215158242
+        },
+        {
+          "symbol": "600201",
+          "period": 4,
+          "revenue": 2275046685,
+          "netProfit": 239124527
+        },
+        {
+          "symbol": "600202",
+          "period": 4,
+          "revenue": 994613724,
+          "netProfit": 60026812
+        },
+        {
+          "symbol": "600301",
+          "period": 4,
+          "revenue": 1085166109,
+          "netProfit": 136049974
+        },
+        {
+          "symbol": "600302",
+          "period": 5,
+          "revenue": 763901450,
+          "netProfit": 67523488
+        },
+        {
+          "symbol": "600401",
+          "period": 4,
+          "revenue": 3404280612,
+          "netProfit": 528380561
+        },
+        {
+          "symbol": "600402",
+          "period": 4,
+          "revenue": 1916077278,
+          "netProfit": 132964332
+        },
+        {
+          "symbol": "600501",
+          "period": 4,
+          "revenue": 2738923145,
+          "netProfit": 314758866
+        },
+        {
+          "symbol": "600502",
+          "period": 4,
+          "revenue": 1500892786,
+          "netProfit": -17720890
+        },
+        {
+          "symbol": "600601",
+          "period": 5,
+          "revenue": 1824108849,
+          "netProfit": 148694540
+        },
+        {
+          "symbol": "600602",
+          "period": 4,
+          "revenue": 1312219773,
+          "netProfit": 103701879
+        }
+      ]
+    },
+    {
+      "seed": "中文🌊",
+      "historyDays": 0,
+      "elapsed": 0,
+      "quotes": [
+        {
+          "symbol": "600101",
+          "last": 679,
+          "prevClose": 680,
+          "volume": 19900,
+          "turnover": 13520200,
+          "bids": [
+            {
+              "price": 679,
+              "quantity": 2300
+            },
+            {
+              "price": 678,
+              "quantity": 7700
+            },
+            {
+              "price": 675,
+              "quantity": 500
+            },
+            {
+              "price": 673,
+              "quantity": 1500
+            }
+          ],
+          "asks": [
+            {
+              "price": 680,
+              "quantity": 2800
+            },
+            {
+              "price": 681,
+              "quantity": 10100
+            },
+            {
+              "price": 682,
+              "quantity": 3400
+            },
+            {
+              "price": 683,
+              "quantity": 1300
+            },
+            {
+              "price": 684,
+              "quantity": 1500
+            }
+          ]
+        },
+        {
+          "symbol": "600102",
+          "last": 1241,
+          "prevClose": 1240,
+          "volume": 15400,
+          "turnover": 19104300,
+          "bids": [
+            {
+              "price": 1240,
+              "quantity": 3800
+            },
+            {
+              "price": 1239,
+              "quantity": 7400
+            },
+            {
+              "price": 1238,
+              "quantity": 2000
+            },
+            {
+              "price": 1237,
+              "quantity": 900
+            },
+            {
+              "price": 1236,
+              "quantity": 900
+            }
+          ],
+          "asks": [
+            {
+              "price": 1241,
+              "quantity": 3400
+            },
+            {
+              "price": 1242,
+              "quantity": 7400
+            },
+            {
+              "price": 1243,
+              "quantity": 2700
+            },
+            {
+              "price": 1244,
+              "quantity": 1200
+            },
+            {
+              "price": 1245,
+              "quantity": 400
+            }
+          ]
+        },
+        {
+          "symbol": "600201",
+          "last": 1822,
+          "prevClose": 1820,
+          "volume": 25400,
+          "turnover": 46244100,
+          "bids": [
+            {
+              "price": 1821,
+              "quantity": 500
+            },
+            {
+              "price": 1820,
+              "quantity": 9900
+            },
+            {
+              "price": 1819,
+              "quantity": 900
+            },
+            {
+              "price": 1818,
+              "quantity": 900
+            }
+          ],
+          "asks": [
+            {
+              "price": 1822,
+              "quantity": 9300
+            },
+            {
+              "price": 1823,
+              "quantity": 1500
+            },
+            {
+              "price": 1824,
+              "quantity": 1500
+            },
+            {
+              "price": 1826,
+              "quantity": 4100
+            }
+          ]
+        },
+        {
+          "symbol": "600202",
+          "last": 896,
+          "prevClose": 895,
+          "volume": 19100,
+          "turnover": 17120500,
+          "bids": [
+            {
+              "price": 896,
+              "quantity": 2600
+            },
+            {
+              "price": 895,
+              "quantity": 10200
+            },
+            {
+              "price": 894,
+              "quantity": 4200
+            },
+            {
+              "price": 893,
+              "quantity": 1200
+            },
+            {
+              "price": 890,
+              "quantity": 2000
+            }
+          ],
+          "asks": [
+            {
+              "price": 897,
+              "quantity": 2500
+            },
+            {
+              "price": 898,
+              "quantity": 4800
+            },
+            {
+              "price": 899,
+              "quantity": 3000
+            },
+            {
+              "price": 900,
+              "quantity": 1200
+            },
+            {
+              "price": 903,
+              "quantity": 2000
+            }
+          ]
+        },
+        {
+          "symbol": "600301",
+          "last": 744,
+          "prevClose": 745,
+          "volume": 20000,
+          "turnover": 14895200,
+          "bids": [
+            {
+              "price": 744,
+              "quantity": 2600
+            },
+            {
+              "price": 743,
+              "quantity": 4800
+            },
+            {
+              "price": 741,
+              "quantity": 1500
+            },
+            {
+              "price": 740,
+              "quantity": 700
+            },
+            {
+              "price": 739,
+              "quantity": 3700
+            }
+          ],
+          "asks": [
+            {
+              "price": 745,
+              "quantity": 3100
+            },
+            {
+              "price": 746,
+              "quantity": 8800
+            },
+            {
+              "price": 747,
+              "quantity": 1200
+            },
+            {
+              "price": 748,
+              "quantity": 200
+            },
+            {
+              "price": 749,
+              "quantity": 1300
+            }
+          ]
+        },
+        {
+          "symbol": "600302",
+          "last": 561,
+          "prevClose": 560,
+          "volume": 23100,
+          "turnover": 12936200,
+          "bids": [
+            {
+              "price": 560,
+              "quantity": 200
+            },
+            {
+              "price": 559,
+              "quantity": 7600
+            },
+            {
+              "price": 558,
+              "quantity": 4200
+            },
+            {
+              "price": 556,
+              "quantity": 800
+            },
+            {
+              "price": 555,
+              "quantity": 2000
+            }
+          ],
+          "asks": [
+            {
+              "price": 561,
+              "quantity": 7800
+            },
+            {
+              "price": 562,
+              "quantity": 4300
+            },
+            {
+              "price": 563,
+              "quantity": 1200
+            },
+            {
+              "price": 566,
+              "quantity": 2500
+            }
+          ]
+        },
+        {
+          "symbol": "600401",
+          "last": 2673,
+          "prevClose": 2670,
+          "volume": 19700,
+          "turnover": 52624600,
+          "bids": [
+            {
+              "price": 2671,
+              "quantity": 300
+            },
+            {
+              "price": 2670,
+              "quantity": 1500
+            },
+            {
+              "price": 2669,
+              "quantity": 7800
+            },
+            {
+              "price": 2668,
+              "quantity": 3600
+            },
+            {
+              "price": 2666,
+              "quantity": 1900
+            }
+          ],
+          "asks": [
+            {
+              "price": 2673,
+              "quantity": 7100
+            },
+            {
+              "price": 2674,
+              "quantity": 4400
+            },
+            {
+              "price": 2675,
+              "quantity": 2500
+            },
+            {
+              "price": 2676,
+              "quantity": 1300
+            },
+            {
+              "price": 2677,
+              "quantity": 1500
+            }
+          ]
+        },
+        {
+          "symbol": "600402",
+          "last": 1581,
+          "prevClose": 1580,
+          "volume": 14800,
+          "turnover": 23396700,
+          "bids": [
+            {
+              "price": 1581,
+              "quantity": 5100
+            },
+            {
+              "price": 1580,
+              "quantity": 6600
+            },
+            {
+              "price": 1579,
+              "quantity": 2100
+            },
+            {
+              "price": 1577,
+              "quantity": 1300
+            },
+            {
+              "price": 1576,
+              "quantity": 1200
+            }
+          ],
+          "asks": [
+            {
+              "price": 1582,
+              "quantity": 8100
+            },
+            {
+              "price": 1583,
+              "quantity": 11300
+            },
+            {
+              "price": 1587,
+              "quantity": 1700
+            }
+          ]
+        },
+        {
+          "symbol": "600501",
+          "last": 2250,
+          "prevClose": 2250,
+          "volume": 19800,
+          "turnover": 44551000,
+          "bids": [
+            {
+              "price": 2250,
+              "quantity": 800
+            },
+            {
+              "price": 2249,
+              "quantity": 6200
+            },
+            {
+              "price": 2248,
+              "quantity": 4800
+            },
+            {
+              "price": 2246,
+              "quantity": 900
+            },
+            {
+              "price": 2243,
+              "quantity": 1300
+            }
+          ],
+          "asks": [
+            {
+              "price": 2251,
+              "quantity": 4400
+            },
+            {
+              "price": 2252,
+              "quantity": 3800
+            },
+            {
+              "price": 2254,
+              "quantity": 900
+            },
+            {
+              "price": 2257,
+              "quantity": 1000
+            },
+            {
+              "price": 2263,
+              "quantity": 1500
+            }
+          ]
+        },
+        {
+          "symbol": "600502",
+          "last": 1180,
+          "prevClose": 1180,
+          "volume": 21100,
+          "turnover": 24900500,
+          "bids": [
+            {
+              "price": 1179,
+              "quantity": 5500
+            },
+            {
+              "price": 1178,
+              "quantity": 3600
+            },
+            {
+              "price": 1177,
+              "quantity": 4100
+            },
+            {
+              "price": 1176,
+              "quantity": 3000
+            },
+            {
+              "price": 1174,
+              "quantity": 2500
+            }
+          ],
+          "asks": [
+            {
+              "price": 1180,
+              "quantity": 1600
+            },
+            {
+              "price": 1181,
+              "quantity": 3800
+            },
+            {
+              "price": 1182,
+              "quantity": 1400
+            },
+            {
+              "price": 1183,
+              "quantity": 1800
+            },
+            {
+              "price": 1184,
+              "quantity": 2300
+            }
+          ]
+        },
+        {
+          "symbol": "600601",
+          "last": 1378,
+          "prevClose": 1380,
+          "volume": 17300,
+          "turnover": 23860700,
+          "bids": [
+            {
+              "price": 1378,
+              "quantity": 8200
+            },
+            {
+              "price": 1377,
+              "quantity": 2600
+            },
+            {
+              "price": 1375,
+              "quantity": 1300
+            }
+          ],
+          "asks": [
+            {
+              "price": 1379,
+              "quantity": 1400
+            },
+            {
+              "price": 1380,
+              "quantity": 5700
+            },
+            {
+              "price": 1381,
+              "quantity": 2200
+            },
+            {
+              "price": 1383,
+              "quantity": 4800
+            },
+            {
+              "price": 1384,
+              "quantity": 1900
+            }
+          ]
+        },
+        {
+          "symbol": "600602",
+          "last": 961,
+          "prevClose": 960,
+          "volume": 23900,
+          "turnover": 22961000,
+          "bids": [
+            {
+              "price": 961,
+              "quantity": 2000
+            },
+            {
+              "price": 960,
+              "quantity": 3700
+            },
+            {
+              "price": 959,
+              "quantity": 3200
+            },
+            {
+              "price": 958,
+              "quantity": 700
+            },
+            {
+              "price": 956,
+              "quantity": 1500
+            }
+          ],
+          "asks": [
+            {
+              "price": 962,
+              "quantity": 2800
+            },
+            {
+              "price": 963,
+              "quantity": 6200
+            },
+            {
+              "price": 965,
+              "quantity": 3100
+            },
+            {
+              "price": 967,
+              "quantity": 1800
+            }
+          ]
+        }
+      ],
+      "reports": [
+        {
+          "symbol": "600101",
+          "period": 4,
+          "revenue": 852548402,
+          "netProfit": 120251336
+        },
+        {
+          "symbol": "600102",
+          "period": 4,
+          "revenue": 1542520140,
+          "netProfit": 223895587
+        },
+        {
+          "symbol": "600201",
+          "period": 4,
+          "revenue": 2072519709,
+          "netProfit": 213916257
+        },
+        {
+          "symbol": "600202",
+          "period": 4,
+          "revenue": 1203422233,
+          "netProfit": 60059983
+        },
+        {
+          "symbol": "600301",
+          "period": 4,
+          "revenue": 844567923,
+          "netProfit": 110662653
+        },
+        {
+          "symbol": "600302",
+          "period": 4,
+          "revenue": 689867128,
+          "netProfit": 59095208
+        },
+        {
+          "symbol": "600401",
+          "period": 4,
+          "revenue": 3220008054,
+          "netProfit": 470121438
+        },
+        {
+          "symbol": "600402",
+          "period": 4,
+          "revenue": 1813759083,
+          "netProfit": 136388797
+        },
+        {
+          "symbol": "600501",
+          "period": 4,
+          "revenue": 2868570525,
+          "netProfit": 372730151
+        },
+        {
+          "symbol": "600502",
+          "period": 4,
+          "revenue": 1443543253,
+          "netProfit": -59918532
+        },
+        {
+          "symbol": "600601",
+          "period": 4,
+          "revenue": 1700268738,
+          "netProfit": 157804729
+        },
+        {
+          "symbol": "600602",
+          "period": 4,
+          "revenue": 1208338831,
+          "netProfit": 86191164
+        }
+      ]
+    },
+    {
+      "seed": "中文🌊",
+      "historyDays": 0,
+      "elapsed": 50,
+      "quotes": [
+        {
+          "symbol": "600101",
+          "last": 675,
+          "prevClose": 680,
+          "volume": 130700,
+          "turnover": 88603500,
+          "bids": [
+            {
+              "price": 675,
+              "quantity": 5100
+            },
+            {
+              "price": 674,
+              "quantity": 4600
+            },
+            {
+              "price": 673,
+              "quantity": 1300
+            },
+            {
+              "price": 672,
+              "quantity": 2900
+            },
+            {
+              "price": 667,
+              "quantity": 1600
+            }
+          ],
+          "asks": [
+            {
+              "price": 676,
+              "quantity": 3400
+            },
+            {
+              "price": 677,
+              "quantity": 6500
+            },
+            {
+              "price": 678,
+              "quantity": 2300
+            },
+            {
+              "price": 680,
+              "quantity": 200
+            },
+            {
+              "price": 681,
+              "quantity": 900
+            }
+          ]
+        },
+        {
+          "symbol": "600102",
+          "last": 1233,
+          "prevClose": 1240,
+          "volume": 130800,
+          "turnover": 161919000,
+          "bids": [
+            {
+              "price": 1233,
+              "quantity": 1100
+            },
+            {
+              "price": 1232,
+              "quantity": 6400
+            },
+            {
+              "price": 1231,
+              "quantity": 1400
+            },
+            {
+              "price": 1228,
+              "quantity": 1100
+            },
+            {
+              "price": 1224,
+              "quantity": 1600
+            }
+          ],
+          "asks": [
+            {
+              "price": 1234,
+              "quantity": 5000
+            },
+            {
+              "price": 1235,
+              "quantity": 8700
+            },
+            {
+              "price": 1236,
+              "quantity": 1900
+            },
+            {
+              "price": 1237,
+              "quantity": 700
+            },
+            {
+              "price": 1238,
+              "quantity": 400
+            }
+          ]
+        },
+        {
+          "symbol": "600201",
+          "last": 1824,
+          "prevClose": 1820,
+          "volume": 135000,
+          "turnover": 245931300,
+          "bids": [
+            {
+              "price": 1824,
+              "quantity": 3500
+            },
+            {
+              "price": 1823,
+              "quantity": 3400
+            },
+            {
+              "price": 1822,
+              "quantity": 1900
+            },
+            {
+              "price": 1821,
+              "quantity": 1100
+            },
+            {
+              "price": 1819,
+              "quantity": 700
+            }
+          ],
+          "asks": [
+            {
+              "price": 1826,
+              "quantity": 4600
+            },
+            {
+              "price": 1827,
+              "quantity": 900
+            },
+            {
+              "price": 1828,
+              "quantity": 1900
+            },
+            {
+              "price": 1829,
+              "quantity": 1200
+            },
+            {
+              "price": 1831,
+              "quantity": 3400
+            }
+          ]
+        },
+        {
+          "symbol": "600202",
+          "last": 897,
+          "prevClose": 895,
+          "volume": 132500,
+          "turnover": 118847900,
+          "bids": [
+            {
+              "price": 896,
+              "quantity": 6000
+            },
+            {
+              "price": 895,
+              "quantity": 4800
+            },
+            {
+              "price": 894,
+              "quantity": 500
+            }
+          ],
+          "asks": [
+            {
+              "price": 897,
+              "quantity": 300
+            },
+            {
+              "price": 898,
+              "quantity": 8200
+            },
+            {
+              "price": 899,
+              "quantity": 4800
+            },
+            {
+              "price": 900,
+              "quantity": 900
+            },
+            {
+              "price": 903,
+              "quantity": 1000
+            }
+          ]
+        },
+        {
+          "symbol": "600301",
+          "last": 741,
+          "prevClose": 745,
+          "volume": 119000,
+          "turnover": 88483400,
+          "bids": [
+            {
+              "price": 741,
+              "quantity": 2500
+            },
+            {
+              "price": 740,
+              "quantity": 4700
+            },
+            {
+              "price": 738,
+              "quantity": 700
+            },
+            {
+              "price": 735,
+              "quantity": 1700
+            },
+            {
+              "price": 734,
+              "quantity": 1400
+            }
+          ],
+          "asks": [
+            {
+              "price": 742,
+              "quantity": 2200
+            },
+            {
+              "price": 743,
+              "quantity": 6800
+            },
+            {
+              "price": 744,
+              "quantity": 2300
+            },
+            {
+              "price": 745,
+              "quantity": 500
+            },
+            {
+              "price": 748,
+              "quantity": 1100
+            }
+          ]
+        },
+        {
+          "symbol": "600302",
+          "last": 559,
+          "prevClose": 560,
+          "volume": 129300,
+          "turnover": 72560000,
+          "bids": [
+            {
+              "price": 559,
+              "quantity": 1500
+            },
+            {
+              "price": 558,
+              "quantity": 4200
+            },
+            {
+              "price": 556,
+              "quantity": 400
+            },
+            {
+              "price": 555,
+              "quantity": 3200
+            }
+          ],
+          "asks": [
+            {
+              "price": 560,
+              "quantity": 5200
+            },
+            {
+              "price": 561,
+              "quantity": 6200
+            },
+            {
+              "price": 562,
+              "quantity": 2900
+            },
+            {
+              "price": 563,
+              "quantity": 300
+            },
+            {
+              "price": 564,
+              "quantity": 900
+            }
+          ]
+        },
+        {
+          "symbol": "600401",
+          "last": 2662,
+          "prevClose": 2670,
+          "volume": 138200,
+          "turnover": 368664700,
+          "bids": [
+            {
+              "price": 2662,
+              "quantity": 1700
+            },
+            {
+              "price": 2661,
+              "quantity": 1200
+            },
+            {
+              "price": 2660,
+              "quantity": 8400
+            },
+            {
+              "price": 2659,
+              "quantity": 2900
+            }
+          ],
+          "asks": [
+            {
+              "price": 2664,
+              "quantity": 4600
+            },
+            {
+              "price": 2665,
+              "quantity": 300
+            },
+            {
+              "price": 2666,
+              "quantity": 6400
+            },
+            {
+              "price": 2667,
+              "quantity": 400
+            },
+            {
+              "price": 2668,
+              "quantity": 700
+            }
+          ]
+        },
+        {
+          "symbol": "600402",
+          "last": 1566,
+          "prevClose": 1580,
+          "volume": 141100,
+          "turnover": 222324800,
+          "bids": [
+            {
+              "price": 1566,
+              "quantity": 800
+            },
+            {
+              "price": 1565,
+              "quantity": 2800
+            },
+            {
+              "price": 1559,
+              "quantity": 1300
+            },
+            {
+              "price": 1558,
+              "quantity": 1500
+            }
+          ],
+          "asks": [
+            {
+              "price": 1568,
+              "quantity": 2100
+            },
+            {
+              "price": 1569,
+              "quantity": 4000
+            },
+            {
+              "price": 1570,
+              "quantity": 4000
+            },
+            {
+              "price": 1572,
+              "quantity": 2600
+            },
+            {
+              "price": 1573,
+              "quantity": 1300
+            }
+          ]
+        },
+        {
+          "symbol": "600501",
+          "last": 2243,
+          "prevClose": 2250,
+          "volume": 131000,
+          "turnover": 294607400,
+          "bids": [
+            {
+              "price": 2243,
+              "quantity": 400
+            },
+            {
+              "price": 2242,
+              "quantity": 1300
+            },
+            {
+              "price": 2241,
+              "quantity": 5000
+            },
+            {
+              "price": 2240,
+              "quantity": 1100
+            },
+            {
+              "price": 2238,
+              "quantity": 800
+            }
+          ],
+          "asks": [
+            {
+              "price": 2244,
+              "quantity": 600
+            },
+            {
+              "price": 2245,
+              "quantity": 5400
+            },
+            {
+              "price": 2246,
+              "quantity": 1800
+            },
+            {
+              "price": 2247,
+              "quantity": 9200
+            },
+            {
+              "price": 2248,
+              "quantity": 600
+            }
+          ]
+        },
+        {
+          "symbol": "600502",
+          "last": 1174,
+          "prevClose": 1180,
+          "volume": 129500,
+          "turnover": 152642100,
+          "bids": [
+            {
+              "price": 1174,
+              "quantity": 1500
+            },
+            {
+              "price": 1173,
+              "quantity": 4000
+            },
+            {
+              "price": 1170,
+              "quantity": 500
+            },
+            {
+              "price": 1169,
+              "quantity": 900
+            },
+            {
+              "price": 1168,
+              "quantity": 400
+            }
+          ],
+          "asks": [
+            {
+              "price": 1175,
+              "quantity": 2700
+            },
+            {
+              "price": 1176,
+              "quantity": 7500
+            },
+            {
+              "price": 1177,
+              "quantity": 2000
+            },
+            {
+              "price": 1178,
+              "quantity": 500
+            },
+            {
+              "price": 1179,
+              "quantity": 700
+            }
+          ]
+        },
+        {
+          "symbol": "600601",
+          "last": 1372,
+          "prevClose": 1380,
+          "volume": 114500,
+          "turnover": 157607000,
+          "bids": [
+            {
+              "price": 1372,
+              "quantity": 8800
+            },
+            {
+              "price": 1371,
+              "quantity": 1900
+            }
+          ],
+          "asks": [
+            {
+              "price": 1374,
+              "quantity": 12000
+            },
+            {
+              "price": 1375,
+              "quantity": 5800
+            },
+            {
+              "price": 1376,
+              "quantity": 3100
+            },
+            {
+              "price": 1379,
+              "quantity": 1700
+            }
+          ]
+        },
+        {
+          "symbol": "600602",
+          "last": 954,
+          "prevClose": 960,
+          "volume": 124800,
+          "turnover": 119670000,
+          "bids": [
+            {
+              "price": 954,
+              "quantity": 3300
+            },
+            {
+              "price": 953,
+              "quantity": 5900
+            },
+            {
+              "price": 952,
+              "quantity": 1700
+            },
+            {
+              "price": 949,
+              "quantity": 1100
+            }
+          ],
+          "asks": [
+            {
+              "price": 955,
+              "quantity": 1700
+            },
+            {
+              "price": 956,
+              "quantity": 4300
+            },
+            {
+              "price": 957,
+              "quantity": 5800
+            },
+            {
+              "price": 958,
+              "quantity": 2900
+            },
+            {
+              "price": 959,
+              "quantity": 1000
+            }
+          ]
+        }
+      ],
+      "reports": [
+        {
+          "symbol": "600101",
+          "period": 5,
+          "revenue": 904088032,
+          "netProfit": 146715653
+        },
+        {
+          "symbol": "600102",
+          "period": 4,
+          "revenue": 1542520140,
+          "netProfit": 223895587
+        },
+        {
+          "symbol": "600201",
+          "period": 4,
+          "revenue": 2072519709,
+          "netProfit": 213916257
+        },
+        {
+          "symbol": "600202",
+          "period": 4,
+          "revenue": 1203422233,
+          "netProfit": 60059983
+        },
+        {
+          "symbol": "600301",
+          "period": 4,
+          "revenue": 844567923,
+          "netProfit": 110662653
+        },
+        {
+          "symbol": "600302",
+          "period": 5,
+          "revenue": 686254315,
+          "netProfit": 72084591
+        },
+        {
+          "symbol": "600401",
+          "period": 4,
+          "revenue": 3220008054,
+          "netProfit": 470121438
+        },
+        {
+          "symbol": "600402",
+          "period": 4,
+          "revenue": 1813759083,
+          "netProfit": 136388797
+        },
+        {
+          "symbol": "600501",
+          "period": 4,
+          "revenue": 2868570525,
+          "netProfit": 372730151
+        },
+        {
+          "symbol": "600502",
+          "period": 4,
+          "revenue": 1443543253,
+          "netProfit": -59918532
+        },
+        {
+          "symbol": "600601",
+          "period": 5,
+          "revenue": 1799890968,
+          "netProfit": 141478738
+        },
+        {
+          "symbol": "600602",
+          "period": 4,
+          "revenue": 1208338831,
+          "netProfit": 86191164
+        }
+      ]
+    },
+    {
+      "seed": "中文🌊",
+      "historyDays": 0,
+      "elapsed": 80,
+      "quotes": [
+        {
+          "symbol": "600101",
+          "last": 688,
+          "prevClose": 680,
+          "volume": 232800,
+          "turnover": 158419500,
+          "bids": [
+            {
+              "price": 687,
+              "quantity": 3100
+            },
+            {
+              "price": 686,
+              "quantity": 12600
+            },
+            {
+              "price": 683,
+              "quantity": 400
+            },
+            {
+              "price": 680,
+              "quantity": 1000
+            }
+          ],
+          "asks": [
+            {
+              "price": 688,
+              "quantity": 3300
+            },
+            {
+              "price": 689,
+              "quantity": 2400
+            },
+            {
+              "price": 690,
+              "quantity": 1200
+            }
+          ]
+        },
+        {
+          "symbol": "600102",
+          "last": 1227,
+          "prevClose": 1240,
+          "volume": 210100,
+          "turnover": 259433900,
+          "bids": [
+            {
+              "price": 1227,
+              "quantity": 100
+            },
+            {
+              "price": 1226,
+              "quantity": 4100
+            }
+          ],
+          "asks": [
+            {
+              "price": 1228,
+              "quantity": 2200
+            },
+            {
+              "price": 1229,
+              "quantity": 4500
+            },
+            {
+              "price": 1230,
+              "quantity": 3900
+            },
+            {
+              "price": 1231,
+              "quantity": 2100
+            },
+            {
+              "price": 1232,
+              "quantity": 1900
+            }
+          ]
+        },
+        {
+          "symbol": "600201",
+          "last": 1825,
+          "prevClose": 1820,
+          "volume": 201800,
+          "turnover": 367936000,
+          "bids": [
+            {
+              "price": 1825,
+              "quantity": 5700
+            },
+            {
+              "price": 1824,
+              "quantity": 2900
+            },
+            {
+              "price": 1822,
+              "quantity": 400
+            },
+            {
+              "price": 1821,
+              "quantity": 600
+            },
+            {
+              "price": 1820,
+              "quantity": 400
+            }
+          ],
+          "asks": [
+            {
+              "price": 1826,
+              "quantity": 1800
+            },
+            {
+              "price": 1827,
+              "quantity": 4200
+            },
+            {
+              "price": 1828,
+              "quantity": 7000
+            },
+            {
+              "price": 1830,
+              "quantity": 1800
+            },
+            {
+              "price": 1831,
+              "quantity": 1200
+            }
+          ]
+        },
+        {
+          "symbol": "600202",
+          "last": 894,
+          "prevClose": 895,
+          "volume": 201900,
+          "turnover": 180935800,
+          "bids": [
+            {
+              "price": 893,
+              "quantity": 500
+            },
+            {
+              "price": 892,
+              "quantity": 6700
+            },
+            {
+              "price": 891,
+              "quantity": 300
+            }
+          ],
+          "asks": [
+            {
+              "price": 894,
+              "quantity": 6200
+            },
+            {
+              "price": 895,
+              "quantity": 1100
+            },
+            {
+              "price": 896,
+              "quantity": 3900
+            },
+            {
+              "price": 897,
+              "quantity": 300
+            },
+            {
+              "price": 898,
+              "quantity": 1400
+            }
+          ]
+        },
+        {
+          "symbol": "600301",
+          "last": 719,
+          "prevClose": 745,
+          "volume": 229800,
+          "turnover": 169301700,
+          "bids": [
+            {
+              "price": 717,
+              "quantity": 400
+            },
+            {
+              "price": 716,
+              "quantity": 400
+            },
+            {
+              "price": 714,
+              "quantity": 1300
+            }
+          ],
+          "asks": [
+            {
+              "price": 718,
+              "quantity": 200
+            },
+            {
+              "price": 720,
+              "quantity": 1200
+            },
+            {
+              "price": 723,
+              "quantity": 5600
+            },
+            {
+              "price": 724,
+              "quantity": 800
+            },
+            {
+              "price": 725,
+              "quantity": 1700
+            }
+          ]
+        },
+        {
+          "symbol": "600302",
+          "last": 584,
+          "prevClose": 560,
+          "volume": 250600,
+          "turnover": 142287500,
+          "bids": [
+            {
+              "price": 584,
+              "quantity": 1800
+            },
+            {
+              "price": 583,
+              "quantity": 3800
+            },
+            {
+              "price": 582,
+              "quantity": 800
+            },
+            {
+              "price": 581,
+              "quantity": 1600
+            },
+            {
+              "price": 580,
+              "quantity": 500
+            }
+          ],
+          "asks": [
+            {
+              "price": 586,
+              "quantity": 2300
+            },
+            {
+              "price": 587,
+              "quantity": 500
+            },
+            {
+              "price": 588,
+              "quantity": 200
+            },
+            {
+              "price": 589,
+              "quantity": 1300
+            }
+          ]
+        },
+        {
+          "symbol": "600401",
+          "last": 2655,
+          "prevClose": 2670,
+          "volume": 206800,
+          "turnover": 551127900,
+          "bids": [
+            {
+              "price": 2655,
+              "quantity": 3600
+            },
+            {
+              "price": 2654,
+              "quantity": 5800
+            },
+            {
+              "price": 2653,
+              "quantity": 1600
+            },
+            {
+              "price": 2652,
+              "quantity": 700
+            },
+            {
+              "price": 2650,
+              "quantity": 1100
+            }
+          ],
+          "asks": [
+            {
+              "price": 2657,
+              "quantity": 1300
+            },
+            {
+              "price": 2658,
+              "quantity": 3000
+            },
+            {
+              "price": 2659,
+              "quantity": 4900
+            },
+            {
+              "price": 2660,
+              "quantity": 1000
+            },
+            {
+              "price": 2661,
+              "quantity": 1300
+            }
+          ]
+        },
+        {
+          "symbol": "600402",
+          "last": 1562,
+          "prevClose": 1580,
+          "volume": 233400,
+          "turnover": 366671600,
+          "bids": [
+            {
+              "price": 1562,
+              "quantity": 1200
+            },
+            {
+              "price": 1561,
+              "quantity": 2500
+            },
+            {
+              "price": 1558,
+              "quantity": 1700
+            },
+            {
+              "price": 1556,
+              "quantity": 1800
+            },
+            {
+              "price": 1555,
+              "quantity": 1800
+            }
+          ],
+          "asks": [
+            {
+              "price": 1563,
+              "quantity": 500
+            },
+            {
+              "price": 1564,
+              "quantity": 9700
+            },
+            {
+              "price": 1565,
+              "quantity": 900
+            },
+            {
+              "price": 1569,
+              "quantity": 1100
+            }
+          ]
+        },
+        {
+          "symbol": "600501",
+          "last": 2237,
+          "prevClose": 2250,
+          "volume": 200700,
+          "turnover": 450729700,
+          "bids": [
+            {
+              "price": 2237,
+              "quantity": 2600
+            },
+            {
+              "price": 2236,
+              "quantity": 600
+            },
+            {
+              "price": 2235,
+              "quantity": 2200
+            },
+            {
+              "price": 2232,
+              "quantity": 800
+            },
+            {
+              "price": 2230,
+              "quantity": 1100
+            }
+          ],
+          "asks": [
+            {
+              "price": 2239,
+              "quantity": 600
+            },
+            {
+              "price": 2240,
+              "quantity": 2200
+            },
+            {
+              "price": 2241,
+              "quantity": 4000
+            },
+            {
+              "price": 2242,
+              "quantity": 2600
+            },
+            {
+              "price": 2249,
+              "quantity": 400
+            }
+          ]
+        },
+        {
+          "symbol": "600502",
+          "last": 1171,
+          "prevClose": 1180,
+          "volume": 198300,
+          "turnover": 233339700,
+          "bids": [
+            {
+              "price": 1171,
+              "quantity": 3000
+            },
+            {
+              "price": 1170,
+              "quantity": 5900
+            },
+            {
+              "price": 1169,
+              "quantity": 1100
+            },
+            {
+              "price": 1168,
+              "quantity": 2300
+            },
+            {
+              "price": 1167,
+              "quantity": 1400
+            }
+          ],
+          "asks": [
+            {
+              "price": 1172,
+              "quantity": 6300
+            },
+            {
+              "price": 1173,
+              "quantity": 8800
+            },
+            {
+              "price": 1175,
+              "quantity": 700
+            },
+            {
+              "price": 1177,
+              "quantity": 900
+            }
+          ]
+        },
+        {
+          "symbol": "600601",
+          "last": 1324,
+          "prevClose": 1380,
+          "volume": 233100,
+          "turnover": 317196700,
+          "bids": [
+            {
+              "price": 1325,
+              "quantity": 100
+            },
+            {
+              "price": 1322,
+              "quantity": 1000
+            },
+            {
+              "price": 1310,
+              "quantity": 1900
+            }
+          ],
+          "asks": [
+            {
+              "price": 1326,
+              "quantity": 1200
+            },
+            {
+              "price": 1328,
+              "quantity": 1100
+            },
+            {
+              "price": 1331,
+              "quantity": 2900
+            },
+            {
+              "price": 1332,
+              "quantity": 4200
+            },
+            {
+              "price": 1333,
+              "quantity": 1900
+            }
+          ]
+        },
+        {
+          "symbol": "600602",
+          "last": 938,
+          "prevClose": 960,
+          "volume": 228400,
+          "turnover": 217927700,
+          "bids": [
+            {
+              "price": 936,
+              "quantity": 500
+            },
+            {
+              "price": 934,
+              "quantity": 1200
+            }
+          ],
+          "asks": [
+            {
+              "price": 937,
+              "quantity": 500
+            },
+            {
+              "price": 939,
+              "quantity": 800
+            },
+            {
+              "price": 940,
+              "quantity": 400
+            },
+            {
+              "price": 942,
+              "quantity": 1800
+            },
+            {
+              "price": 943,
+              "quantity": 3800
+            }
+          ]
+        }
+      ],
+      "reports": [
+        {
+          "symbol": "600101",
+          "period": 5,
+          "revenue": 904088032,
+          "netProfit": 146715653
+        },
+        {
+          "symbol": "600102",
+          "period": 4,
+          "revenue": 1542520140,
+          "netProfit": 223895587
+        },
+        {
+          "symbol": "600201",
+          "period": 4,
+          "revenue": 2072519709,
+          "netProfit": 213916257
+        },
+        {
+          "symbol": "600202",
+          "period": 4,
+          "revenue": 1203422233,
+          "netProfit": 60059983
+        },
+        {
+          "symbol": "600301",
+          "period": 4,
+          "revenue": 844567923,
+          "netProfit": 110662653
+        },
+        {
+          "symbol": "600302",
+          "period": 5,
+          "revenue": 686254315,
+          "netProfit": 72084591
+        },
+        {
+          "symbol": "600401",
+          "period": 4,
+          "revenue": 3220008054,
+          "netProfit": 470121438
+        },
+        {
+          "symbol": "600402",
+          "period": 4,
+          "revenue": 1813759083,
+          "netProfit": 136388797
+        },
+        {
+          "symbol": "600501",
+          "period": 4,
+          "revenue": 2868570525,
+          "netProfit": 372730151
+        },
+        {
+          "symbol": "600502",
+          "period": 4,
+          "revenue": 1443543253,
+          "netProfit": -59918532
+        },
+        {
+          "symbol": "600601",
+          "period": 5,
+          "revenue": 1799890968,
+          "netProfit": 141478738
+        },
+        {
+          "symbol": "600602",
+          "period": 4,
+          "revenue": 1208338831,
+          "netProfit": 86191164
+        }
+      ]
+    },
+    {
+      "seed": "golden-history",
+      "historyDays": 60,
+      "elapsed": 0,
+      "quotes": [
+        {
+          "symbol": "600101",
+          "last": 653,
+          "prevClose": 652,
+          "volume": 15000,
+          "turnover": 9791400,
+          "bids": [
+            {
+              "price": 652,
+              "quantity": 4800
+            },
+            {
+              "price": 651,
+              "quantity": 12000
+            },
+            {
+              "price": 650,
+              "quantity": 700
+            },
+            {
+              "price": 648,
+              "quantity": 400
+            }
+          ],
+          "asks": [
+            {
+              "price": 653,
+              "quantity": 700
+            },
+            {
+              "price": 654,
+              "quantity": 6200
+            },
+            {
+              "price": 655,
+              "quantity": 1500
+            },
+            {
+              "price": 656,
+              "quantity": 2400
+            },
+            {
+              "price": 658,
+              "quantity": 1200
+            }
+          ]
+        },
+        {
+          "symbol": "600102",
+          "last": 1242,
+          "prevClose": 1240,
+          "volume": 22400,
+          "turnover": 27802900,
+          "bids": [
+            {
+              "price": 1240,
+              "quantity": 8500
+            },
+            {
+              "price": 1239,
+              "quantity": 2500
+            },
+            {
+              "price": 1238,
+              "quantity": 1600
+            },
+            {
+              "price": 1237,
+              "quantity": 3100
+            },
+            {
+              "price": 1236,
+              "quantity": 900
+            }
+          ],
+          "asks": [
+            {
+              "price": 1242,
+              "quantity": 6500
+            },
+            {
+              "price": 1243,
+              "quantity": 5100
+            },
+            {
+              "price": 1244,
+              "quantity": 1000
+            },
+            {
+              "price": 1246,
+              "quantity": 1000
+            },
+            {
+              "price": 1247,
+              "quantity": 300
+            }
+          ]
+        },
+        {
+          "symbol": "600201",
+          "last": 2046,
+          "prevClose": 2045,
+          "volume": 18900,
+          "turnover": 38663300,
+          "bids": [
+            {
+              "price": 2045,
+              "quantity": 7300
+            },
+            {
+              "price": 2044,
+              "quantity": 6500
+            },
+            {
+              "price": 2043,
+              "quantity": 3200
+            },
+            {
+              "price": 2042,
+              "quantity": 1900
+            },
+            {
+              "price": 2041,
+              "quantity": 900
+            }
+          ],
+          "asks": [
+            {
+              "price": 2046,
+              "quantity": 200
+            },
+            {
+              "price": 2047,
+              "quantity": 8800
+            },
+            {
+              "price": 2048,
+              "quantity": 1600
+            },
+            {
+              "price": 2049,
+              "quantity": 1500
+            },
+            {
+              "price": 2050,
+              "quantity": 900
+            }
+          ]
+        },
+        {
+          "symbol": "600202",
+          "last": 896,
+          "prevClose": 897,
+          "volume": 13600,
+          "turnover": 12194900,
+          "bids": [
+            {
+              "price": 896,
+              "quantity": 3900
+            },
+            {
+              "price": 895,
+              "quantity": 7000
+            },
+            {
+              "price": 894,
+              "quantity": 1700
+            },
+            {
+              "price": 893,
+              "quantity": 1100
+            },
+            {
+              "price": 892,
+              "quantity": 1200
+            }
+          ],
+          "asks": [
+            {
+              "price": 897,
+              "quantity": 5000
+            },
+            {
+              "price": 898,
+              "quantity": 6300
+            },
+            {
+              "price": 899,
+              "quantity": 3800
+            },
+            {
+              "price": 900,
+              "quantity": 700
+            },
+            {
+              "price": 902,
+              "quantity": 600
+            }
+          ]
+        },
+        {
+          "symbol": "600301",
+          "last": 756,
+          "prevClose": 759,
+          "volume": 23300,
+          "turnover": 17649600,
+          "bids": [
+            {
+              "price": 756,
+              "quantity": 8900
+            },
+            {
+              "price": 755,
+              "quantity": 1600
+            },
+            {
+              "price": 754,
+              "quantity": 300
+            },
+            {
+              "price": 753,
+              "quantity": 2500
+            }
+          ],
+          "asks": [
+            {
+              "price": 758,
+              "quantity": 4200
+            },
+            {
+              "price": 759,
+              "quantity": 6800
+            },
+            {
+              "price": 760,
+              "quantity": 200
+            },
+            {
+              "price": 762,
+              "quantity": 1300
+            },
+            {
+              "price": 764,
+              "quantity": 2000
+            }
+          ]
+        },
+        {
+          "symbol": "600302",
+          "last": 641,
+          "prevClose": 638,
+          "volume": 26900,
+          "turnover": 17216000,
+          "bids": [
+            {
+              "price": 641,
+              "quantity": 800
+            },
+            {
+              "price": 640,
+              "quantity": 5400
+            },
+            {
+              "price": 639,
+              "quantity": 5800
+            },
+            {
+              "price": 638,
+              "quantity": 5800
+            },
+            {
+              "price": 636,
+              "quantity": 2500
+            }
+          ],
+          "asks": [
+            {
+              "price": 642,
+              "quantity": 9300
+            },
+            {
+              "price": 643,
+              "quantity": 600
+            },
+            {
+              "price": 644,
+              "quantity": 1400
+            }
+          ]
+        },
+        {
+          "symbol": "600401",
+          "last": 2607,
+          "prevClose": 2606,
+          "volume": 20000,
+          "turnover": 52112500,
+          "bids": [
+            {
+              "price": 2605,
+              "quantity": 4100
+            },
+            {
+              "price": 2604,
+              "quantity": 2100
+            },
+            {
+              "price": 2603,
+              "quantity": 7200
+            },
+            {
+              "price": 2601,
+              "quantity": 900
+            },
+            {
+              "price": 2591,
+              "quantity": 2000
+            }
+          ],
+          "asks": [
+            {
+              "price": 2607,
+              "quantity": 2900
+            },
+            {
+              "price": 2608,
+              "quantity": 2700
+            },
+            {
+              "price": 2609,
+              "quantity": 6400
+            },
+            {
+              "price": 2610,
+              "quantity": 500
+            },
+            {
+              "price": 2614,
+              "quantity": 1200
+            }
+          ]
+        },
+        {
+          "symbol": "600402",
+          "last": 1609,
+          "prevClose": 1609,
+          "volume": 17600,
+          "turnover": 28320200,
+          "bids": [
+            {
+              "price": 1609,
+              "quantity": 3200
+            },
+            {
+              "price": 1608,
+              "quantity": 6000
+            },
+            {
+              "price": 1606,
+              "quantity": 2500
+            },
+            {
+              "price": 1605,
+              "quantity": 1500
+            },
+            {
+              "price": 1602,
+              "quantity": 200
+            }
+          ],
+          "asks": [
+            {
+              "price": 1610,
+              "quantity": 2600
+            },
+            {
+              "price": 1611,
+              "quantity": 6900
+            },
+            {
+              "price": 1612,
+              "quantity": 2100
+            },
+            {
+              "price": 1614,
+              "quantity": 900
+            },
+            {
+              "price": 1615,
+              "quantity": 2100
+            }
+          ]
+        },
+        {
+          "symbol": "600501",
+          "last": 1818,
+          "prevClose": 1820,
+          "volume": 22900,
+          "turnover": 41653000,
+          "bids": [
+            {
+              "price": 1818,
+              "quantity": 1200
+            },
+            {
+              "price": 1817,
+              "quantity": 7200
+            },
+            {
+              "price": 1816,
+              "quantity": 1200
+            },
+            {
+              "price": 1813,
+              "quantity": 800
+            }
+          ],
+          "asks": [
+            {
+              "price": 1819,
+              "quantity": 6000
+            },
+            {
+              "price": 1820,
+              "quantity": 5400
+            },
+            {
+              "price": 1821,
+              "quantity": 1700
+            },
+            {
+              "price": 1822,
+              "quantity": 1100
+            },
+            {
+              "price": 1827,
+              "quantity": 1200
+            }
+          ]
+        },
+        {
+          "symbol": "600502",
+          "last": 1371,
+          "prevClose": 1371,
+          "volume": 18300,
+          "turnover": 25083800,
+          "bids": [
+            {
+              "price": 1370,
+              "quantity": 1100
+            },
+            {
+              "price": 1369,
+              "quantity": 10100
+            },
+            {
+              "price": 1368,
+              "quantity": 4600
+            },
+            {
+              "price": 1366,
+              "quantity": 600
+            },
+            {
+              "price": 1365,
+              "quantity": 1200
+            }
+          ],
+          "asks": [
+            {
+              "price": 1371,
+              "quantity": 5900
+            },
+            {
+              "price": 1372,
+              "quantity": 3400
+            },
+            {
+              "price": 1374,
+              "quantity": 200
+            }
+          ]
+        },
+        {
+          "symbol": "600601",
+          "last": 1345,
+          "prevClose": 1344,
+          "volume": 22000,
+          "turnover": 29576200,
+          "bids": [
+            {
+              "price": 1344,
+              "quantity": 2900
+            },
+            {
+              "price": 1343,
+              "quantity": 4200
+            },
+            {
+              "price": 1342,
+              "quantity": 1700
+            },
+            {
+              "price": 1340,
+              "quantity": 1200
+            }
+          ],
+          "asks": [
+            {
+              "price": 1346,
+              "quantity": 5400
+            },
+            {
+              "price": 1348,
+              "quantity": 1200
+            },
+            {
+              "price": 1349,
+              "quantity": 400
+            },
+            {
+              "price": 1352,
+              "quantity": 2000
+            },
+            {
+              "price": 1354,
+              "quantity": 1000
+            }
+          ]
+        },
+        {
+          "symbol": "600602",
+          "last": 966,
+          "prevClose": 969,
+          "volume": 18200,
+          "turnover": 17609700,
+          "bids": [
+            {
+              "price": 966,
+              "quantity": 5600
+            },
+            {
+              "price": 965,
+              "quantity": 2800
+            },
+            {
+              "price": 964,
+              "quantity": 500
+            },
+            {
+              "price": 963,
+              "quantity": 500
+            }
+          ],
+          "asks": [
+            {
+              "price": 967,
+              "quantity": 1300
+            },
+            {
+              "price": 968,
+              "quantity": 6100
+            },
+            {
+              "price": 969,
+              "quantity": 1700
+            },
+            {
+              "price": 970,
+              "quantity": 2300
+            },
+            {
+              "price": 971,
+              "quantity": 1200
+            }
+          ]
+        }
+      ],
+      "reports": [
+        {
+          "symbol": "600101",
+          "period": 4,
+          "revenue": 813600694,
+          "netProfit": 135408904
+        },
+        {
+          "symbol": "600102",
+          "period": 4,
+          "revenue": 1669144104,
+          "netProfit": 217653912
+        },
+        {
+          "symbol": "600201",
+          "period": 4,
+          "revenue": 2371651376,
+          "netProfit": 216772052
+        },
+        {
+          "symbol": "600202",
+          "period": 4,
+          "revenue": 1221643397,
+          "netProfit": 66494244
+        },
+        {
+          "symbol": "600301",
+          "period": 4,
+          "revenue": 914543692,
+          "netProfit": 113083332
+        },
+        {
+          "symbol": "600302",
+          "period": 4,
+          "revenue": 871090021,
+          "netProfit": 66674833
+        },
+        {
+          "symbol": "600401",
+          "period": 4,
+          "revenue": 3197804503,
+          "netProfit": 513896419
+        },
+        {
+          "symbol": "600402",
+          "period": 4,
+          "revenue": 2091637216,
+          "netProfit": 187032631
+        },
+        {
+          "symbol": "600501",
+          "period": 4,
+          "revenue": 2128111072,
+          "netProfit": 274417954
+        },
+        {
+          "symbol": "600502",
+          "period": 4,
+          "revenue": 1476969233,
+          "netProfit": -28338582
+        },
+        {
+          "symbol": "600601",
+          "period": 4,
+          "revenue": 1461875988,
+          "netProfit": 118257214
+        },
+        {
+          "symbol": "600602",
+          "period": 4,
+          "revenue": 1176874333,
+          "netProfit": 88730005
+        }
+      ]
+    },
+    {
+      "seed": "golden-history",
+      "historyDays": 60,
+      "elapsed": 50,
+      "quotes": [
+        {
+          "symbol": "600101",
+          "last": 660,
+          "prevClose": 652,
+          "volume": 129000,
+          "turnover": 84738400,
+          "bids": [
+            {
+              "price": 658,
+              "quantity": 11600
+            },
+            {
+              "price": 657,
+              "quantity": 600
+            },
+            {
+              "price": 656,
+              "quantity": 1700
+            },
+            {
+              "price": 655,
+              "quantity": 500
+            }
+          ],
+          "asks": [
+            {
+              "price": 660,
+              "quantity": 6800
+            },
+            {
+              "price": 661,
+              "quantity": 600
+            },
+            {
+              "price": 662,
+              "quantity": 1300
+            },
+            {
+              "price": 665,
+              "quantity": 900
+            }
+          ]
+        },
+        {
+          "symbol": "600102",
+          "last": 1246,
+          "prevClose": 1240,
+          "volume": 126100,
+          "turnover": 156714500,
+          "bids": [
+            {
+              "price": 1245,
+              "quantity": 2200
+            },
+            {
+              "price": 1244,
+              "quantity": 12800
+            },
+            {
+              "price": 1243,
+              "quantity": 1300
+            },
+            {
+              "price": 1242,
+              "quantity": 1400
+            },
+            {
+              "price": 1239,
+              "quantity": 800
+            }
+          ],
+          "asks": [
+            {
+              "price": 1246,
+              "quantity": 10100
+            },
+            {
+              "price": 1247,
+              "quantity": 4700
+            },
+            {
+              "price": 1248,
+              "quantity": 200
+            },
+            {
+              "price": 1249,
+              "quantity": 500
+            },
+            {
+              "price": 1252,
+              "quantity": 400
+            }
+          ]
+        },
+        {
+          "symbol": "600201",
+          "last": 2160,
+          "prevClose": 2045,
+          "volume": 219200,
+          "turnover": 463482300,
+          "bids": [
+            {
+              "price": 2160,
+              "quantity": 2700
+            },
+            {
+              "price": 2158,
+              "quantity": 700
+            },
+            {
+              "price": 2149,
+              "quantity": 800
+            },
+            {
+              "price": 2147,
+              "quantity": 400
+            },
+            {
+              "price": 2138,
+              "quantity": 1100
+            }
+          ],
+          "asks": [
+            {
+              "price": 2170,
+              "quantity": 3600
+            },
+            {
+              "price": 2193,
+              "quantity": 1400
+            }
+          ]
+        },
+        {
+          "symbol": "600202",
+          "last": 897,
+          "prevClose": 897,
+          "volume": 120700,
+          "turnover": 108185300,
+          "bids": [
+            {
+              "price": 896,
+              "quantity": 1500
+            },
+            {
+              "price": 895,
+              "quantity": 6000
+            },
+            {
+              "price": 894,
+              "quantity": 5200
+            },
+            {
+              "price": 893,
+              "quantity": 1300
+            },
+            {
+              "price": 892,
+              "quantity": 2200
+            }
+          ],
+          "asks": [
+            {
+              "price": 897,
+              "quantity": 5000
+            },
+            {
+              "price": 898,
+              "quantity": 3500
+            },
+            {
+              "price": 900,
+              "quantity": 1200
+            }
+          ]
+        },
+        {
+          "symbol": "600301",
+          "last": 760,
+          "prevClose": 759,
+          "volume": 135000,
+          "turnover": 102197100,
+          "bids": [
+            {
+              "price": 759,
+              "quantity": 5000
+            },
+            {
+              "price": 758,
+              "quantity": 5200
+            },
+            {
+              "price": 757,
+              "quantity": 2800
+            },
+            {
+              "price": 756,
+              "quantity": 3500
+            },
+            {
+              "price": 755,
+              "quantity": 1300
+            }
+          ],
+          "asks": [
+            {
+              "price": 760,
+              "quantity": 1200
+            },
+            {
+              "price": 761,
+              "quantity": 6700
+            },
+            {
+              "price": 762,
+              "quantity": 900
+            },
+            {
+              "price": 765,
+              "quantity": 600
+            },
+            {
+              "price": 766,
+              "quantity": 1200
+            }
+          ]
+        },
+        {
+          "symbol": "600302",
+          "last": 643,
+          "prevClose": 638,
+          "volume": 155800,
+          "turnover": 100124900,
+          "bids": [
+            {
+              "price": 643,
+              "quantity": 1700
+            },
+            {
+              "price": 642,
+              "quantity": 5200
+            },
+            {
+              "price": 640,
+              "quantity": 1300
+            },
+            {
+              "price": 637,
+              "quantity": 300
+            }
+          ],
+          "asks": [
+            {
+              "price": 644,
+              "quantity": 2900
+            },
+            {
+              "price": 645,
+              "quantity": 8000
+            },
+            {
+              "price": 646,
+              "quantity": 2100
+            },
+            {
+              "price": 647,
+              "quantity": 1000
+            }
+          ]
+        },
+        {
+          "symbol": "600401",
+          "last": 2604,
+          "prevClose": 2606,
+          "volume": 123000,
+          "turnover": 320418400,
+          "bids": [
+            {
+              "price": 2603,
+              "quantity": 700
+            },
+            {
+              "price": 2602,
+              "quantity": 600
+            },
+            {
+              "price": 2601,
+              "quantity": 4700
+            },
+            {
+              "price": 2600,
+              "quantity": 5300
+            },
+            {
+              "price": 2599,
+              "quantity": 1500
+            }
+          ],
+          "asks": [
+            {
+              "price": 2604,
+              "quantity": 3800
+            },
+            {
+              "price": 2605,
+              "quantity": 3200
+            },
+            {
+              "price": 2606,
+              "quantity": 1100
+            },
+            {
+              "price": 2612,
+              "quantity": 900
+            },
+            {
+              "price": 2615,
+              "quantity": 700
+            }
+          ]
+        },
+        {
+          "symbol": "600402",
+          "last": 1610,
+          "prevClose": 1609,
+          "volume": 108100,
+          "turnover": 173971900,
+          "bids": [
+            {
+              "price": 1609,
+              "quantity": 5200
+            },
+            {
+              "price": 1608,
+              "quantity": 5800
+            },
+            {
+              "price": 1606,
+              "quantity": 200
+            }
+          ],
+          "asks": [
+            {
+              "price": 1610,
+              "quantity": 5000
+            },
+            {
+              "price": 1611,
+              "quantity": 6500
+            },
+            {
+              "price": 1612,
+              "quantity": 400
+            },
+            {
+              "price": 1617,
+              "quantity": 300
+            }
+          ]
+        },
+        {
+          "symbol": "600501",
+          "last": 1819,
+          "prevClose": 1820,
+          "volume": 123900,
+          "turnover": 225359800,
+          "bids": [
+            {
+              "price": 1818,
+              "quantity": 7700
+            },
+            {
+              "price": 1817,
+              "quantity": 4600
+            },
+            {
+              "price": 1816,
+              "quantity": 1200
+            },
+            {
+              "price": 1815,
+              "quantity": 1000
+            },
+            {
+              "price": 1810,
+              "quantity": 1100
+            }
+          ],
+          "asks": [
+            {
+              "price": 1819,
+              "quantity": 3000
+            },
+            {
+              "price": 1820,
+              "quantity": 4500
+            },
+            {
+              "price": 1821,
+              "quantity": 5000
+            },
+            {
+              "price": 1822,
+              "quantity": 900
+            },
+            {
+              "price": 1823,
+              "quantity": 500
+            }
+          ]
+        },
+        {
+          "symbol": "600502",
+          "last": 1368,
+          "prevClose": 1371,
+          "volume": 126000,
+          "turnover": 172583600,
+          "bids": [
+            {
+              "price": 1368,
+              "quantity": 700
+            },
+            {
+              "price": 1367,
+              "quantity": 5800
+            },
+            {
+              "price": 1366,
+              "quantity": 1400
+            },
+            {
+              "price": 1365,
+              "quantity": 800
+            },
+            {
+              "price": 1364,
+              "quantity": 900
+            }
+          ],
+          "asks": [
+            {
+              "price": 1369,
+              "quantity": 1300
+            },
+            {
+              "price": 1370,
+              "quantity": 5100
+            },
+            {
+              "price": 1371,
+              "quantity": 3800
+            },
+            {
+              "price": 1373,
+              "quantity": 700
+            }
+          ]
+        },
+        {
+          "symbol": "600601",
+          "last": 1351,
+          "prevClose": 1344,
+          "volume": 122300,
+          "turnover": 164922500,
+          "bids": [
+            {
+              "price": 1351,
+              "quantity": 2600
+            },
+            {
+              "price": 1350,
+              "quantity": 6500
+            },
+            {
+              "price": 1349,
+              "quantity": 4900
+            },
+            {
+              "price": 1346,
+              "quantity": 500
+            }
+          ],
+          "asks": [
+            {
+              "price": 1352,
+              "quantity": 6800
+            },
+            {
+              "price": 1353,
+              "quantity": 3200
+            },
+            {
+              "price": 1354,
+              "quantity": 1300
+            },
+            {
+              "price": 1358,
+              "quantity": 1100
+            }
+          ]
+        },
+        {
+          "symbol": "600602",
+          "last": 968,
+          "prevClose": 969,
+          "volume": 125000,
+          "turnover": 120830300,
+          "bids": [
+            {
+              "price": 967,
+              "quantity": 2400
+            },
+            {
+              "price": 966,
+              "quantity": 6300
+            },
+            {
+              "price": 965,
+              "quantity": 6900
+            },
+            {
+              "price": 963,
+              "quantity": 2400
+            },
+            {
+              "price": 960,
+              "quantity": 1600
+            }
+          ],
+          "asks": [
+            {
+              "price": 968,
+              "quantity": 8800
+            },
+            {
+              "price": 969,
+              "quantity": 4500
+            }
+          ]
+        }
+      ],
+      "reports": [
+        {
+          "symbol": "600101",
+          "period": 5,
+          "revenue": 818326757,
+          "netProfit": 138089245
+        },
+        {
+          "symbol": "600102",
+          "period": 4,
+          "revenue": 1669144104,
+          "netProfit": 217653912
+        },
+        {
+          "symbol": "600201",
+          "period": 4,
+          "revenue": 2371651376,
+          "netProfit": 216772052
+        },
+        {
+          "symbol": "600202",
+          "period": 4,
+          "revenue": 1221643397,
+          "netProfit": 66494244
+        },
+        {
+          "symbol": "600301",
+          "period": 4,
+          "revenue": 914543692,
+          "netProfit": 113083332
+        },
+        {
+          "symbol": "600302",
+          "period": 5,
+          "revenue": 922900071,
+          "netProfit": 74452628
+        },
+        {
+          "symbol": "600401",
+          "period": 4,
+          "revenue": 3197804503,
+          "netProfit": 513896419
+        },
+        {
+          "symbol": "600402",
+          "period": 4,
+          "revenue": 2091637216,
+          "netProfit": 187032631
+        },
+        {
+          "symbol": "600501",
+          "period": 4,
+          "revenue": 2128111072,
+          "netProfit": 274417954
+        },
+        {
+          "symbol": "600502",
+          "period": 4,
+          "revenue": 1476969233,
+          "netProfit": -28338582
+        },
+        {
+          "symbol": "600601",
+          "period": 5,
+          "revenue": 1341043699,
+          "netProfit": 115145386
+        },
+        {
+          "symbol": "600602",
+          "period": 4,
+          "revenue": 1176874333,
+          "netProfit": 88730005
+        }
+      ]
+    },
+    {
+      "seed": "golden-history",
+      "historyDays": 60,
+      "elapsed": 80,
+      "quotes": [
+        {
+          "symbol": "600101",
+          "last": 649,
+          "prevClose": 652,
+          "volume": 215400,
+          "turnover": 141139600,
+          "bids": [
+            {
+              "price": 649,
+              "quantity": 5600
+            },
+            {
+              "price": 648,
+              "quantity": 4700
+            },
+            {
+              "price": 647,
+              "quantity": 500
+            },
+            {
+              "price": 644,
+              "quantity": 1700
+            },
+            {
+              "price": 643,
+              "quantity": 1500
+            }
+          ],
+          "asks": [
+            {
+              "price": 651,
+              "quantity": 11600
+            },
+            {
+              "price": 652,
+              "quantity": 2800
+            },
+            {
+              "price": 653,
+              "quantity": 400
+            },
+            {
+              "price": 655,
+              "quantity": 600
+            }
+          ]
+        },
+        {
+          "symbol": "600102",
+          "last": 1247,
+          "prevClose": 1240,
+          "volume": 200000,
+          "turnover": 248879000,
+          "bids": [
+            {
+              "price": 1247,
+              "quantity": 4400
+            },
+            {
+              "price": 1246,
+              "quantity": 6800
+            },
+            {
+              "price": 1245,
+              "quantity": 400
+            },
+            {
+              "price": 1243,
+              "quantity": 1200
+            }
+          ],
+          "asks": [
+            {
+              "price": 1249,
+              "quantity": 1500
+            },
+            {
+              "price": 1253,
+              "quantity": 1000
+            },
+            {
+              "price": 1256,
+              "quantity": 1200
+            }
+          ]
+        },
+        {
+          "symbol": "600201",
+          "last": 2101,
+          "prevClose": 2045,
+          "volume": 330400,
+          "turnover": 700768200,
+          "bids": [
+            {
+              "price": 2101,
+              "quantity": 600
+            },
+            {
+              "price": 2100,
+              "quantity": 9400
+            },
+            {
+              "price": 2099,
+              "quantity": 400
+            }
+          ],
+          "asks": [
+            {
+              "price": 2108,
+              "quantity": 4600
+            },
+            {
+              "price": 2110,
+              "quantity": 3200
+            },
+            {
+              "price": 2111,
+              "quantity": 1000
+            },
+            {
+              "price": 2114,
+              "quantity": 1000
+            },
+            {
+              "price": 2116,
+              "quantity": 1300
+            }
+          ]
+        },
+        {
+          "symbol": "600202",
+          "last": 896,
+          "prevClose": 897,
+          "volume": 186200,
+          "turnover": 166905300,
+          "bids": [
+            {
+              "price": 896,
+              "quantity": 600
+            },
+            {
+              "price": 895,
+              "quantity": 11000
+            },
+            {
+              "price": 894,
+              "quantity": 1900
+            },
+            {
+              "price": 892,
+              "quantity": 1300
+            }
+          ],
+          "asks": [
+            {
+              "price": 897,
+              "quantity": 4500
+            },
+            {
+              "price": 898,
+              "quantity": 6000
+            },
+            {
+              "price": 903,
+              "quantity": 400
+            }
+          ]
+        },
+        {
+          "symbol": "600301",
+          "last": 763,
+          "prevClose": 759,
+          "volume": 200500,
+          "turnover": 152100700,
+          "bids": [
+            {
+              "price": 763,
+              "quantity": 1500
+            },
+            {
+              "price": 762,
+              "quantity": 10700
+            },
+            {
+              "price": 761,
+              "quantity": 3100
+            },
+            {
+              "price": 760,
+              "quantity": 700
+            }
+          ],
+          "asks": [
+            {
+              "price": 764,
+              "quantity": 6300
+            },
+            {
+              "price": 765,
+              "quantity": 1200
+            },
+            {
+              "price": 766,
+              "quantity": 2200
+            },
+            {
+              "price": 767,
+              "quantity": 600
+            },
+            {
+              "price": 768,
+              "quantity": 2800
+            }
+          ]
+        },
+        {
+          "symbol": "600302",
+          "last": 661,
+          "prevClose": 638,
+          "volume": 280000,
+          "turnover": 181560800,
+          "bids": [
+            {
+              "price": 661,
+              "quantity": 1300
+            },
+            {
+              "price": 660,
+              "quantity": 1300
+            },
+            {
+              "price": 657,
+              "quantity": 1300
+            },
+            {
+              "price": 656,
+              "quantity": 7800
+            },
+            {
+              "price": 655,
+              "quantity": 800
+            }
+          ],
+          "asks": []
+        },
+        {
+          "symbol": "600401",
+          "last": 2616,
+          "prevClose": 2606,
+          "volume": 201700,
+          "turnover": 525794300,
+          "bids": [
+            {
+              "price": 2613,
+              "quantity": 2600
+            },
+            {
+              "price": 2612,
+              "quantity": 1700
+            },
+            {
+              "price": 2611,
+              "quantity": 5500
+            },
+            {
+              "price": 2610,
+              "quantity": 1100
+            },
+            {
+              "price": 2609,
+              "quantity": 2000
+            }
+          ],
+          "asks": [
+            {
+              "price": 2616,
+              "quantity": 1000
+            },
+            {
+              "price": 2617,
+              "quantity": 4700
+            },
+            {
+              "price": 2619,
+              "quantity": 1000
+            }
+          ]
+        },
+        {
+          "symbol": "600402",
+          "last": 1615,
+          "prevClose": 1609,
+          "volume": 179700,
+          "turnover": 289436700,
+          "bids": [
+            {
+              "price": 1614,
+              "quantity": 500
+            },
+            {
+              "price": 1613,
+              "quantity": 7000
+            },
+            {
+              "price": 1612,
+              "quantity": 2000
+            },
+            {
+              "price": 1611,
+              "quantity": 3900
+            },
+            {
+              "price": 1610,
+              "quantity": 1100
+            }
+          ],
+          "asks": [
+            {
+              "price": 1615,
+              "quantity": 1300
+            },
+            {
+              "price": 1616,
+              "quantity": 5500
+            },
+            {
+              "price": 1619,
+              "quantity": 1500
+            },
+            {
+              "price": 1620,
+              "quantity": 1000
+            }
+          ]
+        },
+        {
+          "symbol": "600501",
+          "last": 1814,
+          "prevClose": 1820,
+          "volume": 192100,
+          "turnover": 349205200,
+          "bids": [
+            {
+              "price": 1814,
+              "quantity": 200
+            },
+            {
+              "price": 1813,
+              "quantity": 10600
+            },
+            {
+              "price": 1812,
+              "quantity": 900
+            },
+            {
+              "price": 1811,
+              "quantity": 2500
+            },
+            {
+              "price": 1807,
+              "quantity": 1500
+            }
+          ],
+          "asks": [
+            {
+              "price": 1815,
+              "quantity": 5800
+            },
+            {
+              "price": 1816,
+              "quantity": 8100
+            },
+            {
+              "price": 1818,
+              "quantity": 1600
+            }
+          ]
+        },
+        {
+          "symbol": "600502",
+          "last": 1368,
+          "prevClose": 1371,
+          "volume": 187200,
+          "turnover": 256285400,
+          "bids": [
+            {
+              "price": 1367,
+              "quantity": 4600
+            },
+            {
+              "price": 1366,
+              "quantity": 6500
+            },
+            {
+              "price": 1365,
+              "quantity": 1100
+            },
+            {
+              "price": 1364,
+              "quantity": 1600
+            },
+            {
+              "price": 1362,
+              "quantity": 1300
+            }
+          ],
+          "asks": [
+            {
+              "price": 1368,
+              "quantity": 900
+            },
+            {
+              "price": 1369,
+              "quantity": 8000
+            },
+            {
+              "price": 1373,
+              "quantity": 1000
+            }
+          ]
+        },
+        {
+          "symbol": "600601",
+          "last": 1335,
+          "prevClose": 1344,
+          "volume": 226300,
+          "turnover": 304142100,
+          "bids": [
+            {
+              "price": 1334,
+              "quantity": 3100
+            },
+            {
+              "price": 1330,
+              "quantity": 1100
+            },
+            {
+              "price": 1328,
+              "quantity": 600
+            },
+            {
+              "price": 1327,
+              "quantity": 1100
+            }
+          ],
+          "asks": [
+            {
+              "price": 1335,
+              "quantity": 600
+            },
+            {
+              "price": 1336,
+              "quantity": 5800
+            },
+            {
+              "price": 1337,
+              "quantity": 5200
+            },
+            {
+              "price": 1339,
+              "quantity": 200
+            },
+            {
+              "price": 1340,
+              "quantity": 900
+            }
+          ]
+        },
+        {
+          "symbol": "600602",
+          "last": 967,
+          "prevClose": 969,
+          "volume": 186900,
+          "turnover": 180691500,
+          "bids": [
+            {
+              "price": 966,
+              "quantity": 5900
+            },
+            {
+              "price": 965,
+              "quantity": 7000
+            },
+            {
+              "price": 963,
+              "quantity": 2400
+            },
+            {
+              "price": 961,
+              "quantity": 1800
+            },
+            {
+              "price": 960,
+              "quantity": 1200
+            }
+          ],
+          "asks": [
+            {
+              "price": 967,
+              "quantity": 2800
+            },
+            {
+              "price": 968,
+              "quantity": 8900
+            },
+            {
+              "price": 969,
+              "quantity": 800
+            },
+            {
+              "price": 970,
+              "quantity": 200
+            },
+            {
+              "price": 972,
+              "quantity": 2200
+            }
+          ]
+        }
+      ],
+      "reports": [
+        {
+          "symbol": "600101",
+          "period": 5,
+          "revenue": 818326757,
+          "netProfit": 138089245
+        },
+        {
+          "symbol": "600102",
+          "period": 4,
+          "revenue": 1669144104,
+          "netProfit": 217653912
+        },
+        {
+          "symbol": "600201",
+          "period": 4,
+          "revenue": 2371651376,
+          "netProfit": 216772052
+        },
+        {
+          "symbol": "600202",
+          "period": 4,
+          "revenue": 1221643397,
+          "netProfit": 66494244
+        },
+        {
+          "symbol": "600301",
+          "period": 4,
+          "revenue": 914543692,
+          "netProfit": 113083332
+        },
+        {
+          "symbol": "600302",
+          "period": 5,
+          "revenue": 922900071,
+          "netProfit": 74452628
+        },
+        {
+          "symbol": "600401",
+          "period": 4,
+          "revenue": 3197804503,
+          "netProfit": 513896419
+        },
+        {
+          "symbol": "600402",
+          "period": 4,
+          "revenue": 2091637216,
+          "netProfit": 187032631
+        },
+        {
+          "symbol": "600501",
+          "period": 4,
+          "revenue": 2128111072,
+          "netProfit": 274417954
+        },
+        {
+          "symbol": "600502",
+          "period": 4,
+          "revenue": 1476969233,
+          "netProfit": -28338582
+        },
+        {
+          "symbol": "600601",
+          "period": 5,
+          "revenue": 1341043699,
+          "netProfit": 115145386
+        },
+        {
+          "symbol": "600602",
+          "period": 4,
+          "revenue": 1176874333,
+          "netProfit": 88730005
+        }
+      ]
+    }
+  ],
+  "rng": [
+    {
+      "seed": "stock-sim-2026",
+      "hash": 1954616796,
+      "values": [
+        0.9281732912641019,
+        0.9330347776412964,
+        0.40456920699216425,
+        0.6809469466097653,
+        0.8538244368974119,
+        0.3794584982097149,
+        0.6237893761135638,
+        0.09422342129983008
+      ]
+    },
+    {
+      "seed": "中文🌊",
+      "hash": 3175653099,
+      "values": [
+        0.05774282431229949,
+        0.09276737831532955,
+        0.4683328461833298,
+        0.14575993409380317,
+        0.06842748145572841,
+        0.601977649377659,
+        0.5872285624500364,
+        0.4973610888700932
+      ]
+    }
+  ]
+}
