@@ -218,7 +218,7 @@ func (a *App) command(w http.ResponseWriter, r *http.Request, id identity, body 
 	var created int64
 	err := a.db.QueryRow("SELECT body_hash,status,response,created_at FROM idempotency WHERE user_id=? AND key=?", id.user.ID, key).Scan(&previous, &status, &response, &created)
 	cutoff := a.now().Add(-7 * 24 * time.Hour).Unix()
-	if err == nil && created > cutoff {
+	if err == nil && (created > cutoff || strings.HasPrefix(previous, visibilityReceiptPrefix)) {
 		if previous != hash {
 			apiError(w, 409, "同一请求编号不能用于不同操作")
 			return
@@ -256,7 +256,7 @@ func (a *App) command(w http.ResponseWriter, r *http.Request, id identity, body 
 	}
 	defer tx.Rollback()
 	if err = a.saveCandidate(tx, candidate, run); err == nil {
-		_, err = tx.Exec("DELETE FROM idempotency WHERE created_at <= ?", cutoff)
+		_, err = tx.Exec("DELETE FROM idempotency WHERE created_at <= ? AND body_hash NOT LIKE 'visibility:%'", cutoff)
 	}
 	if err == nil {
 		_, err = tx.Exec("INSERT INTO idempotency(user_id,key,body_hash,status,response,created_at) VALUES(?,?,?,?,?,?)", id.user.ID, key, hash, 200, response, a.now().Unix())

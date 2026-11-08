@@ -9,6 +9,7 @@ import (
 	"path/filepath"
 	"strings"
 	"testing"
+	"time"
 )
 
 func statsJSON(t *testing.T, c *testClient, method, path string, body any) map[string]any {
@@ -320,6 +321,50 @@ func TestStatsVisibilityCanonicalReplayReturnsCurrentProfile(t *testing.T) {
 	}
 	if res.StatusCode != 200 || res.Header.Get("Idempotency-Replayed") != "true" || res.Header.Get("X-User-Id") != u["id"] || profile["userId"] != u["id"] || profile["leaderboardOptIn"] != false || profile["revision"] != latest["revision"] {
 		t.Fatalf("canonical replay headers=%v profile=%#v", res.Header, profile)
+	}
+}
+
+func TestStatsVisibilityReceiptsSurviveOrderExpiryCleanup(t *testing.T) {
+	a, ts := startTest(t)
+	c := newClient(t, ts.URL)
+	c.register(t, "stats_permanent")
+	statsJSONKey(t, c, "POST", "/api/profile/visibility", map[string]bool{"leaderboardOptIn": false}, "permanent-no-change")
+	statsJSONKey(t, c, "POST", "/api/profile/visibility", map[string]bool{"leaderboardOptIn": true}, "permanent-public-a")
+	statsJSONKey(t, c, "POST", "/api/profile/visibility", map[string]bool{"leaderboardOptIn": false}, "permanent-private-b")
+	statsJSONKey(t, c, "POST", "/api/orders", map[string]any{}, "ordinary-expiring-order")
+	a.mu.Lock()
+	future := a.now().Add(8 * 24 * time.Hour)
+	a.config.Now = func() time.Time { return future }
+	_, err := a.db.Exec("UPDATE sessions SET expires_at=?", future.Add(24*time.Hour).Unix())
+	a.mu.Unlock()
+	if err != nil {
+		t.Fatal(err)
+	}
+	// Ordinary commands must clear their expired receipts while preserving
+	// the tiny privacy receipts, including those for no-change operations.
+	statsJSONKey(t, c, "POST", "/api/orders", map[string]any{}, "ordinary-cleanup-order")
+	a.mu.Lock()
+	var expiredOrders int
+	err = a.db.QueryRow("SELECT COUNT(*) FROM idempotency WHERE key=?", "ordinary-expiring-order").Scan(&expiredOrders)
+	a.mu.Unlock()
+	if err != nil || expiredOrders != 0 {
+		t.Fatalf("ordinary seven-day receipt retained: %d %v", expiredOrders, err)
+	}
+	latest := statsJSON(t, c, "GET", "/api/profile", nil)
+	replayed := statsJSONKey(t, c, "POST", "/api/profile/visibility", map[string]bool{"leaderboardOptIn": true}, "permanent-public-a")
+	if replayed["leaderboardOptIn"] != false || replayed["revision"] != latest["revision"] {
+		t.Fatalf("old receipt republished player: %#v", replayed)
+	}
+	if status, raw := c.req(t, "POST", "/api/orders", map[string]any{}, "permanent-public-a"); status != 409 {
+		t.Fatalf("old privacy key reused by order: %d %s", status, raw)
+	}
+	if status, raw := c.req(t, "POST", "/api/profile/visibility", map[string]bool{"leaderboardOptIn": false}, "permanent-public-a"); status != 409 {
+		t.Fatalf("old privacy key reused with different body: %d %s", status, raw)
+	}
+	latest = statsJSONKey(t, c, "POST", "/api/profile/visibility", map[string]bool{"leaderboardOptIn": true}, "permanent-public-c")
+	replayed = statsJSONKey(t, c, "POST", "/api/profile/visibility", map[string]bool{"leaderboardOptIn": false}, "permanent-no-change")
+	if replayed["leaderboardOptIn"] != true || replayed["revision"] != latest["revision"] {
+		t.Fatalf("old no-change receipt reversed newer choice: %#v", replayed)
 	}
 }
 

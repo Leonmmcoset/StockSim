@@ -7,10 +7,13 @@ import (
 	"encoding/json"
 	"errors"
 	"net/http"
+	"strings"
 	"time"
 
 	"stocksim/server/internal/market"
 )
+
+const visibilityReceiptPrefix = "visibility:"
 
 type playerPreference struct {
 	UserID           string `json:"userId"`
@@ -98,7 +101,7 @@ func (a *App) profileVisibility(w http.ResponseWriter, r *http.Request) {
 		}
 		body, _ := json.Marshal(input)
 		digest := sha256.Sum256(append([]byte(r.Method+" "+r.URL.Path+"\n"), body...))
-		hash := hex.EncodeToString(digest[:])
+		hash := visibilityReceiptPrefix + hex.EncodeToString(digest[:])
 		var previous string
 		var created int64
 		err := a.db.QueryRow("SELECT body_hash,created_at FROM idempotency WHERE user_id=? AND key=?", id.user.ID, key).Scan(&previous, &created)
@@ -107,7 +110,7 @@ func (a *App) profileVisibility(w http.ResponseWriter, r *http.Request) {
 			storageError(w)
 			return
 		}
-		replayed := err == nil && created > cutoff
+		replayed := err == nil && (strings.HasPrefix(previous, visibilityReceiptPrefix) || created > cutoff)
 		if replayed && previous != hash {
 			apiError(w, 409, "同一请求编号不能用于不同操作")
 			return
@@ -147,7 +150,7 @@ func (a *App) profileVisibility(w http.ResponseWriter, r *http.Request) {
 			}
 		}
 		if err == nil {
-			_, err = tx.Exec("DELETE FROM idempotency WHERE created_at <= ?", cutoff)
+			_, err = tx.Exec("DELETE FROM idempotency WHERE created_at <= ? AND body_hash NOT LIKE 'visibility:%'", cutoff)
 		}
 		if err == nil {
 			// Even a no-change request must be remembered, so a late retry
