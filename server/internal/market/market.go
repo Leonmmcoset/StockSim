@@ -56,6 +56,12 @@ func New(options Options) (*Engine, error) {
 	e.initializeCompanies()
 	s.News = append(s.News, NewsItem{ID: "welcome", Time: timestamp(s.Date, openSeconds), Headline: "股海模拟市场开市", Body: "12家虚构公司已进入竞价交易。每位玩家初始资金5000元，买入100股起，T+1可卖；背景历史为合成行情。", Scope: "market", Symbols: []string{}, Impact: "neutral"})
 	e.Step(10)
+	var err error
+	s.Events, err = newEventState(options, s)
+	if err != nil {
+		return nil, err
+	}
+	e.scheduleEvents()
 	return e, nil
 }
 func (e *Engine) AddPlayer(id string) error {
@@ -357,14 +363,22 @@ func (e *Engine) agentAction(q *stock, owner int) {
 		}
 	}
 	inv := float64(h.Quantity) * p / math.Max(1, float64(w.Cash)+float64(h.Quantity)*p)
+	eventSignal, eventRisk := e.eventResponseAt(q.Symbol, s.Tick)
 	risk := math.Sqrt(q.Variance)
 	fund := math.Log(q.Fundamental / p)
 	trend := clamp(math.Log(p/q.EMA), -.015, .015)
 	if w.Kind == "liquidity" {
 		shift := clamp((q.Fundamental*math.Exp(q.Sentiment)-p)*.12-(inv-.5)*p*.008, -p*.003, p*.003)
+		if eventRisk > 0 {
+			shift = clamp(shift+p*eventSignal*.18, -p*.008, p*.008)
+		}
 		center := p + shift
 		spread := max(int64(1), round(p*(.0005+risk*.5)))
 		size := (4 + int64(math.Floor(random(&s.RNG)*12))) * 100
+		if eventRisk > 0 {
+			spread = max(1, round(float64(spread)*(1+1.5*eventRisk)))
+			size = max(100, int64(math.Floor(float64(size)*(1-.5*eventRisk)/100))*100)
+		}
 		e.submit(q, owner, "buy", round(center-float64(spread)), size, 10+int64(math.Floor(random(&s.RNG)*12)))
 		e.submit(q, owner, "sell", round(center+float64(spread)), size, 10+int64(math.Floor(random(&s.RNG)*12)))
 		return
@@ -379,7 +393,16 @@ func (e *Engine) agentAction(q *stock, owner int) {
 	if w.Kind == "noise" {
 		ws = .5
 	}
-	signal := wf*fund + wt*trend + q.Sentiment*ws + normal(&s.RNG)*(.0012+risk) + w.Bias*.001
+	signal := wf*fund + wt*trend + q.Sentiment*ws + normal(&s.RNG)*(.0012+risk+.0012*eventRisk) + w.Bias*.001
+	if eventRisk > 0 {
+		weight := 1.
+		if w.Kind == "fundamental" {
+			weight = .8
+		} else if w.Kind == "trend" {
+			weight = .6
+		}
+		signal += eventSignal * weight * clamp(1+w.Bias*.35, .5, 1.5)
+	}
 	buyProb := clamp(.5+signal*55-(inv-.5)*.55, .06, .94)
 	side, opposite := "sell", "buy"
 	if random(&s.RNG) < buyProb {
@@ -503,6 +526,7 @@ func (e *Engine) Step(ticks int) error {
 		if s.Seconds == closeSeconds {
 			e.closeDay()
 		}
+		e.advanceEvents()
 		e.recordAll(s.Seconds == closeSeconds)
 	}
 	return nil
@@ -590,6 +614,7 @@ func (e *Engine) NextDay() {
 	s.Seq++
 	e.prependNews(NewsItem{ID: fmt.Sprintf("N%d", s.Seq), Time: timestamp(s.Date, openSeconds), Headline: s.Date + " 新交易日开市", Body: "昨日买入持仓已转为可卖，未成交的昨日委托已失效。", Scope: "market", Symbols: []string{}, Impact: "neutral"})
 	e.recordAll(false)
+	e.scheduleEvents()
 }
 func commandError(code, message string) CommandResult {
 	return CommandResult{OK: false, Code: code, Error: message}

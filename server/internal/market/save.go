@@ -18,7 +18,7 @@ type savedMarket struct {
 }
 
 func (e *Engine) Export() ([]byte, error) {
-	return json.Marshal(savedMarket{SchemaVersion: 4, Data: e.s})
+	return json.Marshal(savedMarket{SchemaVersion: 5, Data: e.s})
 }
 func (e *Engine) Clone() (*Engine, error) {
 	s, err := deepCopy(e.s)
@@ -31,6 +31,15 @@ func Restore(data []byte) (*Engine, error) {
 	if len(data) == 0 || len(data) > 256*1024*1024 {
 		return nil, errors.New("存档为空或过大")
 	}
+	var header struct {
+		SchemaVersion int `json:"schemaVersion"`
+	}
+	if err := json.Unmarshal(data, &header); err != nil {
+		return nil, err
+	}
+	if header.SchemaVersion == 4 {
+		return restoreV4(data)
+	}
 	decoder := json.NewDecoder(bytes.NewReader(data))
 	decoder.DisallowUnknownFields()
 	var saved savedMarket
@@ -41,7 +50,7 @@ func Restore(data []byte) (*Engine, error) {
 	if err := decoder.Decode(&extra); err != io.EOF {
 		return nil, errors.New("存档包含尾随数据")
 	}
-	if saved.SchemaVersion != 4 || saved.Data == nil {
+	if saved.SchemaVersion != 5 || saved.Data == nil {
 		return nil, errors.New("存档版本不兼容")
 	}
 	if err := requireJSONFields(data, reflect.TypeOf(saved)); err != nil {
@@ -59,6 +68,12 @@ func validDate(date string) bool {
 	return err == nil && d.Format("2006-01-02") == date && d.Weekday() != time.Saturday && d.Weekday() != time.Sunday
 }
 func (e *Engine) Validate() error {
+	if err := e.validateCore(); err != nil {
+		return err
+	}
+	return e.validateEvents()
+}
+func (e *Engine) validateCore() error {
 	s := e.s
 	fail := func(what string) error { return fmt.Errorf("市场存档校验失败：%s", what) }
 	if !safePersistedNumbers(reflect.ValueOf(s)) {
@@ -416,6 +431,9 @@ func (e *Engine) validateCompanies() error {
 	}
 	seen := map[string]bool{}
 	for _, n := range s.News {
+		if n.Kind == "external" {
+			continue
+		}
 		if n.Kind == "" {
 			if n.ReportID != "" {
 				return fail()
@@ -586,6 +604,13 @@ func requireJSONFields(raw json.RawMessage, typ reflect.Type) error {
 func requireObjectFields(object map[string]json.RawMessage, typ reflect.Type) error {
 	for i := 0; i < typ.NumField(); i++ {
 		field := typ.Field(i)
+		// encoding/json flattens exported members of anonymous private structs.
+		if field.Anonymous && field.Type.Kind() == reflect.Struct && field.Tag.Get("json") == "" {
+			if err := requireObjectFields(object, field.Type); err != nil {
+				return err
+			}
+			continue
+		}
 		if !field.IsExported() {
 			continue
 		}

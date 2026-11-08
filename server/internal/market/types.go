@@ -107,16 +107,22 @@ type PlayerTrade struct {
 	Fee      Money  `json:"fee"`
 }
 
+type ExternalEventInfo struct {
+	Category string `json:"category"`
+	Severity string `json:"severity"`
+}
+
 type NewsItem struct {
-	ID       string   `json:"id"`
-	Time     int64    `json:"time"`
-	Headline string   `json:"headline"`
-	Body     string   `json:"body"`
-	Scope    string   `json:"scope"`
-	Symbols  []string `json:"symbols"`
-	Impact   string   `json:"impact"`
-	Kind     string   `json:"kind,omitempty"`
-	ReportID string   `json:"reportId,omitempty"`
+	ID       string             `json:"id"`
+	Time     int64              `json:"time"`
+	Headline string             `json:"headline"`
+	Body     string             `json:"body"`
+	Scope    string             `json:"scope"`
+	Symbols  []string           `json:"symbols"`
+	Impact   string             `json:"impact"`
+	Kind     string             `json:"kind,omitempty"`
+	ReportID string             `json:"reportId,omitempty"`
+	Event    *ExternalEventInfo `json:"event,omitempty"`
 }
 
 type MarketClock struct {
@@ -331,8 +337,12 @@ type ReviewPeriodSummary struct {
 }
 
 type Options struct {
-	Seed        string
-	HistoryDays *int
+	// EventSeed is only for deterministic Go tests/offline fixtures; production leaves it empty.
+	EventSeed     string
+	EventMeanDays int64
+	DisableEvents bool
+	Seed          string
+	HistoryDays   *int
 }
 type ReviewPeriod struct {
 	Kind     string

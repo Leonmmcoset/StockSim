@@ -82,6 +82,7 @@ type state struct {
 	SectorFactors      map[string]float64
 	TotalShares        map[string]int64
 	Companies          []*companyState
+	Events             *eventState
 }
 type Engine struct{ s *state }
 

@@ -145,7 +145,7 @@ func TestSnapshotDoesNotAliasEngineOrExposeNullCollections(t *testing.T) {
 }
 func TestPlayersJoiningDuringLunchAndClosedHaveTrueBaselines(t *testing.T) {
 	zero := 0
-	e, _ := New(Options{HistoryDays: &zero})
+	e, _ := New(Options{DisableEvents: true, EventSeed: "reference-tests", HistoryDays: &zero})
 	e.Step(1000)
 	e.AddPlayer("lunch")
 	s := snap(t, e, "lunch")

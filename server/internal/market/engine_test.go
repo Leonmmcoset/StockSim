@@ -9,7 +9,7 @@ import (
 func testEngine(t *testing.T) *Engine {
 	t.Helper()
 	zero := 0
-	e, err := New(Options{Seed: "go-multiplayer-tests", HistoryDays: &zero})
+	e, err := New(Options{DisableEvents: true, EventSeed: "reference-tests", Seed: "go-multiplayer-tests", HistoryDays: &zero})
 	if err != nil {
 		t.Fatal(err)
 	}

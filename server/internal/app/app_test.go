@@ -14,6 +14,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"reflect"
 	"strings"
 	"sync"
 	"testing"
@@ -940,4 +941,329 @@ func TestDatabaseExclusiveLockSubprocessProbe(t *testing.T) {
 		a.Close()
 		t.Fatal("another process acquired the live database")
 	}
+}
+
+// Restore may migrate private state even while paused; persisting only on the next tick would lose it again on restart.
+func TestStartupPersistsNormalizedRestoreExactlyOnce(t *testing.T) {
+	zero := 0
+	path := filepath.Join(t.TempDir(), "startup-migration.db")
+	initialTime := time.Date(2026, 11, 8, 1, 0, 0, 0, time.UTC)
+	config := Config{DBPath: path, HistoryDays: &zero, Now: func() time.Time { return initialTime }}
+	a, err := New(config)
+	if err != nil {
+		t.Fatal(err)
+	}
+	canonical, err := a.engine.Export()
+	if err != nil {
+		t.Fatal(err)
+	}
+	initialRevision := a.runtime.Revision
+	a.Close()
+	var pretty bytes.Buffer
+	if err = json.Indent(&pretty, canonical, "", "  "); err != nil {
+		t.Fatal(err)
+	}
+	raw, err := sql.Open("sqlite", path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if _, err = raw.Exec("UPDATE market_state SET payload=? WHERE id=1", pretty.Bytes()); err != nil {
+		t.Fatal(err)
+	}
+	raw.Close()
+	migrationTime := initialTime.Add(time.Minute)
+	config.Now = func() time.Time { return migrationTime }
+	migrated, err := New(config)
+	if err != nil {
+		t.Fatal(err)
+	}
+	var persisted, run []byte
+	if err = migrated.db.QueryRow("SELECT payload,runtime FROM market_state WHERE id=1").Scan(&persisted, &run); err != nil {
+		t.Fatal(err)
+	}
+	if !bytes.Equal(persisted, canonical) {
+		t.Fatal("normalized restored state was not persisted immediately")
+	}
+	if migrated.runtime.Revision != initialRevision+1 || migrated.runtime.SavedAt != migrationTime.Format(time.RFC3339Nano) || migrated.runtime.Running {
+		t.Fatalf("migration changed runtime incorrectly: %+v", migrated.runtime)
+	}
+	migrated.Close()
+	config.Now = func() time.Time { return migrationTime.Add(time.Minute) }
+	reopened, err := New(config)
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer reopened.Close()
+	var again, againRun []byte
+	if err = reopened.db.QueryRow("SELECT payload,runtime FROM market_state WHERE id=1").Scan(&again, &againRun); err != nil {
+		t.Fatal(err)
+	}
+	if !bytes.Equal(again, persisted) || !bytes.Equal(againRun, run) {
+		t.Fatal("already normalized paused state was written again")
+	}
+}
+
+// Failed startup migration must retain the old payload and revision, allowing a clean retry.
+func TestStartupMigrationSaveFailureRetainsOriginalState(t *testing.T) {
+	zero := 0
+	path := filepath.Join(t.TempDir(), "failed-startup-migration.db")
+	config := Config{DBPath: path, HistoryDays: &zero}
+	a, err := New(config)
+	if err != nil {
+		t.Fatal(err)
+	}
+	canonical, _ := a.engine.Export()
+	a.Close()
+	var pretty bytes.Buffer
+	json.Indent(&pretty, canonical, "", "  ")
+	raw, err := sql.Open("sqlite", path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	raw.Exec("UPDATE market_state SET payload=? WHERE id=1", pretty.Bytes())
+	var originalRuntime []byte
+	raw.QueryRow("SELECT runtime FROM market_state WHERE id=1").Scan(&originalRuntime)
+	_, err = raw.Exec(`CREATE TRIGGER reject_startup_migration BEFORE UPDATE ON market_state BEGIN SELECT RAISE(ABORT,'startup migration write failure'); END`)
+	if err != nil {
+		t.Fatal(err)
+	}
+	raw.Close()
+	if candidate, openErr := New(config); openErr == nil {
+		candidate.Close()
+		t.Fatal("startup returned a migrated engine without durable storage")
+	} else if !strings.Contains(openErr.Error(), "startup migration write failure") {
+		t.Fatalf("unexpected error: %v", openErr)
+	}
+	raw, err = sql.Open("sqlite", path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	var payload, runtime []byte
+	raw.QueryRow("SELECT payload,runtime FROM market_state WHERE id=1").Scan(&payload, &runtime)
+	if !bytes.Equal(payload, pretty.Bytes()) || !bytes.Equal(runtime, originalRuntime) {
+		t.Fatal("failed startup migration changed durable state")
+	}
+	raw.Exec("DROP TRIGGER reject_startup_migration")
+	raw.Close()
+	restored, err := New(config)
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer restored.Close()
+	if restored.runtime.Revision != 2 {
+		t.Fatalf("retry revision=%d", restored.runtime.Revision)
+	}
+}
+
+// A format upgrade must not be committed before the engine has been matched to users and valid runtime configuration.
+func TestStartupValidatesBeforeSavingMigration(t *testing.T) {
+	for _, scenario := range []string{"orphan-player", "invalid-speed"} {
+		t.Run(scenario, func(t *testing.T) {
+			zero := 0
+			path := filepath.Join(t.TempDir(), "invalid-migration.db")
+			config := Config{DBPath: path, HistoryDays: &zero}
+			a, err := New(config)
+			if err != nil {
+				t.Fatal(err)
+			}
+			if scenario == "orphan-player" {
+				if err = a.engine.AddPlayer("orphan"); err != nil {
+					t.Fatal(err)
+				}
+			} else {
+				a.runtime.Speed = 3
+			}
+			canonical, err := a.engine.Export()
+			if err != nil {
+				t.Fatal(err)
+			}
+			var pretty bytes.Buffer
+			if err = json.Indent(&pretty, canonical, "", "  "); err != nil {
+				t.Fatal(err)
+			}
+			runtime, err := json.Marshal(a.runtime)
+			if err != nil {
+				t.Fatal(err)
+			}
+			if _, err = a.db.Exec("UPDATE market_state SET payload=?,runtime=? WHERE id=1", pretty.Bytes(), runtime); err != nil {
+				t.Fatal(err)
+			}
+			a.Close()
+			if candidate, openErr := New(config); openErr == nil {
+				candidate.Close()
+				t.Fatal("invalid restored configuration was accepted")
+			}
+			raw, err := sql.Open("sqlite", path)
+			if err != nil {
+				t.Fatal(err)
+			}
+			defer raw.Close()
+			var after, afterRuntime []byte
+			if err = raw.QueryRow("SELECT payload,runtime FROM market_state WHERE id=1").Scan(&after, &afterRuntime); err != nil {
+				t.Fatal(err)
+			}
+			if !bytes.Equal(after, pretty.Bytes()) || !bytes.Equal(afterRuntime, runtime) {
+				t.Fatal("startup saved migration before validation completed")
+			}
+		})
+	}
+}
+
+// This optional integration test consumes an actual pre-upgrade backup and snapshots produced by the old binary.
+// The fixture contains password hashes, so it stays outside Git; all loaded data is written only to t.TempDir.
+func TestStartupMigratesRealSchemaFourBackup(t *testing.T) {
+	backupPath := os.Getenv("STOCKSIM_TEST_LEGACY_BACKUP")
+	baselinePath := os.Getenv("STOCKSIM_TEST_LEGACY_SNAPSHOTS")
+	if backupPath == "" || baselinePath == "" {
+		t.Skip("requires original schema-4 backup and old-binary snapshot baselines")
+	}
+	encoded, err := os.ReadFile(backupPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	var backup struct {
+		Engine           json.RawMessage `json:"engine"`
+		Runtime          runtimeState    `json:"runtime"`
+		RegistrationOpen bool            `json:"registrationOpen"`
+		Users            []struct {
+			User
+			PasswordHash string `json:"passwordHash"`
+		} `json:"users"`
+	}
+	if err = json.Unmarshal(encoded, &backup); err != nil {
+		t.Fatal(err)
+	}
+	var originalVersion struct {
+		SchemaVersion int `json:"schemaVersion"`
+	}
+	if err = json.Unmarshal(backup.Engine, &originalVersion); err != nil || originalVersion.SchemaVersion != 4 {
+		t.Fatal("fixture is not an original schema-4 backup")
+	}
+	baselineBytes, err := os.ReadFile(baselinePath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	var baseline map[string]json.RawMessage
+	if err = json.Unmarshal(baselineBytes, &baseline); err != nil {
+		t.Fatal(err)
+	}
+	path := filepath.Join(t.TempDir(), "legacy-upgrade.db")
+	raw, err := sql.Open("sqlite", path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if _, err = raw.Exec(schema); err != nil {
+		t.Fatal(err)
+	}
+	tx, err := raw.Begin()
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, u := range backup.Users {
+		if _, err = tx.Exec("INSERT INTO users(id,username,password_hash,role,banned,created_at) VALUES(?,?,?,?,?,?)", u.ID, u.Username, u.PasswordHash, u.Role, u.Banned, u.CreatedAt); err != nil {
+			t.Fatal(err)
+		}
+	}
+	runtimeBytes, err := json.Marshal(backup.Runtime)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if _, err = tx.Exec("INSERT INTO market_state(id,payload,runtime) VALUES(1,?,?)", []byte(backup.Engine), runtimeBytes); err != nil {
+		t.Fatal(err)
+	}
+	if _, err = tx.Exec("INSERT INTO settings(id,registration_open) VALUES(1,?)", backup.RegistrationOpen); err != nil {
+		t.Fatal(err)
+	}
+	if err = tx.Commit(); err != nil {
+		t.Fatal(err)
+	}
+	raw.Close()
+	zero := 0
+	config := Config{DBPath: path, HistoryDays: &zero}
+	// Exercise the real schema-4 migration failure before accepting its generated private key.
+	raw, err = sql.Open("sqlite", path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if _, err = raw.Exec(`CREATE TRIGGER reject_legacy_migration BEFORE UPDATE ON market_state BEGIN SELECT RAISE(ABORT,'legacy migration persistence failure'); END`); err != nil {
+		t.Fatal(err)
+	}
+	raw.Close()
+	if candidate, openErr := New(config); openErr == nil {
+		candidate.Close()
+		t.Fatal("legacy migration returned an engine despite failed durable storage")
+	} else if !strings.Contains(openErr.Error(), "legacy migration persistence failure") {
+		t.Fatalf("unexpected legacy migration failure: %v", openErr)
+	}
+	raw, err = sql.Open("sqlite", path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	var uncommitted, unchangedRuntime []byte
+	if err = raw.QueryRow("SELECT payload,runtime FROM market_state WHERE id=1").Scan(&uncommitted, &unchangedRuntime); err != nil {
+		t.Fatal(err)
+	}
+	if !bytes.Equal(uncommitted, backup.Engine) || !bytes.Equal(unchangedRuntime, runtimeBytes) {
+		t.Fatal("failed migration overwrote original schema-4 state")
+	}
+	if _, err = raw.Exec("DROP TRIGGER reject_legacy_migration"); err != nil {
+		t.Fatal(err)
+	}
+	raw.Close()
+	a, err := New(config)
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer a.Close()
+	exported, err := a.engine.Export()
+	if err != nil {
+		t.Fatal(err)
+	}
+	var newVersion struct {
+		SchemaVersion int `json:"schemaVersion"`
+	}
+	if err = json.Unmarshal(exported, &newVersion); err != nil || newVersion.SchemaVersion != 5 {
+		t.Fatal("original schema-4 state was not upgraded to schema 5")
+	}
+	var persisted, persistedRuntime []byte
+	if err = a.db.QueryRow("SELECT payload,runtime FROM market_state WHERE id=1").Scan(&persisted, &persistedRuntime); err != nil {
+		t.Fatal(err)
+	}
+	if !bytes.Equal(exported, persisted) || a.runtime.Revision != backup.Runtime.Revision+1 || a.runtime.Running != backup.Runtime.Running {
+		t.Fatal("legacy upgrade was not durably committed at startup")
+	}
+	for _, u := range backup.Users {
+		snapshot, snapshotErr := a.engine.Snapshot(u.ID)
+		if snapshotErr != nil {
+			t.Fatal(snapshotErr)
+		}
+		actualBytes, marshalErr := json.Marshal(snapshot)
+		if marshalErr != nil {
+			t.Fatal(marshalErr)
+		}
+		var actual, want any
+		if err = json.Unmarshal(actualBytes, &actual); err != nil {
+			t.Fatal(err)
+		}
+		if err = json.Unmarshal(baseline[u.ID], &want); err != nil {
+			t.Fatal(err)
+		}
+		if !reflect.DeepEqual(actual, want) {
+			t.Fatalf("legacy upgrade changed full player snapshot: %s", u.ID)
+		}
+	}
+	a.Close()
+	reopened, err := New(config)
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer reopened.Close()
+	var again, againRuntime []byte
+	if err = reopened.db.QueryRow("SELECT payload,runtime FROM market_state WHERE id=1").Scan(&again, &againRuntime); err != nil {
+		t.Fatal(err)
+	}
+	if !bytes.Equal(again, persisted) || !bytes.Equal(againRuntime, persistedRuntime) {
+		t.Fatal("paused legacy restart regenerated private state or repeated migration")
+	}
+	t.Logf("verified original schema 4 -> 5 upgrade for %d players, revision %d -> %d", len(backup.Users), backup.Runtime.Revision, a.runtime.Revision)
 }

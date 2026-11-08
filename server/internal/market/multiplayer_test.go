@@ -181,7 +181,7 @@ func TestRejectCorruptSaveAndPrivateDataProjection(t *testing.T) {
 	if _, err := Restore(append(raw, []byte("{}")...)); err == nil {
 		t.Fatal("trailing JSON accepted")
 	}
-	unknown := bytes.Replace(raw, []byte(`"schemaVersion":4`), []byte(`"schemaVersion":4,"injected":true`), 1)
+	unknown := bytes.Replace(raw, []byte(`"schemaVersion":5`), []byte(`"schemaVersion":5,"injected":true`), 1)
 	if _, err := Restore(unknown); err == nil {
 		t.Fatal("unknown field")
 	}
@@ -245,7 +245,7 @@ func TestTSGoldenMarketAndPRNG(t *testing.T) {
 	}
 	for _, tc := range fixture.Cases {
 		t.Run(tc.Seed+"/"+strconv.Itoa(tc.Elapsed), func(t *testing.T) {
-			e, err := New(Options{Seed: tc.Seed, HistoryDays: &tc.HistoryDays})
+			e, err := New(Options{DisableEvents: true, EventSeed: "reference-tests", Seed: tc.Seed, HistoryDays: &tc.HistoryDays})
 			if err != nil {
 				t.Fatal(err)
 			}

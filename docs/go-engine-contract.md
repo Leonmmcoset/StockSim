@@ -1,6 +1,6 @@
 # Go 共享市场引擎接口
 
-状态：2026-11-08 已实现多人 Go 引擎，接口已与 HTTP 服务接入。算法迁移由 GPT-6 Astra 承担。超低概率外部事件在多人版本完成后另行设计。
+状态：2026-11-08 已实现多人 Go 引擎，接口已与 HTTP 服务接入。算法迁移由 GPT-6 Astra 承担。多人阶段已完成；稀有外部事件规则及验证见 `docs/external-events-model.md`。
 
 ## 已确认边界
 
@@ -19,6 +19,9 @@
 type Options struct {
     Seed string
     HistoryDays *int          // nil=60，指向0=关闭背景历史
+    EventSeed string         // 仅Go确定性测试/离线假数据；生产留空使用crypto/rand私有密钥
+    EventMeanDays int64       // 0默认100；仅Go配置，不对HTTP开放
+    DisableEvents bool       // reference回归测试明确关闭事件
 }
 
 func New(options Options) (*Engine, error)
@@ -41,7 +44,7 @@ func (e *Engine) NextDay()
 
 `Step` 对 0 至 10000 整数有效，遇午休或收盘停止。`SkipLunch` 仅在午休推进到 13:00，其余无副作用。`NextDay` 与旧引擎一致：先完成当日剩余交易（已有委托可能成交），清理当日单后推进下一工作日 09:30；不得仅改日期跳过清算。权限与自动衔接计时均由服务器负责。
 
-引擎无内部并发锁；服务器在同一 owner mutex 下 Clone → mutate → SQLite commit → swap。`Clone` 深复制已可信运行状态，可以绕过完整外部存档校验；`Restore` 必须完整校验。`Export` 输出内部 schema 4 JSON，不能发送给普通玩家。
+引擎无内部并发锁；服务器在同一 owner mutex 下 Clone → mutate → SQLite commit → swap。`Clone` 深复制已可信运行状态，可以绕过完整外部存档校验；`Restore` 必须完整校验。`Export` 输出内部 schema 5 JSON，不能发送给普通玩家。
 
 复盘区间选择由 Go `GetReview(playerID string, period ReviewPeriod) (ReviewSelection, error)` 提供。`ReviewPeriod{Kind string, Days int, DayIndex int64}` 中 Kind 为 `all`、`recent`、`day`；`recent` 使用正数 Days，`day` 使用 DayIndex。返回 `ReviewSelection{Points []NormalizedEquityPoint, Summary ReviewPeriodSummary}`。收益、同期基准、超额收益与观察回撤全部在 Go 计算。HTTP 普通快照将 `review.points` 投影为空数组，完整曲线只通过 `/api/review` 请求。
 
@@ -72,7 +75,7 @@ func (e *Engine) NextDay()
 
 ## 存档和不变量
 
-多人存档使用 schemaVersion 4，包含所有玩家、全部 NPC、时钟、RNG、订单、公司和各玩家复盘。恢复先完整校验新对象，成功后服务器才能替换运行实例；公开快照不能充当存档。
+多人存档输出 schemaVersion 5，接受严格校验后的 schemaVersion 4 迁移；包含所有玩家、全部 NPC、时钟、RNG、订单、公司和各玩家复盘。恢复先完整校验新对象，成功后服务器才能替换运行实例；公开快照不能充当存档。
 
 - 全市场 `sum(wallet.cash) + feePool == totalCash`；新增玩家只同步增加钱包现金和 `totalCash`。
 - 在任何运算前拒绝超出 JavaScript 精确整数范围（±(2^53−1)）的持久化整数。现金、股份、预留、量额、成本和费用的不定长累加使用有界加法，金额乘法先检查上界；单持仓不超过该股 480 万总股份。
@@ -113,7 +116,7 @@ node /tmp/stocksim-go-golden.mjs
 
 单次本机成本样本：3 玩家推进 30 交易日约 4.966 秒；内部 JSON 存档 7,616,149 字节；10 次可信深复制平均约 50.56 毫秒；含递归必需字段校验的严格恢复约 283.75 毫秒。采用固定种子、关闭背景日线；这些数字不作为跨机器性能保证。复盘按玩家保留，因此存档和整体复制开销随玩家数增加。目前服务端采用可靠的完整候选复制和原子保存，小规模运行已检查，尚未声称完成大规模用户压测。
 
-本次保持原代理参数和财报参数，不重新声称完成真实市场校准；现有量价模型与历史先导结果见 `docs/market-model.md` 和 `docs/fundamentals-model.md`。超低概率外部事件尚未加入本阶段。
+本次保持原代理参数和财报参数，不重新声称完成真实市场校准；现有量价模型与历史先导结果见 `docs/market-model.md` 和 `docs/fundamentals-model.md`。新增外部事件机制和事件参数见 `docs/external-events-model.md`；原市场与公司随机流保持独立，生产不需要 Node。
 
 
 ## 独立审查后的恢复校验修复

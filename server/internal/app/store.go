@@ -1,6 +1,7 @@
 package app
 
 import (
+	"bytes"
 	"context"
 	"database/sql"
 	"encoding/json"
@@ -221,7 +222,31 @@ func New(config Config) (*App, error) {
 			return fail(errors.New("账户与市场玩家不一致"))
 		}
 	}
-	if _, err = db.Exec("DELETE FROM sessions WHERE expires_at <= ?", a.now().Unix()); err != nil {
+	// Restore can upgrade private engine state. Commit that candidate only after
+	// all runtime configuration and user/player mappings have passed validation,
+	// even if the market is paused and no future tick will trigger a save.
+	normalized, err := a.engine.Export()
+	if err != nil {
+		return fail(err)
+	}
+	if !bytes.Equal(payload, normalized) {
+		migratedRuntime := a.nextRuntime()
+		tx, migrationErr := db.Begin()
+		if migrationErr != nil {
+			return fail(migrationErr)
+		}
+		if migrationErr = a.saveCandidate(tx, a.engine, migratedRuntime); migrationErr == nil {
+			_, migrationErr = tx.Exec("DELETE FROM sessions WHERE expires_at <= ?", a.now().Unix())
+		}
+		if migrationErr == nil {
+			migrationErr = tx.Commit()
+		}
+		if migrationErr != nil {
+			tx.Rollback()
+			return fail(fmt.Errorf("市场存档升级保存失败: %w", migrationErr))
+		}
+		a.runtime = migratedRuntime
+	} else if _, err = db.Exec("DELETE FROM sessions WHERE expires_at <= ?", a.now().Unix()); err != nil {
 		return fail(err)
 	}
 	return a, nil
