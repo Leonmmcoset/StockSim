@@ -7,3 +7,10 @@ playwright-report/
 .superpowers/
 *.local
 .DS_Store
+bin/
+data/
+server/data/
+.env
+*.db
+*.db-shm
+*.db-wal
