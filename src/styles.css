@@ -35,3 +35,4 @@
   .admin-controls{width:100%;flex-wrap:wrap;gap:5px}
   .admin-controls .speed-selector,.admin-controls button{flex-shrink:0}
 }
+.external-news-item>.news-item{width:100%;text-align:left}.external-news-tag{color:#f1ca6c;border-color:#9b7734;background:#302717;font-weight:600}.external-news-detail{padding:10px 17px 12px;background:#111820;border-bottom:1px solid #55482b;color:#aebed3;font-size:11px}.external-news-detail>div:first-child{display:flex;align-items:center;flex-wrap:wrap;gap:8px 16px}.external-news-detail strong{color:#f1ca6c}.external-news-detail p{line-height:1.8;margin:8px 0;white-space:pre-wrap}.external-news-detail button{padding:3px 7px;border:1px solid #455575;background:#1a2636;color:#b8c8de}.external-news-symbols{display:flex;align-items:center;flex-wrap:wrap;gap:6px}

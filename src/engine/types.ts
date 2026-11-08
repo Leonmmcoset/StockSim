@@ -54,7 +54,8 @@ export interface NewsItem {
   id: string; time: number; headline: string; body: string;
   scope: 'market' | 'sector' | 'company'; symbols: string[];
   impact: 'positive' | 'negative' | 'neutral';
-  kind?: 'earnings'; reportId?: string;
+  kind?: 'earnings' | 'external'; reportId?: string;
+  event?: { category: 'policy' | 'disaster' | 'supply-chain' | 'technology'; severity: 'major' | 'extreme' };
 }
 export interface MarketClock {
   dayIndex: number; date: string; time: string; timestamp: number;
