@@ -78,6 +78,9 @@ func (a *App) Handler() http.Handler {
 	mux.HandleFunc("POST /api/orders/preview", a.preview)
 	mux.HandleFunc("POST /api/orders/{id}/cancel", a.cancel)
 	mux.HandleFunc("GET /api/review", a.review)
+	mux.HandleFunc("GET /api/profile", a.profile)
+	mux.HandleFunc("POST /api/profile/visibility", a.profileVisibility)
+	mux.HandleFunc("GET /api/leaderboard", a.leaderboard)
 	mux.HandleFunc("POST /api/admin/market", a.adminMarket)
 	mux.HandleFunc("GET /api/admin/users", func(w http.ResponseWriter, r *http.Request) {
 		a.withSession(w, r, true, true, func(id identity) { a.writeUsers(w) })
@@ -447,15 +450,21 @@ func (a *App) backup(w http.ResponseWriter, r *http.Request) {
 			storageError(w)
 			return
 		}
+		preferences, err := a.playerPreferences()
+		if err != nil {
+			storageError(w)
+			return
+		}
 		w.Header().Set("Content-Disposition", `attachment; filename="stocksim-backup.json"`)
 		writeJSON(w, 200, struct {
-			SchemaVersion    int             `json:"schemaVersion"`
-			ExportedAt       string          `json:"exportedAt"`
-			Engine           json.RawMessage `json:"engine"`
-			Runtime          runtimeState    `json:"runtime"`
-			RegistrationOpen bool            `json:"registrationOpen"`
-			Users            []backupUser    `json:"users"`
-		}{1, a.now().Format(time.RFC3339Nano), state, a.runtime, a.registrationOpen, users})
+			SchemaVersion     int                `json:"schemaVersion"`
+			ExportedAt        string             `json:"exportedAt"`
+			Engine            json.RawMessage    `json:"engine"`
+			Runtime           runtimeState       `json:"runtime"`
+			RegistrationOpen  bool               `json:"registrationOpen"`
+			Users             []backupUser       `json:"users"`
+			PlayerPreferences []playerPreference `json:"playerPreferences"`
+		}{2, a.now().Format(time.RFC3339Nano), state, a.runtime, a.registrationOpen, users, preferences})
 	})
 }
 func (a *App) events(w http.ResponseWriter, r *http.Request) {

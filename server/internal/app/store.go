@@ -75,6 +75,7 @@ type App struct {
 const schema = `
 CREATE TABLE IF NOT EXISTS users(id TEXT PRIMARY KEY,username TEXT NOT NULL COLLATE NOCASE UNIQUE,password_hash TEXT NOT NULL,role TEXT NOT NULL CHECK(role IN('admin','user')),banned INTEGER NOT NULL DEFAULT 0,created_at TEXT NOT NULL);
 CREATE UNIQUE INDEX IF NOT EXISTS one_administrator ON users(role) WHERE role='admin';
+CREATE TABLE IF NOT EXISTS player_preferences(user_id TEXT PRIMARY KEY REFERENCES users(id),leaderboard_opt_in INTEGER NOT NULL DEFAULT 0 CHECK(leaderboard_opt_in IN(0,1)));
 CREATE TABLE IF NOT EXISTS sessions(token_hash TEXT PRIMARY KEY,user_id TEXT REFERENCES users(id),csrf_token TEXT NOT NULL,expires_at INTEGER NOT NULL);
 CREATE INDEX IF NOT EXISTS sessions_user ON sessions(user_id);
 CREATE TABLE IF NOT EXISTS market_state(id INTEGER PRIMARY KEY CHECK(id=1),payload BLOB NOT NULL,runtime BLOB NOT NULL);
