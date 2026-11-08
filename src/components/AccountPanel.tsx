@@ -4,7 +4,7 @@ import * as Dialog from '@radix-ui/react-dialog';
 import type { CommandResult, MarketSnapshot, NewsItem, Side } from '../engine/types';
 import { direction, money, pct, price } from '../lib/format';
 
-type Tab = 'positions' | 'orders' | 'trades' | 'news' | 'review';
+type Tab = 'positions' | 'orders' | 'trades' | 'news' | 'review' | 'players';
 interface AccountPanelProps {
   snapshot: MarketSnapshot;
   onSelect: (symbol: string) => void;
@@ -34,10 +34,11 @@ export function AccountPanel({ snapshot, onSelect, onTradePosition, onCancel, di
     { key: 'orders' as const, label: '当日委托', icon: ClipboardList, count: openOrders.length },
     { key: 'trades' as const, label: '成交记录', icon: FileClock, count: trades.length },
     { key: 'news' as const, label: '市场快讯', icon: BellRing, count: news.length },
+    { key: 'players' as const, label: '玩家战绩', icon: ListOrdered, count: null },
     { key: 'review' as const, label: '投资复盘', icon: ChartNoAxesCombined, count: snapshot.review.days.length },
   ];
-  return <section className={`account-panel ${activeTab === 'review' ? 'review-open' : ''}`} aria-label="账户与交易记录">
-    <div className="account-tabs-row"><div className="account-tabs">{tabs.map(tab => <button key={tab.key} className={activeTab === tab.key ? 'active' : ''} onClick={() => onTabChange(tab.key)}><tab.icon size={12} />{tab.label}<span className="tab-count">{tab.count}</span></button>)}</div><div className="account-actions"><span className="live-dot" />模拟账户 · 人民币</div></div>
+  return <section className={`account-panel ${(activeTab === 'review' || activeTab === 'players') ? 'review-open' : ''}`} aria-label="账户与交易记录">
+    <div className="account-tabs-row"><div className="account-tabs">{tabs.map(tab => <button key={tab.key} className={activeTab === tab.key ? 'active' : ''} onClick={() => onTabChange(tab.key)}><tab.icon size={12} />{tab.label}{tab.count !== null && <span className="tab-count">{tab.count}</span>}</button>)}</div><div className="account-actions"><span className="live-dot" />模拟账户 · 人民币</div></div>
     <div className="account-overview">
       <div className="asset-item"><label>总资产 / 元</label><strong>{money(account.equity)}</strong></div>
       <div className="asset-item"><label>可用资金</label><strong>{money(account.availableCash)}</strong></div>
@@ -47,7 +48,7 @@ export function AccountPanel({ snapshot, onSelect, onTradePosition, onCancel, di
       <div className="asset-item small"><label>冻结资金</label><strong>{money(account.frozenCash)}</strong></div>
       <div className="initial-capital"><Wallet size={12} />初始资金 <span className="mono">¥{money(account.initialCash)}</span></div>
     </div>
-    <div className="account-content" hidden={activeTab === 'review'}>
+    <div className="account-content" hidden={activeTab === 'review' || activeTab === 'players'}>
       {activeTab === 'positions' && (account.positions.length ? <table className="account-table"><thead><tr><th>证券代码</th><th>证券名称</th><th>持仓 / 可卖</th><th>成本价</th><th>现价</th><th>最新市值</th><th>浮动盈亏</th><th>盈亏比例</th><th>操作</th></tr></thead><tbody>{account.positions.map(position => <tr key={position.symbol} onClick={() => onSelect(position.symbol)}><td className="code-cell">{position.symbol}</td><td className="name-cell">{findQuote(position.symbol)?.name}</td><td>{position.quantity} / <span className={position.sellable ? 'yellow' : 'muted'}>{position.sellable}</span></td><td>{price(position.averageCost)}</td><td className={direction(findQuote(position.symbol)?.change ?? 0)}>{price(findQuote(position.symbol)?.last ?? 0)}</td><td>{money(position.marketValue)}</td><td className={direction(position.pnl)}>{position.pnl > 0 ? '+' : ''}{money(position.pnl)}</td><td className={direction(position.pnlPct)}>{pct(position.pnlPct)}</td><td><button className="text-action" onClick={e => { e.stopPropagation(); onTradePosition(position.symbol, 'sell'); }} title={position.sellable ? '卖出该持仓' : '当日买入股份次日可卖'}>卖出</button></td></tr>)}</tbody></table> : <EmptyState icon="wallet" title="暂无持仓，等待你的第一笔交易" detail="选择左侧证券，在右侧买入下单 · 当日买入的股票，下一交易日可卖" />)}
       {activeTab === 'orders' && (todayOrders.length ? <table className="account-table"><thead><tr><th>委托时间</th><th>证券代码</th><th>证券名称</th><th>方向</th><th>委托价格</th><th>委托数量</th><th>已成 / 未成</th><th>状态</th><th>操作</th></tr></thead><tbody>{todayOrders.map(order => <tr key={order.id} onClick={() => onSelect(order.symbol)}><td>{time(order.createdAt)}</td><td className="code-cell">{order.symbol}</td><td className="name-cell">{findQuote(order.symbol)?.name}</td><td className={order.side === 'buy' ? 'up' : 'down'}>{order.side === 'buy' ? '买入' : '卖出'}</td><td>{price(order.price)}</td><td>{order.quantity}</td><td>{order.filled} / {order.remaining}</td><td className="order-state">{statuses[order.status]}</td><td>{['open', 'partial'].includes(order.status) ? <button disabled={disabled} className="text-action" onClick={e => { e.stopPropagation(); void onCancel(order.id); }}>撤单</button> : <span className="muted">—</span>}</td></tr>)}</tbody></table> : <EmptyState title="今日暂无委托" detail="提交的买卖委托将显示在这里，可撤回尚未成交的部分" />)}
       {activeTab === 'trades' && (trades.length ? <table className="account-table"><thead><tr><th>成交时间</th><th>证券代码</th><th>证券名称</th><th>方向</th><th>成交价格</th><th>成交数量</th><th>成交金额</th><th>交易费用</th><th>委托编号</th></tr></thead><tbody>{trades.map(trade => <tr key={trade.id} onClick={() => onSelect(trade.symbol)}><td>{dateTime(trade.time)}</td><td className="code-cell">{trade.symbol}</td><td className="name-cell">{findQuote(trade.symbol)?.name}</td><td className={trade.side === 'buy' ? 'up' : 'down'}>{trade.side === 'buy' ? '买入' : '卖出'}</td><td>{price(trade.price)}</td><td>{trade.quantity}</td><td>{money(trade.amount)}</td><td>{money(trade.fee)}</td><td className="muted">{trade.orderId}</td></tr>)}</tbody></table> : <EmptyState title="暂无成交记录" detail="委托撮合成交后，将在这里记录成交价格、数量与费用" />)}

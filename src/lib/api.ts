@@ -22,3 +22,12 @@ export async function request<T>(path: string, options: { body?: unknown; csrf?:
   return response.status === 204 ? undefined as T : options.responseType === 'blob' ? response.blob() as Promise<T> : response.json();
 }
 export const preview = (input: OrderInput, csrf: string, expectedUserId: string, signal?: AbortSignal) => request<OrderPreview>('/orders/preview', { body: input, csrf, expectedUserId, signal });
+
+export type LeaderboardSort = 'totalReturnPct' | 'recent5ReturnPct' | 'maxDrawdownPct';
+export interface RecentFive { requestedStartDayIndex: number; requestedStartAt: number; startAt: number; endAt: number; coveredDays: number; complete: boolean; returnPct: number | null }
+export interface ObservedDrawdown { startAt: number; endAt: number; maxDrawdownPct: number | null; retentionDays: number; compacted: boolean }
+export interface LeaderboardEntry { username: string; rank: number | null; joinedAt: number; totalReturnPct: number | null; recent5: RecentFive; drawdown: ObservedDrawdown }
+export interface LeaderboardResponse { userId: string; revision: number; sortBy: LeaderboardSort; entries: LeaderboardEntry[] }
+export interface PlayerProfile { userId: string; revision: number; username: string; createdAt: string; leaderboardOptIn: boolean; performance: PlayerPerformance }
+export interface PerformanceDay { dayIndex: number; date: string; netPnl: number; returnPct: number | null }
+export interface PlayerPerformance { joinedAt: number; equity: number; totalPnl: number; totalReturnPct: number | null; recent5: RecentFive & { netPnl: number | null }; drawdown: ObservedDrawdown; points: { time: number; dayIndex: number; equity: number }[]; fillCount: number; buyFillCount: number; sellFillCount: number; feesPaid: number; bestDay: PerformanceDay | null; worstDay: PerformanceDay | null; closedDayCount: number; excludedPartialDayCount: number }
