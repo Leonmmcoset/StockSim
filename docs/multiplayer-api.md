@@ -12,6 +12,8 @@ interface CommandResponse extends SnapshotResponse { result:CommandResult }
 
 `MarketSnapshot` 与现有 `src/engine/types.ts` 字段相同；普通 snapshot.review.points 固定 `[]`，历史点由 review API 获取。空集合均序列化 `[]`，不返回 null。SSE 与 GET/命令响应采用相同 SnapshotResponse。revision 是保存成功后的单调版本，客户端忽略比已见版本小的快照（含幂等重放响应）。
 
+已发生的外部新闻使用 `kind:'external'`，附加 `event:{category:'policy'|'disaster'|'supply-chain'|'technology',severity:'major'|'extreme'}`。其余沿用新闻时刻、正文、方向、范围和相关证券；普通快照不含事件密钥、未来计划或内部冲击参数。
+
 - GET `/api/session`：SessionResponse，未登录时也分配匿名 CSRF 会话。
 - POST `/api/register`、`/api/login`：`{username,password}` -> SessionResponse，设置/旋转 Cookie。用户名 3–24 位 ASCII 字母数字下划线短横，密码 8–128 字节。
 - POST `/api/logout`：204，撤销会话并断开订阅。
