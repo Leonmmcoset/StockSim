@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState, type FormEvent } from 'react';
+import { useEffect, useState, type FormEvent } from 'react';
 import { ArrowDownLeft, ArrowUpRight, ChevronDown, ChevronUp, Info, Minus, Plus, ShieldCheck } from 'lucide-react';
 import type { Account, CommandResult, OrderInput, OrderPreview, Quote, Side } from '../engine/types';
 import { direction, money, price, volume } from '../lib/format';
@@ -10,11 +10,12 @@ interface OrderPanelProps {
   selection: PriceSelection | null;
   sessionRevision: number;
   revision: number;
-  onSubmit: (input: OrderInput) => CommandResult;
-  onPreview: (input: OrderInput) => OrderPreview;
+  onSubmit: (input: OrderInput) => Promise<CommandResult>;
+  disabled: boolean;
+  onPreview: (input: OrderInput, signal?: AbortSignal) => Promise<OrderPreview>;
 }
 
-export function OrderPanel({ quote, account, selection, sessionRevision, revision, onSubmit, onPreview }: OrderPanelProps) {
+export function OrderPanel({ quote, account, selection, sessionRevision, revision, onSubmit, onPreview, disabled }: OrderPanelProps) {
   const [side, setSide] = useState<Side>('buy');
   const [priceText, setPriceText] = useState(price(quote.last));
   const [quantityText, setQuantityText] = useState('100');
@@ -24,13 +25,15 @@ export function OrderPanel({ quote, account, selection, sessionRevision, revisio
   const orderPrice = Math.round(Number(priceText) * 100);
   const quantity = Number(quantityText);
   const input: OrderInput = { symbol: quote.symbol, side, price: Number.isFinite(orderPrice) ? orderPrice : 0, quantity: Number.isFinite(quantity) ? quantity : 0 };
-  const preview = useMemo(() => onPreview(input), [quote.symbol, side, orderPrice, quantity, revision, account, onPreview]);
+  const [preview, setPreview] = useState<OrderPreview>({ amount: 0, fees: { commission: 0, transfer: 0, stamp: 0, total: 0 }, cashRequired: 0, maxBuyQuantity: 0, maxSellQuantity: 0 });
+  useEffect(() => { const controller = new AbortController(); let active = true; onPreview(input, controller.signal).then(value => { if (active) setPreview(value); }).catch(() => {}); return () => { active = false; controller.abort(); }; }, [quote.symbol, side, orderPrice, quantity, revision, onPreview]);
   const maxQuantity = side === 'buy' ? preview.maxBuyQuantity : preview.maxSellQuantity;
   const adjustPrice = (delta: number) => setPriceText(price(Math.max(1, (Number.isFinite(orderPrice) ? orderPrice : quote.last) + delta)));
   const adjustQuantity = (delta: number) => setQuantityText(String(Math.max(0, (Number.isFinite(quantity) ? quantity : 0) + delta)));
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    const result = onSubmit(input);
+    if (disabled) return;
+    const result = await onSubmit(input);
     setFeedback({ ok: result.ok, text: result.ok ? `委托已提交 · ${result.order?.id ?? ''}${result.order?.status === 'filled' ? ' · 已成交' : ''}` : result.error || '委托未成功，请检查价格和数量' });
   };
   return <section className="order-panel" aria-label="委托交易">
@@ -42,7 +45,7 @@ export function OrderPanel({ quote, account, selection, sessionRevision, revisio
       <div className="quantity-shortcuts">{[.25, .5, 1].map(ratio => <button key={ratio} type="button" onClick={() => setQuantityText(String(Math.floor(maxQuantity * ratio / 100) * 100))}>{ratio === 1 ? '全仓' : ratio === .5 ? '1/2' : '1/4'}</button>)}</div>
       <div className="order-availability"><span>{side === 'buy' ? '可用资金' : '可卖数量'} <strong>{side === 'buy' ? money(account.availableCash) : `${maxQuantity} 股`}</strong></span><span>{side === 'buy' ? `可买 ${maxQuantity} 股` : 'T+1 可卖'}</span></div>
       <div className="order-estimate"><span>委托金额 <span className="mono">{money(preview.amount)}</span></span><span title={`佣金 ${money(preview.fees.commission)} · 过户费 ${money(preview.fees.transfer)} · 印花税 ${money(preview.fees.stamp)}`}>预计费用 <span className="mono">{money(preview.fees.total)}</span></span></div>
-      <button type="submit" className={`order-submit ${side === 'sell' ? 'sell-submit' : ''}`}>{side === 'buy' ? <ChevronUp size={13} /> : <ChevronDown size={13} />}{side === 'buy' ? '买入下单' : '卖出下单'}</button>
+      <button disabled={disabled} type="submit" className={`order-submit ${side === 'sell' ? 'sell-submit' : ''}`}>{side === 'buy' ? <ChevronUp size={13} /> : <ChevronDown size={13} />}{side === 'buy' ? '买入下单' : '卖出下单'}</button>
       {feedback && <div role="status" className={`order-feedback ${feedback.ok ? '' : 'error'}`}>{feedback.text}</div>}
       <div className="order-note"><Info size={10} /><span>100 股起买 · 当日买入次日可卖<br />涨停 {price(quote.limitUp)} / 跌停 {price(quote.limitDown)} · 含交易费用</span></div>
     </form>

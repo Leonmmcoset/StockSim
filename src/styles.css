@@ -25,3 +25,13 @@
 .account-panel.review-open{height:87px;min-height:87px}
 .account-content[hidden]{display:none}
 @media(max-width:780px){.terminal.review-active{height:100dvh;min-height:640px;overflow:hidden}.review-workspace{flex:1;min-height:340px}.account-panel.review-open{height:104px;min-height:104px}.account-tabs{width:100%}.account-tabs button{flex:1;justify-content:center;padding:0 5px;gap:0}.account-tabs .tab-count,.account-tabs button svg{display:none}}
+.auth-form{display:flex;flex-direction:column;gap:8px;text-align:left;min-width:240px}.auth-form label{display:flex;justify-content:space-between;gap:10px;align-items:center}.auth-form input{background:#06080d;border:1px solid #424957;color:#d6d9e2;padding:6px}.auth-form button{margin-top:4px}.offline-label{color:#f09b89}.admin-controls{display:flex;gap:4px;align-items:center}
+@media(max-width:780px){
+  .topbar-right{flex:1;min-width:0;gap:5px}
+  .topbar-right .simulation-label{display:none}
+  .topbar-right .muted.mono{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .topbar-right button{flex-shrink:0}
+  .clock-control{flex-wrap:wrap;justify-content:flex-start}
+  .admin-controls{width:100%;flex-wrap:wrap;gap:5px}
+  .admin-controls .speed-selector,.admin-controls button{flex-shrink:0}
+}

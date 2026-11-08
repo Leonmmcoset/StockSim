@@ -6,7 +6,8 @@ import { GridComponent, TooltipComponent } from 'echarts/components';
 import { CanvasRenderer } from 'echarts/renderers';
 import type { EChartsOption } from 'echarts';
 import type { DailyReview, InvestmentReview as ReviewData, NormalizedEquityPoint } from '../engine/types';
-import { selectReviewPeriod } from '../engine/review';
+import { ApiError, ApiIdentityError, request, type ReviewResponse } from '../lib/api';
+import { useGameStore } from '../store/game';
 import { compactNumber, direction, money, pct } from '../lib/format';
 import './InvestmentReview.css';
 
@@ -129,8 +130,27 @@ export default function InvestmentReview({ review, onClose }: InvestmentReviewPr
   const [range, setRange] = useState<CurveRange>('day');
   const days = useMemo(() => [...review.days.filter(day => day.dayIndex !== review.currentDay.dayIndex), review.currentDay], [review.days, review.currentDay]);
   const selectedDay = days.find(day => day.dayIndex === selectedDayIndex) ?? review.currentDay;
-  const period = useMemo(() => selectReviewPeriod(review, range === 'day' ? { dayIndex: selectedDay.dayIndex } : range === 'all' ? 'all' : Number(range)), [review, selectedDay.dayIndex, range]);
-  const { points, summary } = period;
+  const [period, setPeriod] = useState<ReviewResponse | null>(null);
+  const [periodError, setPeriodError] = useState('');
+  useEffect(() => {
+    const sessionRevision = useGameStore.getState().sessionRevision;
+    const expectedUserId = useGameStore.getState().user?.id ?? '';
+    let active = true; let controller: AbortController | null = null; let sequence = 0; let pending = false;
+    setPeriod(null); setPeriodError('');
+    const query = range === 'day' ? `range=day&dayIndex=${selectedDay.dayIndex}` : `range=${range}`;
+    const refresh = () => {
+      if (pending) return; pending = true; controller = new AbortController(); const current = ++sequence;
+      request<ReviewResponse>(`/review?${query}`, { signal: controller.signal, expectedUserId }).then(value => {
+        if (active && current === sequence && useGameStore.getState().sessionRevision === sessionRevision && useGameStore.getState().verifyIdentity(value.userId)) { setPeriod(value); setPeriodError(''); }
+      }).catch(error => {
+        if (active && current === sequence && useGameStore.getState().sessionRevision === sessionRevision) { if (error instanceof ApiIdentityError) useGameStore.getState().verifyIdentity(error.actualUserId ?? ''); else if (error instanceof ApiError && error.status === 401) void useGameStore.getState().refreshSnapshot(); setPeriodError(error.message); }
+      }).finally(() => { pending = false; });
+    };
+    refresh(); const timer = window.setInterval(refresh, 5000);
+    return () => { active = false; controller?.abort(); window.clearInterval(timer); };
+  }, [range, selectedDay.dayIndex]);
+  const points = period?.points ?? [];
+  const summary = period?.summary;
   const completedDays = days.filter(day => day.status === 'closed').length;
 
   return <section className="investment-review" aria-label="投资复盘">
@@ -147,7 +167,8 @@ export default function InvestmentReview({ review, onClose }: InvestmentReviewPr
       <section className="ir-section" aria-label="账户历史走势">
         <div className="ir-section-heading"><h3>账户走势</h3><div className="ir-buttons" aria-label="走势记录区间">{curveRanges.map(item => <button key={item.id} className={range === item.id ? 'active' : ''} aria-pressed={range === item.id} onClick={() => setRange(item.id)}>{item.label}</button>)}</div></div>
         <div className="ir-curve-controls"><div className="ir-buttons" aria-label="走势指标">{chartModes.map(item => <button key={item.id} className={mode === item.id ? 'active' : ''} aria-pressed={mode === item.id} onClick={() => setMode(item.id)}>{item.label}</button>)}</div><span>{points.length ? `${dateTime(points[0].time)} — ${dateTime(points[points.length - 1].time)}` : '暂无区间数据'}</span></div>
-        <div className="ir-period-summary" aria-label="所选区间收益"><span>区间净收益 <b className={direction(summary.netPnl)}>{signedMoney(summary.netPnl)} 元</b></span><span>账户 <b className={summary.returnPct === null ? '' : direction(summary.returnPct)}>{nullablePct(summary.returnPct)}</b></span><span>基准 <b className={direction(summary.benchmarkReturnPct)}>{pct(summary.benchmarkReturnPct)}</b></span><span>超额 <b className={summary.excessReturnPct === null ? '' : direction(summary.excessReturnPct)}>{nullablePct(summary.excessReturnPct)}</b></span><small>{summary.dayCount} 个记录日{summary.partial ? ' · 含非完整日' : ''}</small></div>
+        {periodError && <p role="alert">{periodError}</p>}
+        {summary && <div className="ir-period-summary" aria-label="所选区间收益"><span>区间净收益 <b className={direction(summary.netPnl)}>{signedMoney(summary.netPnl)} 元</b></span><span>账户 <b className={summary.returnPct === null ? '' : direction(summary.returnPct)}>{nullablePct(summary.returnPct)}</b></span><span>基准 <b className={direction(summary.benchmarkReturnPct)}>{pct(summary.benchmarkReturnPct)}</b></span><span>超额 <b className={summary.excessReturnPct === null ? '' : direction(summary.excessReturnPct)}>{nullablePct(summary.excessReturnPct)}</b></span><small>{summary.dayCount} 个记录日{summary.partial ? ' · 含非完整日' : ''}</small></div>}
         <ReviewCurve points={points} mode={mode} />
         <p className="ir-note">{mode === 'returns' ? '账户与股海指数均以所选区间首个采集点归零；账户起点资产为零时收益率显示“—”。' : mode === 'assets' ? '现金包含冻结资金，股票市值按当时公开成交价计价。' : '仓位显示股票市值占总资产的比例。'} 横轴为北京时间，保留午休与隔夜间隔；连线仅连接真实采样点，不表示期间发生交易。</p>
       </section>
