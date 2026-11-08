@@ -17,7 +17,8 @@
     "start": "npm run build && npm run build:server && cd server && ../bin/stocksim",
     "test:server": "cd server && go test ./...",
     "test:race": "cd server && go test -race ./...",
-    "test:integration": "npm run build && npm run build:server && node scripts/check-multiplayer.mjs",
+    "test:integration": "npm run build && npm run build:server && node scripts/check-multiplayer.mjs && node scripts/check-player-stats.mjs",
+    "test:integration:stats": "npm run build && npm run build:server && node scripts/check-player-stats.mjs",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:e2e": "playwright test"

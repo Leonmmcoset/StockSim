@@ -66,6 +66,8 @@ PerformanceDay = {
 
 所有玩家（包含升级前的既有玩家）默认不上榜。偏好存在独立 `player_preferences` 表，缺失记录等同 false。该接口不会把排行榜或战绩数据广播进 SSE。
 
+客户端在发送前将待确认的用户 ID、原始键和目标值写入同标签页 sessionStorage；不保存私人曲线或密码。超时、网络失败、403/429 等未确认响应均保留原意图，禁止单次 GET 将其判定为已结清；仅在同身份收到有效成功确认后重新读取当前状态。页面刷新可恢复同用户待确认操作；退出或身份变化清除它。存储不可用时仍保留当前页面的内存回执。断线时公开状态显示未知、操作禁用。
+
 ## GET /api/leaderboard?sortBy=totalReturnPct
 
 `sortBy` 可为 `totalReturnPct`（默认）、`recent5ReturnPct` 或 `maxDrawdownPct`；其他值返回 400。收益率降序、回撤升序。指标不可用或近五日覆盖不完整的玩家排在可排名玩家后，rank 为 null；相同指标采用竞争排名，例如 1、1、3。用稳定内部 ID 字典序打破显示顺序平局（不向客户端输出 ID）。
